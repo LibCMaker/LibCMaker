@@ -32,3 +32,19 @@ cmr_print_debug_message("Test cmr_print_debug_message(), cmr_PRINT_DEBUG ON")
 include(cmr_print_var_value)
 set(TEST_VAR "test value")
 cmr_print_var_value(TEST_VAR)
+
+include(cmr_get_version_parts)
+# Test correct version string
+set(test_VERSION "12.23.34.45")
+cmr_print_var_value(test_VERSION)
+cmr_get_version_parts(${test_VERSION} test_MAJOR test_MINOR test_PATCH test_TWEAK)
+cmr_print_var_value(test_MAJOR)
+cmr_print_var_value(test_MINOR)
+cmr_print_var_value(test_PATCH)
+cmr_print_var_value(test_TWEAK)
+
+# Test bad version string
+#set(test_VERSION "aa12.23.34.45aa")
+#cmr_print_var_value(test_VERSION)
+#cmr_get_version_parts(${test_VERSION} test_MAJOR test_MINOR test_PATCH test_TWEAK)
+
