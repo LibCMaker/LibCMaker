@@ -1,0 +1,21 @@
+CMakeCache.txt
+CMakeFiles
+CMakeScripts
+Makefile
+cmake_install.cmake
+install_manifest.txt
+CTestTestfile.cmake
+
+# QtCreator
+CMakeLists.txt.user
+CMakeLists.txt.autosave
+
+# Eclipse
+.externalToolBuilders/
+.settings/
+.cproject
+.project
+
+.downloads/
+src_old/
+build/
