@@ -47,4 +47,3 @@ cmr_print_var_value(test_TWEAK)
 #set(test_VERSION "aa12.23.34.45aa")
 #cmr_print_var_value(test_VERSION)
 #cmr_get_version_parts(${test_VERSION} test_MAJOR test_MINOR test_PATCH test_TWEAK)
-
