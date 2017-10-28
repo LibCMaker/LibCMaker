@@ -246,7 +246,6 @@ function(cmr_lib_cmaker)
   execute_process(
     COMMAND
       ${CMAKE_COMMAND} ${lib_PROJECT_DIR} ${cmr_CMAKE_ARGS}
-#      ${CMAKE_COMMAND} ${LIBCMAKER_SRC_DIR} ${cmr_CMAKE_ARGS} # TODO
     WORKING_DIRECTORY ${lib_BUILD_DIR}
     RESULT_VARIABLE configure_RESULT
   )
