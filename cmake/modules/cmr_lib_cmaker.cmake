@@ -111,92 +111,92 @@ function(cmr_lib_cmaker)
   set(cmr_CMAKE_ARGS)
 
   # Args for cmr_lib_cmaker().
-  if(LIBCMAKER_SRC_DIR)
+  if(DEFINED LIBCMAKER_SRC_DIR)
     list(APPEND cmr_CMAKE_ARGS
       -DLIBCMAKER_SRC_DIR=${LIBCMAKER_SRC_DIR}
     )
   endif()
-  if(lib_BUILD_HOST_TOOLS)
+  if(DEFINED lib_BUILD_HOST_TOOLS)
     list(APPEND cmr_CMAKE_ARGS
       -Dlib_BUILD_HOST_TOOLS=${lib_BUILD_HOST_TOOLS}
     )
   endif()
-  if(lib_PROJECT_DIR)
+  if(DEFINED lib_PROJECT_DIR)
     list(APPEND cmr_CMAKE_ARGS
       -Dlib_PROJECT_DIR=${lib_PROJECT_DIR}
     )
   endif()
-  if(lib_BUILD_DIR)
+  if(DEFINED lib_BUILD_DIR)
     list(APPEND cmr_CMAKE_ARGS
       -Dlib_BUILD_DIR=${lib_BUILD_DIR}
     )
   endif()
-  if(lib_NAME)
+  if(DEFINED lib_NAME)
     list(APPEND cmr_CMAKE_ARGS
       -Dlib_NAME=${lib_NAME}
     )
   endif()
-  if(lib_VERSION)
+  if(DEFINED lib_VERSION)
     list(APPEND cmr_CMAKE_ARGS
       -Dlib_VERSION=${lib_VERSION}
     )
   endif()
   # Download dir for lib sources.
-  if(lib_DOWNLOAD_DIR)
+  if(DEFINED lib_DOWNLOAD_DIR)
     list(APPEND cmr_CMAKE_ARGS
       -Dlib_DOWNLOAD_DIR=${lib_DOWNLOAD_DIR}
     )
   endif()
-  if(lib_UNPACKED_SRC_DIR)
+  if(DEFINED lib_UNPACKED_SRC_DIR)
     list(APPEND cmr_CMAKE_ARGS
       -Dlib_UNPACKED_SRC_DIR=${lib_UNPACKED_SRC_DIR}
     )
   endif()
-  if(lib_COMPONENTS)
+  if(DEFINED lib_COMPONENTS)
     list(APPEND cmr_CMAKE_ARGS
       -Dlib_COMPONENTS=${lib_COMPONENTS}
     )
   endif()
   # Lib specific args
-  if(lib_CMAKE_ARGS)
+  if(DEFINED lib_CMAKE_ARGS)
     list(APPEND cmr_CMAKE_ARGS
       ${lib_CMAKE_ARGS} # TODO: check list to list adding
     )
   endif()
 
-  if(cmr_PRINT_DEBUG)
+  if(DEFINED cmr_PRINT_DEBUG)
     list(APPEND cmr_CMAKE_ARGS
       -Dcmr_PRINT_DEBUG=${cmr_PRINT_DEBUG}
     )
   endif()
 
   # Standard CMake vars
-  if(CMAKE_INSTALL_PREFIX)
+  if(DEFINED CMAKE_INSTALL_PREFIX)
     list(APPEND cmr_CMAKE_ARGS
       -DCMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX}
     )
   endif()
-  if(CMAKE_BUILD_TYPE)
+  if(DEFINED CMAKE_BUILD_TYPE)
     list(APPEND cmr_CMAKE_ARGS
       -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
     )
   endif()
-  if(BUILD_SHARED_LIBS)
+  if(DEFINED BUILD_SHARED_LIBS)
     list(APPEND cmr_CMAKE_ARGS
       -DBUILD_SHARED_LIBS=${BUILD_SHARED_LIBS}
     )
   endif()
-  if(SKIP_INSTALL_HEADERS)
+  if(DEFINED SKIP_INSTALL_HEADERS)
     list(APPEND lcm_CMAKE_ARGS
       -DSKIP_INSTALL_HEADERS=${SKIP_INSTALL_HEADERS}
     )
   endif()
-  if(SKIP_INSTALL_LIBRARIES)
+  if(DEFINED SKIP_INSTALL_LIBRARIES)
     list(APPEND lcm_CMAKE_ARGS
       -DSKIP_INSTALL_LIBRARIES=${SKIP_INSTALL_LIBRARIES}
     )
   endif()
-  if(SKIP_INSTALL_ALL)
+  if(DEFINED SKIP_INSTALL_ALL)
     list(APPEND lcm_CMAKE_ARGS
       -DSKIP_INSTALL_ALL=${SKIP_INSTALL_ALL}
     )
@@ -205,33 +205,33 @@ function(cmr_lib_cmaker)
 
   # Prevent the host tools building with the cross platform tools.
   if(NOT lib_BUILD_HOST_TOOLS)
-    if(CMAKE_TOOLCHAIN_FILE)
+    if(DEFINED CMAKE_TOOLCHAIN_FILE)
       list(APPEND cmr_CMAKE_ARGS
         -DCMAKE_TOOLCHAIN_FILE=${CMAKE_TOOLCHAIN_FILE}
       )
     endif()
-    if(CMAKE_GENERATOR)
+    if(DEFINED CMAKE_GENERATOR)
       list(APPEND cmr_CMAKE_ARGS
         -G "${CMAKE_GENERATOR}" # TODO: check it with debug message
       )
     endif()
-    if(CMAKE_MAKE_PROGRAM)
+    if(DEFINED CMAKE_MAKE_PROGRAM)
       list(APPEND cmr_CMAKE_ARGS
         -DCMAKE_MAKE_PROGRAM=${CMAKE_MAKE_PROGRAM}
       )
     endif()
   else() # if(lib_BUILD_HOST_TOOLS)
-    if(lib_HOST_TOOLS_CMAKE_TOOLCHAIN_FILE)
+    if(DEFINED lib_HOST_TOOLS_CMAKE_TOOLCHAIN_FILE)
       list(APPEND cmr_CMAKE_ARGS
         -DCMAKE_TOOLCHAIN_FILE=${lib_HOST_TOOLS_CMAKE_TOOLCHAIN_FILE}
       )
     endif()
-    if(lib_HOST_TOOLS_CMAKE_GENERATOR)
+    if(DEFINED lib_HOST_TOOLS_CMAKE_GENERATOR)
       list(APPEND cmr_CMAKE_ARGS
         -G "${lib_HOST_TOOLS_CMAKE_GENERATOR}" # TODO: check it with debug message
       )
     endif()
-    if(lib_HOST_TOOLS_CMAKE_MAKE_PROGRAM)
+    if(DEFINED lib_HOST_TOOLS_CMAKE_MAKE_PROGRAM)
       list(APPEND cmr_CMAKE_ARGS
         -DCMAKE_MAKE_PROGRAM=${lib_HOST_TOOLS_CMAKE_MAKE_PROGRAM}
       )
