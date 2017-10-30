@@ -186,6 +186,21 @@ function(cmr_lib_cmaker)
       -DBUILD_SHARED_LIBS=${BUILD_SHARED_LIBS}
     )
   endif()
+  if(SKIP_INSTALL_HEADERS)
+    list(APPEND lcm_CMAKE_ARGS
+      -DSKIP_INSTALL_HEADERS=${SKIP_INSTALL_HEADERS}
+    )
+  endif()
+  if(SKIP_INSTALL_LIBRARIES)
+    list(APPEND lcm_CMAKE_ARGS
+      -DSKIP_INSTALL_LIBRARIES=${SKIP_INSTALL_LIBRARIES}
+    )
+  endif()
+  if(SKIP_INSTALL_ALL)
+    list(APPEND lcm_CMAKE_ARGS
+      -DSKIP_INSTALL_ALL=${SKIP_INSTALL_ALL}
+    )
+  endif()
 
 
   # Prevent the host tools building with the cross platform tools.
@@ -262,6 +277,8 @@ function(cmr_lib_cmaker)
   endif()
   execute_process(
     COMMAND ${CMAKE_COMMAND} --build . ${install_options}
+    # For development.
+    #COMMAND ${CMAKE_COMMAND} --build . ${install_options} -- -j6
     WORKING_DIRECTORY ${lib_BUILD_DIR}
     RESULT_VARIABLE build_RESULT
   )
