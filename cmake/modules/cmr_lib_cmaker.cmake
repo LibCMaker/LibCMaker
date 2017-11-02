@@ -267,7 +267,7 @@ function(cmr_lib_cmaker)
   
   if(configure_RESULT)
     cmr_print_var_value(configure_RESULT)
-    cmr_fatal_error("cmr_lib_cmaker() ended with errors at configure time.")
+    cmr_print_fatal_error("cmr_lib_cmaker() ended with errors at configure time.")
   endif()
 
   # Build lib
