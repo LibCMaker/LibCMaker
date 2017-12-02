@@ -24,6 +24,6 @@
 function(cmr_print_debug_message message)
   if(cmr_PRINT_DEBUG)
     string(TIMESTAMP timestamp)
-    message(STATUS "[LibCMaker ** DEBUG ** ${timestamp}] ${message}")
+    message(STATUS "[ LibCMaker ** DEBUG ** ${timestamp} ] ${message}")
   endif()
 endfunction()

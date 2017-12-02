@@ -24,9 +24,10 @@
 function(cmr_print_fatal_error)
   message("")
   foreach(arg ${ARGV})
-    message("[LibCMaker ** FATAL ERROR **] ${arg}")
+    message(STATUS "[ LibCMaker ** FATAL ERROR ** ] ${arg}")
   endforeach()
-  message("[LibCMaker ** FATAL ERROR **] [Directory: ${CMAKE_CURRENT_LIST_DIR}]")
-  message("")
+  message(STATUS
+    "[ LibCMaker ** FATAL ERROR ** ] [ Directory: ${CMAKE_CURRENT_LIST_DIR} ]")
+  message(STATUS "")
   message(FATAL_ERROR "")
 endfunction()

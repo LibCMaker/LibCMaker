@@ -23,6 +23,6 @@
 
 function(cmr_print_message message)
 #  string(TIMESTAMP timestamp)
-#  message(STATUS "[LibCMaker ${timestamp}] ${message}")
-  message(STATUS "[LibCMaker] ${message}")
+#  message(STATUS "[ LibCMaker ${timestamp} ] ${message}")
+  message(STATUS "[ LibCMaker ] ${message}")
 endfunction()
