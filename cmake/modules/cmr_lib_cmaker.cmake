@@ -37,7 +37,7 @@ function(cmr_lib_cmaker)
 
   set(options
     # optional args
-    INSTALL BUILD_HOST_TOOLS
+    CONFIGURE BUILD BUILD_HOST_TOOLS INSTALL
   )
   # Useful params for BUILD_HOST_TOOLS:
   # HOST_TOOLS_CMAKE_TOOLCHAIN_FILE
@@ -66,8 +66,10 @@ function(cmr_lib_cmaker)
 
   cmr_print_var_value(LIBCMAKER_SRC_DIR)
 
-  cmr_print_var_value(lib_INSTALL)
+  cmr_print_var_value(lib_CONFIGURE)
+  cmr_print_var_value(lib_BUILD)
   cmr_print_var_value(lib_BUILD_HOST_TOOLS)
+  cmr_print_var_value(lib_INSTALL)
 
   cmr_print_var_value(lib_PROJECT_DIR)
   cmr_print_var_value(lib_BUILD_DIR)
@@ -93,6 +95,13 @@ function(cmr_lib_cmaker)
   if(lib_UNPARSED_ARGUMENTS)
     cmr_print_fatal_error(
       "There are unparsed arguments: ${lib_UNPARSED_ARGUMENTS}")
+  endif()
+  
+  if(lib_INSTALL)
+    set(lib_BUILD ON)
+  endif()
+  if(lib_BUILD)
+    set(lib_CONFIGURE ON)
   endif()
   
   # To prevent the list expansion on an argument with ';'.
@@ -256,36 +265,41 @@ function(cmr_lib_cmaker)
 
   cmr_print_var_value(cmr_CMAKE_ARGS)
 
-  # Configure lib
-  file(MAKE_DIRECTORY ${lib_BUILD_DIR})
-  execute_process(
-    COMMAND
-      ${CMAKE_COMMAND} ${lib_PROJECT_DIR} ${cmr_CMAKE_ARGS}
-    WORKING_DIRECTORY ${lib_BUILD_DIR}
-    RESULT_VARIABLE configure_RESULT
-  )
+  if(lib_CONFIGURE)
+    # Configure lib
+    file(MAKE_DIRECTORY ${lib_BUILD_DIR})
+    execute_process(
+      COMMAND
+        ${CMAKE_COMMAND} ${lib_PROJECT_DIR} ${cmr_CMAKE_ARGS}
+      WORKING_DIRECTORY ${lib_BUILD_DIR}
+      RESULT_VARIABLE configure_RESULT
+    )
+    
+    if(configure_RESULT)
+      cmr_print_var_value(configure_RESULT)
+      cmr_print_fatal_error("cmr_lib_cmaker() ended with errors at configure time.")
+    endif()
   
-  if(configure_RESULT)
-    cmr_print_var_value(configure_RESULT)
-    cmr_print_fatal_error("cmr_lib_cmaker() ended with errors at configure time.")
-  endif()
-
-  # Build lib
-  set(install_options "")
-  if(lib_INSTALL)
-    set(install_options "--target" "install")
-  endif()
-  execute_process(
-    COMMAND ${CMAKE_COMMAND} --build . ${install_options}
-    # For development.
-    #COMMAND ${CMAKE_COMMAND} --build . ${install_options} -- -j6
-    WORKING_DIRECTORY ${lib_BUILD_DIR}
-    RESULT_VARIABLE build_RESULT
-  )
-
-  if(build_RESULT)
-    cmr_print_var_value(build_RESULT)
-    cmr_print_fatal_error("cmr_lib_cmaker() ended with errors at build time.")
+    if(lib_BUILD)
+      # Build lib
+      set(install_options "")
+      if(lib_INSTALL)
+        set(install_options "--target" "install")
+      endif()
+      execute_process(
+        COMMAND ${CMAKE_COMMAND} --build . ${install_options}
+        # For development.
+        # WARNING: LibCMaker_Boost can not be builded with -j6 ! It need fix.
+        #COMMAND ${CMAKE_COMMAND} --build . ${install_options} -- -j6
+        WORKING_DIRECTORY ${lib_BUILD_DIR}
+        RESULT_VARIABLE build_RESULT
+      )
+    
+      if(build_RESULT)
+        cmr_print_var_value(build_RESULT)
+        cmr_print_fatal_error("cmr_lib_cmaker() ended with errors at build time.")
+      endif()
+    endif()
   endif()
 
 
