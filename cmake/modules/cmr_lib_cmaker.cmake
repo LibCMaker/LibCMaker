@@ -119,103 +119,12 @@ function(cmr_lib_cmaker)
 
   set(cmr_CMAKE_ARGS)
 
-  # Args for cmr_lib_cmaker().
-  if(DEFINED LIBCMAKER_SRC_DIR)
-    list(APPEND cmr_CMAKE_ARGS
-      -DLIBCMAKER_SRC_DIR=${LIBCMAKER_SRC_DIR}
-    )
-  endif()
-  if(DEFINED lib_BUILD_HOST_TOOLS)
-    list(APPEND cmr_CMAKE_ARGS
-      -Dlib_BUILD_HOST_TOOLS=${lib_BUILD_HOST_TOOLS}
-    )
-  endif()
-  if(DEFINED lib_PROJECT_DIR)
-    list(APPEND cmr_CMAKE_ARGS
-      -Dlib_PROJECT_DIR=${lib_PROJECT_DIR}
-    )
-  endif()
-  if(DEFINED lib_BUILD_DIR)
-    list(APPEND cmr_CMAKE_ARGS
-      -Dlib_BUILD_DIR=${lib_BUILD_DIR}
-    )
-  endif()
-  if(DEFINED lib_NAME)
-    list(APPEND cmr_CMAKE_ARGS
-      -Dlib_NAME=${lib_NAME}
-    )
-  endif()
-  if(DEFINED lib_VERSION)
-    list(APPEND cmr_CMAKE_ARGS
-      -Dlib_VERSION=${lib_VERSION}
-    )
-  endif()
-  # Download dir for lib sources.
-  if(DEFINED lib_DOWNLOAD_DIR)
-    list(APPEND cmr_CMAKE_ARGS
-      -Dlib_DOWNLOAD_DIR=${lib_DOWNLOAD_DIR}
-    )
-  endif()
-  if(DEFINED lib_UNPACKED_SRC_DIR)
-    list(APPEND cmr_CMAKE_ARGS
-      -Dlib_UNPACKED_SRC_DIR=${lib_UNPACKED_SRC_DIR}
-    )
-  endif()
-  if(DEFINED lib_COMPONENTS)
-    list(APPEND cmr_CMAKE_ARGS
-      -Dlib_COMPONENTS=${lib_COMPONENTS}
-    )
-  endif()
   # Lib specific args
   if(DEFINED lib_CMAKE_ARGS)
     list(APPEND cmr_CMAKE_ARGS
       ${lib_CMAKE_ARGS} # TODO: check list to list adding
     )
   endif()
-
-  if(DEFINED cmr_PRINT_DEBUG)
-    list(APPEND cmr_CMAKE_ARGS
-      -Dcmr_PRINT_DEBUG=${cmr_PRINT_DEBUG}
-    )
-  endif()
-
-  # Standard CMake vars
-  if(DEFINED CMAKE_INSTALL_PREFIX)
-    list(APPEND cmr_CMAKE_ARGS
-      -DCMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX}
-    )
-  endif()
-  if(DEFINED CMAKE_BUILD_TYPE)
-    list(APPEND cmr_CMAKE_ARGS
-      -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
-    )
-  endif()
-  if(DEFINED BUILD_SHARED_LIBS)
-    list(APPEND cmr_CMAKE_ARGS
-      -DBUILD_SHARED_LIBS=${BUILD_SHARED_LIBS}
-    )
-  endif()
-  if(DEFINED SKIP_INSTALL_HEADERS)
-    list(APPEND cmr_CMAKE_ARGS
-      -DSKIP_INSTALL_HEADERS=${SKIP_INSTALL_HEADERS}
-    )
-  endif()
-  if(DEFINED SKIP_INSTALL_LIBRARIES)
-    list(APPEND cmr_CMAKE_ARGS
-      -DSKIP_INSTALL_LIBRARIES=${SKIP_INSTALL_LIBRARIES}
-    )
-  endif()
-  if(DEFINED SKIP_INSTALL_ALL)
-    list(APPEND cmr_CMAKE_ARGS
-      -DSKIP_INSTALL_ALL=${SKIP_INSTALL_ALL}
-    )
-  endif()
-  if(DEFINED CMAKE_VERBOSE_MAKEFILE)
-    list(APPEND cmr_CMAKE_ARGS
-      -DCMAKE_VERBOSE_MAKEFILE=${CMAKE_VERBOSE_MAKEFILE}
-    )
-  endif()
-
 
   # Prevent the host tools building with the cross platform tools.
   if(NOT lib_BUILD_HOST_TOOLS)
@@ -258,6 +167,63 @@ function(cmr_lib_cmaker)
     cmr_android_vars()
   endif()
   
+  # Enable /MP flag for Visual Studio 2008 and greater
+  if(MSVC AND MSVC_VERSION GREATER 1400 AND cmr_ADD_MSVC_MP_FLAG)
+    include(ProcessorCount) # ProcessorCount
+    ProcessorCount(CPU_CNT)
+    if(CPU_CNT GREATER 0)
+      set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /MP${CPU_CNT}")
+      set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /MP${CPU_CNT}")
+    endif()
+  endif()
+  
+
+  set(cmr_LIB_VARS
+
+    # Args for cmr_lib_cmaker().
+    LIBCMAKER_SRC_DIR
+    lib_BUILD_HOST_TOOLS
+    lib_PROJECT_DIR
+    lib_BUILD_DIR
+    lib_NAME
+    lib_VERSION
+    lib_DOWNLOAD_DIR # Download dir for lib sources.
+    lib_UNPACKED_SRC_DIR
+    lib_COMPONENTS
+    cmr_PRINT_DEBUG
+    
+    # Standard CMake vars.
+    BUILD_SHARED_LIBS
+    CMAKE_BUILD_TYPE
+    CMAKE_INSTALL_PREFIX
+    CMAKE_VERBOSE_MAKEFILE
+    SKIP_INSTALL_ALL
+    SKIP_INSTALL_HEADERS
+    SKIP_INSTALL_LIBRARIES
+    
+    # Compiler flags.
+    CMAKE_C_FLAGS
+    CMAKE_CXX_FLAGS
+    CMAKE_ASM_FLAGS
+    CMAKE_C_FLAGS_DEBUG
+    CMAKE_CXX_FLAGS_DEBUG
+    CMAKE_ASM_FLAGS_DEBUG
+    CMAKE_C_FLAGS_RELEASE
+    CMAKE_CXX_FLAGS_RELEASE
+    CMAKE_ASM_FLAGS_RELEASE
+    CMAKE_SHARED_LINKER_FLAGS
+    CMAKE_MODULE_LINKER_FLAGS
+    CMAKE_EXE_LINKER_FLAGS
+  )
+
+  foreach(d ${cmr_LIB_VARS})
+    if(DEFINED ${d})
+      list(APPEND cmr_CMAKE_ARGS
+        -D${d}=${${d}}
+      )
+    endif()
+  endforeach()
+
   
   #-----------------------------------------------------------------------
   # BUILDING
