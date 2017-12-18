@@ -111,6 +111,9 @@ function(cmr_lib_cmaker)
   if(lib_COMPONENTS)
     string(REPLACE ";" " " lib_COMPONENTS "${lib_COMPONENTS}")
   endif()
+  if(CMAKE_FIND_ROOT_PATH)
+    string(REPLACE ";" " " CMAKE_FIND_ROOT_PATH "${CMAKE_FIND_ROOT_PATH}")
+  endif()
 
 
   #-----------------------------------------------------------------------

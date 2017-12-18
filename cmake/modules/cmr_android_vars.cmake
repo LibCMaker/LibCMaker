@@ -39,6 +39,8 @@ macro(cmr_android_vars)
       ANDROID_DISABLE_FORMAT_STRING_CHECKS
       ANDROID_CCACHE
       
+      CMAKE_FIND_ROOT_PATH
+      
       # Allow users to override these values
       # in case they want more strict behaviors.
       # For example, they may want to prevent the NDK's libz
