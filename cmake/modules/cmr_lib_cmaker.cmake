@@ -170,15 +170,21 @@ function(cmr_lib_cmaker)
     cmr_android_vars()
   endif()
   
+  # Use /MP flag in command line. Just specify /MP by itself to have
+  # VS's build system automatically select how many threads to compile on
+  # (which usually is the maximum number of threads available):
+  # cmake ..\ -DCMAKE_CXX_FLAGS="/MP" -DCMAKE_C_FLAGS="/MP" -DCMAKE_BUILD_TYPE=Release ^
+  # && cmake --build . --config Release
+  #
   # Enable /MP flag for Visual Studio 2008 and greater
-  if(MSVC AND MSVC_VERSION GREATER 1400 AND cmr_ADD_MSVC_MP_FLAG)
-    include(ProcessorCount) # ProcessorCount
-    ProcessorCount(CPU_CNT)
-    if(CPU_CNT GREATER 0)
-      set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /MP${CPU_CNT}")
-      set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /MP${CPU_CNT}")
-    endif()
-  endif()
+  #if(MSVC AND MSVC_VERSION GREATER 1400 AND cmr_ADD_MSVC_MP_FLAG)
+  #  include(ProcessorCount) # ProcessorCount
+  #  ProcessorCount(CPU_CNT)
+  #  if(CPU_CNT GREATER 0)
+  #    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /MP${CPU_CNT}")
+  #    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /MP${CPU_CNT}")
+  #  endif()
+  #endif()
   
 
   set(cmr_LIB_VARS
