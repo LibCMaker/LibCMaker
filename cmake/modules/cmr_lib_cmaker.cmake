@@ -103,6 +103,10 @@ function(cmr_lib_cmaker)
   if(lib_BUILD)
     set(lib_CONFIGURE ON)
   endif()
+  if(NOT lib_CONFIGURE)
+    cmr_print_fatal_error(
+      "There are not defined one of CONFIGURE, BUILD or INSTALL.")
+  endif()
   
   # To prevent the list expansion on an argument with ';'.
   # See also:
@@ -199,6 +203,9 @@ function(cmr_lib_cmaker)
     lib_DOWNLOAD_DIR # Download dir for lib sources.
     lib_UNPACKED_SRC_DIR
     lib_COMPONENTS
+    lib_CONFIGURE
+    lib_BUILD
+    lib_INSTALL
     cmr_PRINT_DEBUG
     
     # Standard CMake vars.
