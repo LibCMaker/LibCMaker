@@ -321,7 +321,7 @@ function(cmr_lib_cmaker)
         list(LENGTH CMAKE_CONFIGURATION_TYPES config_cnt)
         if(config_cnt GREATER 1)
           cmr_print_fatal_error(
-            "Please set only one confiduration in CMAKE_CONFIGURATION_TYPES."
+            "Please set only one confiduration (Debug, Release, ...) in CMAKE_CONFIGURATION_TYPES."
           )
         endif()
         
