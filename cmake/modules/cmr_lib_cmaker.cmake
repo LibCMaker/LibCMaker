@@ -135,14 +135,30 @@ function(cmr_lib_cmaker)
 
   # Prevent the host tools building with the cross platform tools.
   if(NOT lib_BUILD_HOST_TOOLS)
+    cmr_print_var_value(CMAKE_TOOLCHAIN_FILE)
+    cmr_print_var_value(CMAKE_GENERATOR)
+    cmr_print_var_value(CMAKE_GENERATOR_PLATFORM)
+    cmr_print_var_value(CMAKE_GENERATOR_TOOLSET)
+    cmr_print_var_value(CMAKE_MAKE_PROGRAM)
+
     if(DEFINED CMAKE_TOOLCHAIN_FILE)
       list(APPEND cmr_CMAKE_ARGS
         -DCMAKE_TOOLCHAIN_FILE=${CMAKE_TOOLCHAIN_FILE}
       )
     endif()
-    if(DEFINED CMAKE_GENERATOR)
+    if(DEFINED CMAKE_GENERATOR AND CMAKE_GENERATOR)
       list(APPEND cmr_CMAKE_ARGS
-        -G "${CMAKE_GENERATOR}" # TODO: check it with debug message
+        -DCMAKE_GENERATOR=${CMAKE_GENERATOR}
+      )
+    endif()
+    if(DEFINED CMAKE_GENERATOR_PLATFORM AND CMAKE_GENERATOR_PLATFORM)
+      list(APPEND cmr_CMAKE_ARGS
+        -DCMAKE_GENERATOR_PLATFORM=${CMAKE_GENERATOR_PLATFORM}
+      )
+    endif()
+    if(DEFINED CMAKE_GENERATOR_TOOLSET AND CMAKE_GENERATOR_TOOLSET)
+      list(APPEND cmr_CMAKE_ARGS
+        -DCMAKE_GENERATOR_TOOLSET=${CMAKE_GENERATOR_TOOLSET}
       )
     endif()
     if(DEFINED CMAKE_MAKE_PROGRAM)
@@ -150,7 +166,14 @@ function(cmr_lib_cmaker)
         -DCMAKE_MAKE_PROGRAM=${CMAKE_MAKE_PROGRAM}
       )
     endif()
+
   else() # if(lib_BUILD_HOST_TOOLS)
+    cmr_print_var_value(lib_HOST_TOOLS_CMAKE_TOOLCHAIN_FILE)
+    cmr_print_var_value(lib_HOST_TOOLS_CMAKE_GENERATOR)
+    cmr_print_var_value(lib_HOST_TOOLS_CMAKE_GENERATOR_PLATFORM)
+    cmr_print_var_value(lib_HOST_TOOLS_CMAKE_GENERATOR_TOOLSET)
+    cmr_print_var_value(lib_HOST_TOOLS_CMAKE_MAKE_PROGRAM)
+
     if(DEFINED lib_HOST_TOOLS_CMAKE_TOOLCHAIN_FILE)
       list(APPEND cmr_CMAKE_ARGS
         -DCMAKE_TOOLCHAIN_FILE=${lib_HOST_TOOLS_CMAKE_TOOLCHAIN_FILE}
@@ -158,7 +181,17 @@ function(cmr_lib_cmaker)
     endif()
     if(DEFINED lib_HOST_TOOLS_CMAKE_GENERATOR)
       list(APPEND cmr_CMAKE_ARGS
-        -G "${lib_HOST_TOOLS_CMAKE_GENERATOR}" # TODO: check it with debug message
+        -DCMAKE_GENERATOR=${lib_HOST_TOOLS_CMAKE_GENERATOR}
+      )
+    endif()
+    if(DEFINED lib_HOST_TOOLS_CMAKE_GENERATOR_PLATFORM)
+      list(APPEND cmr_CMAKE_ARGS
+        -DCMAKE_GENERATOR_PLATFORM=${lib_HOST_TOOLS_CMAKE_GENERATOR_PLATFORM}
+      )
+    endif()
+    if(DEFINED lib_HOST_TOOLS_CMAKE_GENERATOR_TOOLSET)
+      list(APPEND cmr_CMAKE_ARGS
+        -DCMAKE_GENERATOR_TOOLSET=${lib_HOST_TOOLS_CMAKE_GENERATOR_TOOLSET}
       )
     endif()
     if(DEFINED lib_HOST_TOOLS_CMAKE_MAKE_PROGRAM)
@@ -195,32 +228,40 @@ function(cmr_lib_cmaker)
 
     # Args for cmr_lib_cmaker().
     LIBCMAKER_SRC_DIR
-    lib_BUILD_HOST_TOOLS
-    lib_PROJECT_DIR
-    lib_BUILD_DIR
+
     lib_NAME
     lib_VERSION
+    lib_COMPONENTS
+
+    lib_PROJECT_DIR
+    lib_BUILD_DIR
     lib_DOWNLOAD_DIR # Download dir for lib sources.
     lib_UNPACKED_SRC_DIR
-    lib_COMPONENTS
+
     lib_CONFIGURE
     lib_BUILD
+    lib_BUILD_HOST_TOOLS
     lib_INSTALL
+
     cmr_PRINT_DEBUG
     
-    # Standard CMake vars.
-    BUILD_SHARED_LIBS
-    CMAKE_BUILD_TYPE
-    CMAKE_CFG_INTDIR
-    CMAKE_COLOR_MAKEFILE
-    CMAKE_INSTALL_PREFIX
-    CMAKE_VERBOSE_MAKEFILE
     SKIP_INSTALL_ALL
     SKIP_INSTALL_BINARIES
     SKIP_INSTALL_HEADERS
     SKIP_INSTALL_LIBRARIES
     SKIP_INSTALL_TOOLS
     SKIP_INSTALL_UTILITIES
+
+    # Standard CMake vars.
+    CMAKE_COLOR_MAKEFILE
+    CMAKE_VERBOSE_MAKEFILE
+    
+    BUILD_SHARED_LIBS
+    CMAKE_BUILD_TYPE
+    CMAKE_CFG_INTDIR
+    CMAKE_CONFIGURATION_TYPES
+
+    CMAKE_INSTALL_PREFIX
     
     # Compiler flags.
     CMAKE_C_FLAGS
@@ -274,15 +315,29 @@ function(cmr_lib_cmaker)
   
     if(lib_BUILD)
       # Build lib
-      set(install_options "")
-      if(lib_INSTALL)
-        set(install_options "--target" "install")
+      
+      set(config_options "")
+      if(NOT CMAKE_CFG_INTDIR STREQUAL ".")
+        list(LENGTH CMAKE_CONFIGURATION_TYPES config_cnt)
+        if(config_cnt GREATER 1)
+          cmr_print_fatal_error(
+            "Please set only one confiduration in CMAKE_CONFIGURATION_TYPES."
+          )
+        endif()
+        
+        set(config_options "--config" ${CMAKE_CONFIGURATION_TYPES})
       endif()
+      
+      set(target_options "")
+      if(lib_INSTALL)
+        set(target_options "--target" install)
+      endif()
+
       execute_process(
-        COMMAND ${CMAKE_COMMAND} --build . ${install_options}
+        COMMAND ${CMAKE_COMMAND} --build . ${config_options} ${target_options}
         # For development.
         # WARNING: LibCMaker_Boost can not be builded with -j6 ! It need fix.
-        #COMMAND ${CMAKE_COMMAND} --build . ${install_options} -- -j6
+        #COMMAND ${CMAKE_COMMAND} --build . ${target_options} -- -j6
         WORKING_DIRECTORY ${lib_BUILD_DIR}
         RESULT_VARIABLE build_RESULT
       )
