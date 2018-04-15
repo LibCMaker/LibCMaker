@@ -237,7 +237,7 @@ function(cmr_lib_cmaker)
           include(ProcessorCount) # ProcessorCount
           ProcessorCount(CPU_CNT)
           if(CPU_CNT GREATER 0)
-            set(cmr_BUILD_MULTIPROC_CNT CPU_CNT)
+            set(cmr_BUILD_MULTIPROC_CNT ${CPU_CNT})
           endif()
         endif()
 
