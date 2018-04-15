@@ -207,23 +207,45 @@ function(cmr_lib_cmaker)
     cmr_android_vars()
   endif()
   
-  # Use /MP flag in command line. Just specify /MP by itself to have
-  # VS's build system automatically select how many threads to compile on
-  # (which usually is the maximum number of threads available):
-  # cmake ..\ -DCMAKE_CXX_FLAGS="/MP" -DCMAKE_C_FLAGS="/MP" -DCMAKE_BUILD_TYPE=Release ^
-  # && cmake --build . --config Release
-  #
-  # Enable /MP flag for Visual Studio 2008 and greater
-  #if(MSVC AND MSVC_VERSION GREATER 1400 AND cmr_ADD_MSVC_MP_FLAG)
-  #  include(ProcessorCount) # ProcessorCount
-  #  ProcessorCount(CPU_CNT)
-  #  if(CPU_CNT GREATER 0)
-  #    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /MP${CPU_CNT}")
-  #    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /MP${CPU_CNT}")
-  #  endif()
-  #endif()
+  if(lib_BUILD)
+    set(tool_options "")
+    
+    if(NOT DEFINED cmr_BUILD_MULTIPROC)
+      set(cmr_BUILD_MULTIPROC ON)
+    endif()
   
+    if(cmr_BUILD_MULTIPROC OR cmr_BUILD_MULTIPROC_CNT)
+      if(NOT cmr_BUILD_MULTIPROC_CNT)
+        set(cmr_BUILD_MULTIPROC_CNT "")
+      endif()
 
+      # Enable /MP flag for Visual Studio 2008 and greater.
+      if(MSVC AND MSVC_VERSION GREATER 1400)
+        # Just specify /MP by itself to have VS's build system automatically
+        # select how many threads to compile on
+        # (which usually is the maximum number of threads available).
+
+        set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /MP${cmr_BUILD_MULTIPROC_CNT}")
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /MP${cmr_BUILD_MULTIPROC_CNT}")
+      endif()
+
+      # TODO: LibCMaker_Boost can not be builded with -j ! It need fix.
+      #if(CMAKE_MAKE_PROGRAM MATCHES "make")
+      if(CMAKE_MAKE_PROGRAM MATCHES "make" AND NOT lib_NAME EQUAL "Boost")
+        
+        if(NOT cmr_BUILD_MULTIPROC_CNT)
+          include(ProcessorCount) # ProcessorCount
+          ProcessorCount(CPU_CNT)
+          if(CPU_CNT GREATER 0)
+            set(cmr_BUILD_MULTIPROC_CNT CPU_CNT)
+          endif()
+        endif()
+
+        set(tool_options "-j${cmr_BUILD_MULTIPROC_CNT}")
+      endif()
+    endif()
+  endif()
+  
   set(cmr_LIB_VARS
 
     # Args for cmr_lib_cmaker().
@@ -334,10 +356,8 @@ function(cmr_lib_cmaker)
       endif()
 
       execute_process(
-        COMMAND ${CMAKE_COMMAND} --build . ${config_options} ${target_options}
-        # For development.
-        # WARNING: LibCMaker_Boost can not be builded with -j6 ! It need fix.
-        #COMMAND ${CMAKE_COMMAND} --build . ${target_options} -- -j6
+        COMMAND ${CMAKE_COMMAND} --build .
+          ${config_options} ${target_options} -- ${tool_options}
         WORKING_DIRECTORY ${lib_BUILD_DIR}
         RESULT_VARIABLE build_RESULT
       )
