@@ -1,12 +1,12 @@
 # Some variables are defined in <NDK>/build/cmake/android.toolchain.cmake
-# and may be used after it. See android.toolchain.cmake.
+# and may be used after it. See 'android.toolchain.cmake'.
 #  ANDROID_NDK_REVISION
 #  ANDROID_PLATFORM_LEVEL
 #  ANDROID_SYSROOT_ABI # arch
 
 macro(cmr_android_vars)
   if(ANDROID)
-    # TODO: get new vars from NDK's toolchain
+    # TODO: get new vars from NDK's toolchain.
     
     set(cmr_LIB_VARS_ANDROID
       ANDROID
@@ -15,7 +15,7 @@ macro(cmr_android_vars)
       # Configurable variables from
       # android-sdk/cmake/3.6.3155560/android.toolchain.cmake
       # (package version 3.6.3155560)
-      # and from android-sdk/ndk-bundle/build/cmake/android.toolchain.cmake
+      # and from 'android-sdk/ndk-bundle/build/cmake/android.toolchain.cmake'.
       # Modeled after the ndk-build system.
       # For any variables defined in:
       #         https://developer.android.com/ndk/guides/android_mk.html

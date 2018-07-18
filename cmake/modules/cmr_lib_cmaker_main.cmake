@@ -25,21 +25,24 @@ if(NOT LIBCMAKER_SRC_DIR)
   message(FATAL_ERROR
     "Please set LIBCMAKER_SRC_DIR with path to LibCMaker root")
 endif()
-# TODO: prevent multiply includes for CMAKE_MODULE_PATH
-list(APPEND CMAKE_MODULE_PATH "${LIBCMAKER_SRC_DIR}/cmake/modules")
 
-include(cmr_print_fatal_error)
-include(cmr_print_debug_message)
-include(cmr_print_var_value)
+# Append LibCMaker modules dir to CMake module path.
+set(LIBCMAKER_MODULES_DIR "${LIBCMAKER_SRC_DIR}/cmake/modules")
+list(FIND CMAKE_MODULE_PATH ${LIBCMAKER_MODULES_DIR} has_MODULES_DIR)
+if(has_MODULES_DIR EQUAL -1)
+  list(APPEND CMAKE_MODULE_PATH "${LIBCMAKER_MODULES_DIR}")
+endif()
 
-function(cmr_lib_cmaker)
-  cmake_minimum_required(VERSION 2.8.12)
+include(cmr_printers)
+
+function(cmr_lib_cmaker_main)
+  cmake_minimum_required(VERSION ${cmr_CMAKE_MIN_VER})
 
   set(options
-    # optional args
+    # Optional args.
     CONFIGURE BUILD BUILD_HOST_TOOLS INSTALL
   )
-  # Useful params for BUILD_HOST_TOOLS:
+  # Useful parameters for BUILD_HOST_TOOLS:
   # HOST_TOOLS_CMAKE_TOOLCHAIN_FILE
   # HOST_TOOLS_CMAKE_GENERATOR
   # HOST_TOOLS_CMAKE_GENERATOR_PLATFORM
@@ -47,11 +50,15 @@ function(cmr_lib_cmaker)
   # HOST_TOOLS_CMAKE_MAKE_PROGRAM
   
   set(oneValueArgs
-    # required args
-    PROJECT_DIR BUILD_DIR
-    # optional args
-    NAME  VERSION  DOWNLOAD_DIR  UNPACKED_SRC_DIR
-    # optional args for cross compilation
+    # Required args.
+    NAME
+    VERSION
+    BASE_DIR
+    BUILD_DIR
+    # Optional args.
+    DOWNLOAD_DIR
+    UNPACKED_DIR
+    # Optional args for cross compilation.
     HOST_TOOLS_CMAKE_TOOLCHAIN_FILE
     HOST_TOOLS_CMAKE_GENERATOR
     HOST_TOOLS_CMAKE_GENERATOR_PLATFORM
@@ -60,7 +67,7 @@ function(cmr_lib_cmaker)
   )
 
   set(multiValueArgs
-    # optional args
+    # Optional args.
     COMPONENTS CMAKE_ARGS
   )
 
@@ -72,25 +79,31 @@ function(cmr_lib_cmaker)
 
   cmr_print_var_value(LIBCMAKER_SRC_DIR)
 
+  cmr_print_var_value(lib_NAME)
+  cmr_print_var_value(lib_VERSION)
+  cmr_print_var_value(lib_COMPONENTS)
+
+  cmr_print_var_value(lib_BASE_DIR)
+  cmr_print_var_value(lib_DOWNLOAD_DIR)
+  cmr_print_var_value(lib_UNPACKED_DIR)
+  cmr_print_var_value(lib_BUILD_DIR)
+
   cmr_print_var_value(lib_CONFIGURE)
   cmr_print_var_value(lib_BUILD)
   cmr_print_var_value(lib_BUILD_HOST_TOOLS)
   cmr_print_var_value(lib_INSTALL)
 
-  cmr_print_var_value(lib_PROJECT_DIR)
-  cmr_print_var_value(lib_BUILD_DIR)
-
-  cmr_print_var_value(lib_NAME)
-  cmr_print_var_value(lib_VERSION)
-  cmr_print_var_value(lib_DOWNLOAD_DIR)
-  cmr_print_var_value(lib_UNPACKED_SRC_DIR)
-
-  cmr_print_var_value(lib_COMPONENTS)
   cmr_print_var_value(lib_CMAKE_ARGS)
 
-  # Required args
-  if(NOT lib_PROJECT_DIR)
-    cmr_print_fatal_error("Argument PROJECT_DIR is not defined.")
+  # Required args.
+  if(NOT lib_NAME)
+    cmr_print_fatal_error("Argument NAME is not defined.")
+  endif()
+  if(NOT lib_VERSION)
+    cmr_print_fatal_error("Argument VERSION is not defined.")
+  endif()
+  if(NOT lib_BASE_DIR)
+    cmr_print_fatal_error("Argument BASE_DIR is not defined.")
   endif()
   if(NOT lib_BUILD_DIR)
     cmr_print_fatal_error("Argument BUILD_DIR is not defined.")
@@ -129,10 +142,10 @@ function(cmr_lib_cmaker)
 
   set(cmr_CMAKE_ARGS)
 
-  # Lib specific args
+  # Lib specific args.
   if(DEFINED lib_CMAKE_ARGS)
     list(APPEND cmr_CMAKE_ARGS
-      ${lib_CMAKE_ARGS} # TODO: check list to list adding
+      ${lib_CMAKE_ARGS}
     )
   endif()
 
@@ -144,31 +157,21 @@ function(cmr_lib_cmaker)
     cmr_print_var_value(CMAKE_GENERATOR_TOOLSET)
     cmr_print_var_value(CMAKE_MAKE_PROGRAM)
 
-    if(DEFINED CMAKE_TOOLCHAIN_FILE)
-      list(APPEND cmr_CMAKE_ARGS
-        -DCMAKE_TOOLCHAIN_FILE=${CMAKE_TOOLCHAIN_FILE}
-      )
-    endif()
-    if(DEFINED CMAKE_GENERATOR AND CMAKE_GENERATOR)
-      list(APPEND cmr_CMAKE_ARGS
-        -DCMAKE_GENERATOR=${CMAKE_GENERATOR}
-      )
-    endif()
-    if(DEFINED CMAKE_GENERATOR_PLATFORM AND CMAKE_GENERATOR_PLATFORM)
-      list(APPEND cmr_CMAKE_ARGS
-        -DCMAKE_GENERATOR_PLATFORM=${CMAKE_GENERATOR_PLATFORM}
-      )
-    endif()
-    if(DEFINED CMAKE_GENERATOR_TOOLSET AND CMAKE_GENERATOR_TOOLSET)
-      list(APPEND cmr_CMAKE_ARGS
-        -DCMAKE_GENERATOR_TOOLSET=${CMAKE_GENERATOR_TOOLSET}
-      )
-    endif()
-    if(DEFINED CMAKE_MAKE_PROGRAM)
-      list(APPEND cmr_CMAKE_ARGS
-        -DCMAKE_MAKE_PROGRAM=${CMAKE_MAKE_PROGRAM}
-      )
-    endif()
+    set(cmr_LIB_VARS
+      CMAKE_TOOLCHAIN_FILE
+      CMAKE_GENERATOR
+      CMAKE_GENERATOR_PLATFORM
+      CMAKE_GENERATOR_TOOLSET
+      CMAKE_MAKE_PROGRAM
+    )
+
+    foreach(d ${cmr_LIB_VARS})
+      if(DEFINED ${d})
+        list(APPEND cmr_CMAKE_ARGS
+          -D${d}=${${d}}
+        )
+      endif()
+    endforeach()
 
   else() # if(lib_BUILD_HOST_TOOLS)
     cmr_print_var_value(lib_HOST_TOOLS_CMAKE_TOOLCHAIN_FILE)
@@ -177,34 +180,25 @@ function(cmr_lib_cmaker)
     cmr_print_var_value(lib_HOST_TOOLS_CMAKE_GENERATOR_TOOLSET)
     cmr_print_var_value(lib_HOST_TOOLS_CMAKE_MAKE_PROGRAM)
 
-    if(DEFINED lib_HOST_TOOLS_CMAKE_TOOLCHAIN_FILE)
-      list(APPEND cmr_CMAKE_ARGS
-        -DCMAKE_TOOLCHAIN_FILE=${lib_HOST_TOOLS_CMAKE_TOOLCHAIN_FILE}
-      )
-    endif()
-    if(DEFINED lib_HOST_TOOLS_CMAKE_GENERATOR)
-      list(APPEND cmr_CMAKE_ARGS
-        -DCMAKE_GENERATOR=${lib_HOST_TOOLS_CMAKE_GENERATOR}
-      )
-    endif()
-    if(DEFINED lib_HOST_TOOLS_CMAKE_GENERATOR_PLATFORM)
-      list(APPEND cmr_CMAKE_ARGS
-        -DCMAKE_GENERATOR_PLATFORM=${lib_HOST_TOOLS_CMAKE_GENERATOR_PLATFORM}
-      )
-    endif()
-    if(DEFINED lib_HOST_TOOLS_CMAKE_GENERATOR_TOOLSET)
-      list(APPEND cmr_CMAKE_ARGS
-        -DCMAKE_GENERATOR_TOOLSET=${lib_HOST_TOOLS_CMAKE_GENERATOR_TOOLSET}
-      )
-    endif()
-    if(DEFINED lib_HOST_TOOLS_CMAKE_MAKE_PROGRAM)
-      list(APPEND cmr_CMAKE_ARGS
-        -DCMAKE_MAKE_PROGRAM=${lib_HOST_TOOLS_CMAKE_MAKE_PROGRAM}
-      )
-    endif()
+    set(cmr_LIB_VARS
+      lib_HOST_TOOLS_CMAKE_TOOLCHAIN_FILE
+      lib_HOST_TOOLS_CMAKE_GENERATOR
+      lib_HOST_TOOLS_CMAKE_GENERATOR_PLATFORM
+      lib_HOST_TOOLS_CMAKE_GENERATOR_TOOLSET
+      lib_HOST_TOOLS_CMAKE_MAKE_PROGRAM
+    )
+
+    foreach(d ${cmr_LIB_VARS})
+      if(DEFINED ${d})
+        string(REPLACE "lib_HOST_TOOLS_" "" out_d ${d})
+        list(APPEND cmr_CMAKE_ARGS
+          -D${out_d}=${${d}}
+        )
+      endif()
+    endforeach()
   endif()
 
-  # Android specifics
+  # Android specifics.
   if(NOT lib_BUILD_HOST_TOOLS)
     include(cmr_android_vars)
     cmr_android_vars()
@@ -250,18 +244,18 @@ function(cmr_lib_cmaker)
   endif()
   
   set(cmr_LIB_VARS
-
-    # Args for cmr_lib_cmaker().
+    # Args for cmr_lib_cmaker_main().
     LIBCMAKER_SRC_DIR
+    cmr_CMAKE_MIN_VER
 
     lib_NAME
     lib_VERSION
     lib_COMPONENTS
 
-    lib_PROJECT_DIR
-    lib_BUILD_DIR
-    lib_DOWNLOAD_DIR # Download dir for lib sources.
-    lib_UNPACKED_SRC_DIR
+    lib_BASE_DIR      # Library's LibCMaker dir.
+    lib_DOWNLOAD_DIR  # Download dir for lib sources.
+    lib_UNPACKED_DIR  # Common unpacked dir.
+    lib_BUILD_DIR     # Library's build dir.
 
     lib_CONFIGURE
     lib_BUILD
@@ -291,9 +285,9 @@ function(cmr_lib_cmaker)
 
   if(NOT lib_BUILD_HOST_TOOLS)
     list(APPEND cmr_LIB_VARS
-  
+
       # Standard CMake vars.
-  
+
       # Compiler flags.
       CMAKE_C_FLAGS
       CMAKE_CXX_FLAGS
@@ -320,7 +314,7 @@ function(cmr_lib_cmaker)
 
   
   #-----------------------------------------------------------------------
-  # BUILDING
+  # Building
   #-----------------------------------------------------------------------
 
 # env [--unset=NAME]... [NAME=VALUE]... COMMAND [ARG]...
@@ -331,22 +325,22 @@ function(cmr_lib_cmaker)
   cmr_print_var_value(cmr_CMAKE_ARGS)
 
   if(lib_CONFIGURE)
-    # Configure lib
+    # Configure lib.
     file(MAKE_DIRECTORY ${lib_BUILD_DIR})
     execute_process(
       COMMAND
-        ${CMAKE_COMMAND} ${lib_PROJECT_DIR} ${cmr_CMAKE_ARGS}
+        ${CMAKE_COMMAND} ${LIBCMAKER_SRC_DIR} ${cmr_CMAKE_ARGS}
       WORKING_DIRECTORY ${lib_BUILD_DIR}
       RESULT_VARIABLE configure_RESULT
     )
     
     if(configure_RESULT)
       cmr_print_var_value(configure_RESULT)
-      cmr_print_fatal_error("cmr_lib_cmaker() ended with errors at configure time.")
+      cmr_print_fatal_error("cmr_lib_cmaker_main() ended with errors at configure time.")
     endif()
   
     if(lib_BUILD)
-      # Build lib
+      # Build lib.
       
       set(config_options "")
       if(NOT CMAKE_CFG_INTDIR STREQUAL ".")
@@ -374,7 +368,7 @@ function(cmr_lib_cmaker)
     
       if(build_RESULT)
         cmr_print_var_value(build_RESULT)
-        cmr_print_fatal_error("cmr_lib_cmaker() ended with errors at build time.")
+        cmr_print_fatal_error("cmr_lib_cmaker_main() ended with errors at build time.")
       endif()
     endif()
   endif()

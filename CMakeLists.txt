@@ -21,31 +21,26 @@
 #    along with this program. If not, see <http://www.gnu.org/licenses/>.
 # ****************************************************************************
 
-if(NOT LIBCMAKER_SRC_DIR)
+if(NOT lib_NAME)
   message(FATAL_ERROR
-    "Please set LIBCMAKER_SRC_DIR with path to LibCMaker root")
+    "Please set lib_NAME with name of the library.")
 endif()
-# TODO: prevent multiply includes for CMAKE_MODULE_PATH
-list(APPEND CMAKE_MODULE_PATH "${LIBCMAKER_SRC_DIR}/cmake/modules")
+if(NOT lib_BASE_DIR)
+  message(FATAL_ERROR
+    "Please set lib_BASE_DIR with path to LibCMaker_${lib_NAME} project root.")
+endif()
+if(NOT cmr_CMAKE_MIN_VER)
+  message(FATAL_ERROR
+    "Please set cmr_CMAKE_MIN_VER with CMake minimum required version.")
+endif()
 
-include(cmr_print_fatal_error)
-include(cmr_print_debug_message)
-include(cmr_print_var_value)
+string(TOLOWER ${lib_NAME} lower_lib_NAME)
 
-function(cmr_lib_cmaker_post)
-  cmake_minimum_required(VERSION 2.8.12)
+cmake_minimum_required(VERSION ${cmr_CMAKE_MIN_VER})
+project(LibCMaker_${lib_NAME})
 
-  # To prevent the list expansion on an argument with ';'.
-  # See also
-  # http://stackoverflow.com/a/20989991
-  # http://stackoverflow.com/a/20985057
-  if(lib_COMPONENTS)
-    string (REPLACE " " ";" lib_COMPONENTS "${lib_COMPONENTS}")
-    set(lib_COMPONENTS ${lib_COMPONENTS} PARENT_SCOPE)
-  endif()
-  if(CMAKE_FIND_ROOT_PATH)
-    string (REPLACE " " ";" CMAKE_FIND_ROOT_PATH "${CMAKE_FIND_ROOT_PATH}")
-    set(CMAKE_FIND_ROOT_PATH ${CMAKE_FIND_ROOT_PATH} PARENT_SCOPE)
-  endif()
+list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake/modules")
+list(APPEND CMAKE_MODULE_PATH "${lib_BASE_DIR}/cmake/modules")
 
-endfunction()
+include(cmr_build_rules)
+cmr_build_rules()
