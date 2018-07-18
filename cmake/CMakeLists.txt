@@ -29,7 +29,7 @@ project(LibCMaker_Tests)
 #set(CMAKE_VERBOSE_MAKEFILE ON)
 
 list(INSERT CMAKE_MODULE_PATH 0
-  "${PROJECT_SOURCE_DIR}/cmake/modules"
+  "${PROJECT_SOURCE_DIR}/modules"
 )
 
 include(cmr_tests)
