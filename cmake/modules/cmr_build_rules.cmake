@@ -75,13 +75,15 @@ function(cmr_build_rules)
       SHOW_PROGRESS
     )
   endif()
-  
+
   # Extract tar file.
   if(NOT EXISTS "${lib_SRC_DIR}")
-    cmr_print_message("Extract ${lib_ARCH_FILE}")
+    cmr_print_message(
+      "Extract\n  '${lib_ARCH_FILE}'\nto\n  '${lib_UNPACK_TO_DIR}'"
+    )
     file(MAKE_DIRECTORY ${lib_UNPACK_TO_DIR})
     execute_process(
-      COMMAND ${CMAKE_COMMAND} -E tar xjf ${lib_ARCH_FILE}
+      COMMAND ${CMAKE_COMMAND} -E tar xf ${lib_ARCH_FILE} # TODO: arch opts (z, j, ...)
       WORKING_DIRECTORY ${lib_UNPACK_TO_DIR}
     )
   endif()

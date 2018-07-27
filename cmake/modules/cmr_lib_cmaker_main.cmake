@@ -128,6 +128,9 @@ function(cmr_lib_cmaker_main)
   # See also:
   # http://stackoverflow.com/a/20989991
   # http://stackoverflow.com/a/20985057
+  if(lib_LANGUAGES)
+    string(REPLACE ";" " " lib_LANGUAGES "${lib_LANGUAGES}")
+  endif()
   if(lib_COMPONENTS)
     string(REPLACE ";" " " lib_COMPONENTS "${lib_COMPONENTS}")
   endif()
@@ -251,6 +254,7 @@ function(cmr_lib_cmaker_main)
     lib_NAME
     lib_VERSION
     lib_COMPONENTS
+    lib_LANGUAGES
 
     lib_BASE_DIR      # Library's LibCMaker dir.
     lib_DOWNLOAD_DIR  # Download dir for lib sources.
@@ -263,6 +267,7 @@ function(cmr_lib_cmaker_main)
     lib_INSTALL
 
     cmr_PRINT_DEBUG
+    cmr_BUILD_MULTIPROC
     
     SKIP_INSTALL_ALL
     SKIP_INSTALL_BINARIES
@@ -281,6 +286,11 @@ function(cmr_lib_cmaker_main)
     CMAKE_CONFIGURATION_TYPES
 
     CMAKE_INSTALL_PREFIX
+    
+    CMAKE_C_STANDARD
+    CMAKE_C_STANDARD_REQUIRED
+    CMAKE_CXX_STANDARD
+    CMAKE_CXX_STANDARD_REQUIRED    
   )
 
   if(NOT lib_BUILD_HOST_TOOLS)
@@ -347,11 +357,11 @@ function(cmr_lib_cmaker_main)
         list(LENGTH CMAKE_CONFIGURATION_TYPES config_cnt)
         if(config_cnt GREATER 1)
           cmr_print_fatal_error(
-            "Please set only one confiduration (Debug, Release, ...) in CMAKE_CONFIGURATION_TYPES."
+            "Please set only one configuration (Debug, Release, ...) in CMAKE_CONFIGURATION_TYPES."
           )
         endif()
-        
-        set(config_options "--config" ${CMAKE_CONFIGURATION_TYPES})
+        list(GET CMAKE_CONFIGURATION_TYPES 0 config_type)
+        set(config_options "--config" ${config_type})
       endif()
       
       set(target_options "")

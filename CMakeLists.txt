@@ -36,8 +36,13 @@ endif()
 
 string(TOLOWER ${lib_NAME} lower_lib_NAME)
 
+if(lib_LANGUAGES)
+  string(REPLACE " " ";" lib_LANGUAGES "${lib_LANGUAGES}")
+endif()
+
 cmake_minimum_required(VERSION ${cmr_CMAKE_MIN_VER})
-project(LibCMaker_${lib_NAME})
+# If not defined lib_LANGUAGES then default languages (C and CXX).
+project(LibCMaker_${lib_NAME} ${lib_LANGUAGES})
 
 list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake/modules")
 list(APPEND CMAKE_MODULE_PATH "${lib_BASE_DIR}/cmake/modules")

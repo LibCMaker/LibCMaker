@@ -69,6 +69,7 @@ function(lib_cmaker_init)
   )
   set(multiValueArgs
     # Optional args.
+    COMPONENTS
   )
   include(CMakeParseArguments)
   cmake_parse_arguments(arg
@@ -81,6 +82,7 @@ function(lib_cmaker_init)
   cmr_print_var_value(LIBCMAKER_SRC_DIR)
 
   cmr_print_var_value(arg_VERSION)
+  cmr_print_var_value(arg_COMPONENTS)
   cmr_print_var_value(arg_DOWNLOAD_DIR)
   cmr_print_var_value(arg_UNPACKED_DIR)
   cmr_print_var_value(arg_BUILD_DIR)
@@ -109,6 +111,7 @@ function(lib_cmaker_init)
   set(lower_lib_NAME ${lower_lib_NAME} PARENT_SCOPE)
 
   set(arg_VERSION ${arg_VERSION} PARENT_SCOPE)
+  set(arg_COMPONENTS ${arg_COMPONENTS} PARENT_SCOPE)
   set(arg_DOWNLOAD_DIR ${arg_DOWNLOAD_DIR} PARENT_SCOPE)
   set(arg_UNPACKED_DIR ${arg_UNPACKED_DIR} PARENT_SCOPE)
   set(arg_BUILD_DIR ${arg_BUILD_DIR} PARENT_SCOPE)
