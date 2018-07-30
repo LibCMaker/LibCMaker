@@ -38,6 +38,18 @@ function(cmr_build_rules)
   if(CMAKE_FIND_ROOT_PATH)
     string(REPLACE " " ";" CMAKE_FIND_ROOT_PATH "${CMAKE_FIND_ROOT_PATH}")
   endif()
+  if(CMAKE_PREFIX_PATH)
+    string(REPLACE " " ";" CMAKE_PREFIX_PATH "${CMAKE_PREFIX_PATH}")
+  endif()
+  if(CMAKE_INCLUDE_PATH)
+    string(REPLACE " " ";" CMAKE_INCLUDE_PATH "${CMAKE_INCLUDE_PATH}")
+  endif()
+  if(CMAKE_LIBRARY_PATH)
+    string(REPLACE " " ";" CMAKE_LIBRARY_PATH "${CMAKE_LIBRARY_PATH}")
+  endif()
+  if(CMAKE_PROGRAM_PATH)
+    string(REPLACE " " ";" CMAKE_PROGRAM_PATH "${CMAKE_PROGRAM_PATH}")
+  endif()
 
   # Required vars.
   if(NOT lib_VERSION)
@@ -62,7 +74,7 @@ function(cmr_build_rules)
 
   if(NOT lib_SHA)
     cmr_print_fatal_error(
-      "${lib_NAME} library version ${version} is not supported."
+      "${cmr_lib_NAME} library version ${version} is not supported."
     )
   endif()
 

@@ -22,18 +22,18 @@
 # ****************************************************************************
 
 function(lib_cmaker_init)
-  set(cmr_CMAKE_MIN_VER 3.2)
+  set(cmr_CMAKE_MIN_VER 3.3)
   cmake_minimum_required(VERSION ${cmr_CMAKE_MIN_VER})
 
-  if(NOT lib_NAME)
-    message(FATAL_ERROR "Please set lib_NAME with library name.")
+  if(NOT cmr_lib_NAME)
+    message(FATAL_ERROR "Please set cmr_lib_NAME with library name.")
   endif()
   if(NOT LIBCMAKER_SRC_DIR)
     message(FATAL_ERROR
       "Please set LIBCMAKER_SRC_DIR with path to LibCMaker root.")
   endif()
 
-  string(TOLOWER ${lib_NAME} lower_lib_NAME)
+  string(TOLOWER ${cmr_lib_NAME} lower_lib_NAME)
 
   # Append LibCMaker modules dir to CMake module path.
   set(LIBCMAKER_MODULES_DIR "${LIBCMAKER_SRC_DIR}/cmake/modules")
@@ -44,10 +44,10 @@ function(lib_cmaker_init)
   endif()
   
   # Append library's LibCMaker modules dir to CMake module path.
-  set(lcm_${lib_NAME}_MODULES_DIR "${lcm_${lib_NAME}_SRC_DIR}/cmake/modules")
-  list(FIND CMAKE_MODULE_PATH ${lcm_${lib_NAME}_MODULES_DIR} has_MODULES_DIR)
+  set(lcm_${cmr_lib_NAME}_MODULES_DIR "${lcm_${cmr_lib_NAME}_SRC_DIR}/cmake/modules")
+  list(FIND CMAKE_MODULE_PATH ${lcm_${cmr_lib_NAME}_MODULES_DIR} has_MODULES_DIR)
   if(has_MODULES_DIR EQUAL -1)
-    list(APPEND CMAKE_MODULE_PATH "${lcm_${lib_NAME}_MODULES_DIR}")
+    list(APPEND CMAKE_MODULE_PATH "${lcm_${cmr_lib_NAME}_MODULES_DIR}")
     set(changed_CMAKE_MODULE_PATH ON)
   endif()
 
@@ -55,7 +55,7 @@ function(lib_cmaker_init)
   include(cmr_lib_cmaker_main RESULT_VARIABLE cmr_lib_cmaker_main_PATH)
   include(cmr_printers RESULT_VARIABLE cmr_printers_PATH)
 
-  cmr_print_message("======== Build library: ${lib_NAME} ========")
+  cmr_print_message("======== Build library: ${cmr_lib_NAME} ========")
 
   # Parse args.
   set(options

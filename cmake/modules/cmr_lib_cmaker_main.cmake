@@ -79,7 +79,7 @@ function(cmr_lib_cmaker_main)
 
   cmr_print_var_value(LIBCMAKER_SRC_DIR)
 
-  cmr_print_var_value(lib_NAME)
+  cmr_print_var_value(cmr_lib_NAME)
   cmr_print_var_value(lib_VERSION)
   cmr_print_var_value(lib_COMPONENTS)
 
@@ -96,7 +96,7 @@ function(cmr_lib_cmaker_main)
   cmr_print_var_value(lib_CMAKE_ARGS)
 
   # Required args.
-  if(NOT lib_NAME)
+  if(NOT cmr_lib_NAME)
     cmr_print_fatal_error("Argument NAME is not defined.")
   endif()
   if(NOT lib_VERSION)
@@ -136,6 +136,18 @@ function(cmr_lib_cmaker_main)
   endif()
   if(CMAKE_FIND_ROOT_PATH)
     string(REPLACE ";" " " CMAKE_FIND_ROOT_PATH "${CMAKE_FIND_ROOT_PATH}")
+  endif()
+  if(CMAKE_PREFIX_PATH)
+    string(REPLACE ";" " " CMAKE_PREFIX_PATH "${CMAKE_PREFIX_PATH}")
+  endif()
+  if(CMAKE_INCLUDE_PATH)
+    string(REPLACE ";" " " CMAKE_INCLUDE_PATH "${CMAKE_INCLUDE_PATH}")
+  endif()
+  if(CMAKE_LIBRARY_PATH)
+    string(REPLACE ";" " " CMAKE_LIBRARY_PATH "${CMAKE_LIBRARY_PATH}")
+  endif()
+  if(CMAKE_PROGRAM_PATH)
+    string(REPLACE ";" " " CMAKE_PROGRAM_PATH "${CMAKE_PROGRAM_PATH}")
   endif()
 
 
@@ -231,7 +243,7 @@ function(cmr_lib_cmaker_main)
 
       # TODO: LibCMaker_Boost can not be builded with -j ! It need fix.
       #if(CMAKE_MAKE_PROGRAM MATCHES "make")
-      if(CMAKE_MAKE_PROGRAM MATCHES "make" AND NOT lib_NAME EQUAL "Boost")
+      if(CMAKE_MAKE_PROGRAM MATCHES "make" AND NOT cmr_lib_NAME EQUAL "Boost")
         
         if(NOT cmr_BUILD_MULTIPROC_CNT)
           include(ProcessorCount) # ProcessorCount
@@ -251,7 +263,7 @@ function(cmr_lib_cmaker_main)
     LIBCMAKER_SRC_DIR
     cmr_CMAKE_MIN_VER
 
-    lib_NAME
+    cmr_lib_NAME
     lib_VERSION
     lib_COMPONENTS
     lib_LANGUAGES
@@ -286,6 +298,10 @@ function(cmr_lib_cmaker_main)
     CMAKE_CONFIGURATION_TYPES
 
     CMAKE_INSTALL_PREFIX
+    CMAKE_PREFIX_PATH
+    CMAKE_INCLUDE_PATH
+    CMAKE_LIBRARY_PATH
+    CMAKE_PROGRAM_PATH
     
     CMAKE_C_STANDARD
     CMAKE_C_STANDARD_REQUIRED

@@ -21,20 +21,20 @@
 #    along with this program. If not, see <http://www.gnu.org/licenses/>.
 # ****************************************************************************
 
-if(NOT lib_NAME)
+if(NOT cmr_lib_NAME)
   message(FATAL_ERROR
-    "Please set lib_NAME with name of the library.")
+    "Please set cmr_lib_NAME with name of the library.")
 endif()
 if(NOT lib_BASE_DIR)
   message(FATAL_ERROR
-    "Please set lib_BASE_DIR with path to LibCMaker_${lib_NAME} project root.")
+    "Please set lib_BASE_DIR with path to LibCMaker_${cmr_lib_NAME} project root.")
 endif()
 if(NOT cmr_CMAKE_MIN_VER)
   message(FATAL_ERROR
     "Please set cmr_CMAKE_MIN_VER with CMake minimum required version.")
 endif()
 
-string(TOLOWER ${lib_NAME} lower_lib_NAME)
+string(TOLOWER ${cmr_lib_NAME} lower_lib_NAME)
 
 if(lib_LANGUAGES)
   string(REPLACE " " ";" lib_LANGUAGES "${lib_LANGUAGES}")
@@ -42,7 +42,7 @@ endif()
 
 cmake_minimum_required(VERSION ${cmr_CMAKE_MIN_VER})
 # If not defined lib_LANGUAGES then default languages (C and CXX).
-project(LibCMaker_${lib_NAME} ${lib_LANGUAGES})
+project(LibCMaker_${cmr_lib_NAME} ${lib_LANGUAGES})
 
 list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake/modules")
 list(APPEND CMAKE_MODULE_PATH "${lib_BASE_DIR}/cmake/modules")
