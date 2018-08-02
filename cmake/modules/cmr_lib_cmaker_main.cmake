@@ -313,6 +313,7 @@ function(cmr_lib_cmaker_main)
     list(APPEND cmr_LIB_VARS
 
       # Standard CMake vars.
+      CMAKE_FIND_ROOT_PATH
 
       # Compiler flags.
       CMAKE_C_FLAGS
