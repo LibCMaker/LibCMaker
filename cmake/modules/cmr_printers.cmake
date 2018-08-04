@@ -21,7 +21,7 @@
 #    along with this program. If not, see <http://www.gnu.org/licenses/>.
 # ****************************************************************************
 
-include(cmr_print_debug_message)
-include(cmr_print_fatal_error)
-include(cmr_print_message)
-include(cmr_print_var_value)
+include(cmr_print_debug)
+include(cmr_print_error)
+include(cmr_print_status)
+include(cmr_print_value)

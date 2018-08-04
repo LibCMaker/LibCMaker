@@ -21,8 +21,8 @@
 #    along with this program. If not, see <http://www.gnu.org/licenses/>.
 # ****************************************************************************
 
-include(cmr_print_debug_message)
+include(cmr_print_debug)
 
-function(cmr_print_var_value in_var)
-  cmr_print_debug_message("Var: ${in_var} == ${${in_var}}")
+function(cmr_print_value in_var)
+  cmr_print_debug("Var: ${in_var} == ${${in_var}}")
 endfunction()

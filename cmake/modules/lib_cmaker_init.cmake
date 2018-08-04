@@ -55,7 +55,7 @@ function(lib_cmaker_init)
   include(cmr_lib_cmaker_main RESULT_VARIABLE cmr_lib_cmaker_main_PATH)
   include(cmr_printers RESULT_VARIABLE cmr_printers_PATH)
 
-  cmr_print_message("======== Build library: ${cmr_lib_NAME} ========")
+  cmr_print_status("======== Build library: ${cmr_lib_NAME} ========")
 
   # Parse args.
   set(options
@@ -79,23 +79,23 @@ function(lib_cmaker_init)
   # -> arg_* ...
 
   # Debug printers.
-  cmr_print_var_value(LIBCMAKER_SRC_DIR)
+  cmr_print_value(LIBCMAKER_SRC_DIR)
 
-  cmr_print_var_value(arg_VERSION)
-  cmr_print_var_value(arg_COMPONENTS)
-  cmr_print_var_value(arg_DOWNLOAD_DIR)
-  cmr_print_var_value(arg_UNPACKED_DIR)
-  cmr_print_var_value(arg_BUILD_DIR)
+  cmr_print_value(arg_VERSION)
+  cmr_print_value(arg_COMPONENTS)
+  cmr_print_value(arg_DOWNLOAD_DIR)
+  cmr_print_value(arg_UNPACKED_DIR)
+  cmr_print_value(arg_BUILD_DIR)
 
   # Required args.
   if(NOT arg_VERSION)
-    cmr_print_fatal_error("Argument VERSION is not defined.")
+    cmr_print_error("Argument VERSION is not defined.")
   endif()
   if(NOT arg_BUILD_DIR)
-    cmr_print_fatal_error("Argument BUILD_DIR is not defined.")
+    cmr_print_error("Argument BUILD_DIR is not defined.")
   endif()
   if(arg_UNPARSED_ARGUMENTS)
-    cmr_print_fatal_error(
+    cmr_print_error(
       "There are unparsed arguments: ${arg_UNPARSED_ARGUMENTS}")
   endif()
 

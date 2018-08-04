@@ -53,10 +53,10 @@ function(cmr_build_rules)
 
   # Required vars.
   if(NOT lib_VERSION)
-    cmr_print_fatal_error("Variable lib_VERSION is not defined.")
+    cmr_print_error("Variable lib_VERSION is not defined.")
   endif()
   if(NOT lib_BUILD_DIR)
-    cmr_print_fatal_error("Variable lib_BUILD_DIR is not defined.")
+    cmr_print_error("Variable lib_BUILD_DIR is not defined.")
   endif()
 
   # Optional vars.
@@ -73,14 +73,14 @@ function(cmr_build_rules)
     lib_UNPACK_TO_DIR lib_SRC_DIR lib_VERSION_BUILD_DIR)
 
   if(NOT lib_SHA)
-    cmr_print_fatal_error(
+    cmr_print_error(
       "${cmr_lib_NAME} library version ${version} is not supported."
     )
   endif()
 
   # Download tar file.
   if(NOT EXISTS "${lib_ARCH_FILE}")
-    cmr_print_message("Download ${lib_URL}")
+    cmr_print_status("Download ${lib_URL}")
     file(
       DOWNLOAD "${lib_URL}" "${lib_ARCH_FILE}"
       EXPECTED_HASH ${lib_SHA_ALG}=${lib_SHA}
@@ -90,7 +90,7 @@ function(cmr_build_rules)
 
   # Extract tar file.
   if(NOT EXISTS "${lib_SRC_DIR}")
-    cmr_print_message(
+    cmr_print_status(
       "Extract\n  '${lib_ARCH_FILE}'\nto\n  '${lib_UNPACK_TO_DIR}'"
     )
     file(MAKE_DIRECTORY ${lib_UNPACK_TO_DIR})

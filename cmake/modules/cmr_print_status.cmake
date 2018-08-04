@@ -21,7 +21,7 @@
 #    along with this program. If not, see <http://www.gnu.org/licenses/>.
 # ****************************************************************************
 
-function(cmr_print_message message)
+function(cmr_print_status message)
 #  string(TIMESTAMP timestamp)
 #  message(STATUS "[ LibCMaker ${timestamp} ] ${message}")
   message(STATUS "[ LibCMaker ] ${message}")

@@ -21,13 +21,9 @@
 #    along with this program. If not, see <http://www.gnu.org/licenses/>.
 # ****************************************************************************
 
-function(cmr_print_fatal_error)
-  message("")
-  foreach(arg ${ARGV})
-    message(STATUS "[ LibCMaker ** FATAL ERROR ** ] ${arg}")
-  endforeach()
-  message(STATUS
-    "[ LibCMaker ** FATAL ERROR ** ] [ Directory: ${CMAKE_CURRENT_LIST_DIR} ]")
-  message(STATUS "")
-  message(FATAL_ERROR "")
+function(cmr_print_debug message)
+  if(cmr_PRINT_DEBUG)
+    string(TIMESTAMP timestamp)
+    message(STATUS "[ LibCMaker ** DEBUG ** ${timestamp} ] ${message}")
+  endif()
 endfunction()

@@ -21,7 +21,7 @@
 #    along with this program. If not, see <http://www.gnu.org/licenses/>.
 # ****************************************************************************
 
-include(cmr_print_fatal_error)
+include(cmr_print_error)
 
 function(cmr_get_version_parts version out_MAJOR out_MINOR out_PATCH out_TWEAK)
   set(version_REGEX "^[0-9]+(\\.[0-9]+)?(\\.[0-9]+)?(\\.[0-9]+)?$")
@@ -31,7 +31,7 @@ function(cmr_get_version_parts version out_MAJOR out_MINOR out_PATCH out_TWEAK)
   set(version_REGEX_4 "^[0-9]+\\.[0-9]+\\.[0-9]+\\.[0-9]+$")
 
   if(NOT version MATCHES ${version_REGEX})
-    cmr_print_fatal_error("Problem parsing version string.")
+    cmr_print_error("Problem parsing version string.")
   endif()
 
   if(version MATCHES ${version_REGEX_1})
