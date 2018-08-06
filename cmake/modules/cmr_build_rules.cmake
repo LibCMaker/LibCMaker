@@ -80,7 +80,9 @@ function(cmr_build_rules)
 
   # Download tar file.
   if(NOT EXISTS "${lib_ARCH_FILE}")
-    cmr_print_status("Download ${lib_URL}")
+    cmr_print_status(
+      "Download\n  '${lib_URL}'\nto\n  '${lib_ARCH_FILE}'"
+    )
     file(
       DOWNLOAD "${lib_URL}" "${lib_ARCH_FILE}"
       EXPECTED_HASH ${lib_SHA_ALG}=${lib_SHA}
