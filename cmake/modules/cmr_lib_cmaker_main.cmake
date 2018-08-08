@@ -67,6 +67,8 @@ function(cmr_lib_cmaker_main)
   )
 
   set(multiValueArgs
+    # Required args.
+    LANGUAGES
     # Optional args.
     COMPONENTS CMAKE_ARGS
   )
@@ -82,6 +84,7 @@ function(cmr_lib_cmaker_main)
   cmr_print_value(cmr_lib_NAME)
   cmr_print_value(lib_VERSION)
   cmr_print_value(lib_COMPONENTS)
+  cmr_print_value(lib_LANGUAGES)
 
   cmr_print_value(lib_BASE_DIR)
   cmr_print_value(lib_DOWNLOAD_DIR)
@@ -101,6 +104,9 @@ function(cmr_lib_cmaker_main)
   endif()
   if(NOT lib_VERSION)
     cmr_print_error("Argument VERSION is not defined.")
+  endif()
+  if(NOT lib_LANGUAGES)
+    cmr_print_error("Argument LANGUAGES is not defined.")
   endif()
   if(NOT lib_BASE_DIR)
     cmr_print_error("Argument BASE_DIR is not defined.")
@@ -226,7 +232,7 @@ function(cmr_lib_cmaker_main)
       set(cmr_BUILD_MULTIPROC ON)
     endif()
 
-    if(cmr_BUILD_MULTIPROC OR cmr_BUILD_MULTIPROC_CNT)
+    if(cmr_BUILD_MULTIPROC)
       if(NOT cmr_BUILD_MULTIPROC_CNT)
         set(cmr_BUILD_MULTIPROC_CNT "")
       endif()
@@ -280,6 +286,7 @@ function(cmr_lib_cmaker_main)
 
     cmr_PRINT_DEBUG
     cmr_BUILD_MULTIPROC
+    cmr_USE_MSVC_STATIC_RUNTIME
 
     SKIP_INSTALL_ALL
     SKIP_INSTALL_BINARIES

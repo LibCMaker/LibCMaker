@@ -36,9 +36,12 @@ endif()
 
 string(TOLOWER ${cmr_lib_NAME} lower_lib_NAME)
 
-if(lib_LANGUAGES)
-  string(REPLACE " " ";" lib_LANGUAGES "${lib_LANGUAGES}")
+if(NOT lib_LANGUAGES)
+  message(FATAL_ERROR
+    "Please set lib_LANGUAGES with library used languages.")
 endif()
+
+string(REPLACE " " ";" lib_LANGUAGES "${lib_LANGUAGES}")
 
 cmake_minimum_required(VERSION ${cmr_CMAKE_MIN_VER})
 # If not defined lib_LANGUAGES then default languages (C and CXX).

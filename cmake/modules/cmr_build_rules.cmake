@@ -102,6 +102,35 @@ function(cmr_build_rules)
     )
   endif()
 
+  # Set compile flags.
+  if(cmr_USE_MSVC_STATIC_RUNTIME AND MSVC AND NOT BUILD_SHARED_LIBS)
+    # Set MSVC static runtime flags for all configurations.
+    # See:
+    # https://stackoverflow.com/a/20804336
+    # https://stackoverflow.com/a/14172871
+    foreach(cfg "" ${CMAKE_CONFIGURATION_TYPES})
+      set(c_flag_var   CMAKE_C_FLAGS)
+      set(cxx_flag_var CMAKE_CXX_FLAGS)
+      if(cfg)
+        string(TOUPPER ${cfg} cfg_upper)
+        set(c_flag_var   "${c_flag_var}_${cfg_upper}")
+        set(cxx_flag_var "${cxx_flag_var}_${cfg_upper}")
+      endif()
+      if(${c_flag_var} MATCHES "/MD")
+        string(REPLACE "/MD" "/MT" ${c_flag_var} "${${c_flag_var}}")
+        set(${c_flag_var} ${${c_flag_var}} CACHE STRING
+          "Flags used by the C compiler during ${cfg_upper} builds." FORCE
+        )
+      endif()
+      if(${cxx_flag_var} MATCHES "/MD")
+        string(REPLACE "/MD" "/MT" ${cxx_flag_var} "${${cxx_flag_var}}")
+        set(${cxx_flag_var} ${${cxx_flag_var}} CACHE STRING
+          "Flags used by the CXX compiler during ${cfg_upper} builds." FORCE
+        )
+      endif()
+    endforeach()
+  endif()
+
   # Configure, build and install rules.
   include(cmr_build_rules_${lower_lib_NAME})
 
