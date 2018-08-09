@@ -55,8 +55,6 @@ function(lib_cmaker_init)
   include(cmr_lib_cmaker_main RESULT_VARIABLE cmr_lib_cmaker_main_PATH)
   include(cmr_printers RESULT_VARIABLE cmr_printers_PATH)
 
-  cmr_print_status("======== Build library: ${cmr_lib_NAME} ========")
-
   # Parse args.
   set(options
     # Optional args.
@@ -77,6 +75,8 @@ function(lib_cmaker_init)
   # -> arg_VERSION
   # -> arg_BUILD_DIR
   # -> arg_* ...
+
+  cmr_print_status("======== Build library: ${cmr_lib_NAME} ${arg_VERSION} ========")
 
   # Debug printers.
   cmr_print_value(LIBCMAKER_SRC_DIR)
