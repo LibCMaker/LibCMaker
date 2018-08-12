@@ -1,0 +1,33 @@
+[submodule "libs/LibCMaker_AGG"]
+	path = libs/LibCMaker_AGG
+	url = git@bitbucket.org:libcmaker/libcmaker_agg.git
+[submodule "libs/LibCMaker_Boost"]
+	path = libs/LibCMaker_Boost
+	url = git@bitbucket.org:libcmaker/libcmaker_boost.git
+[submodule "libs/LibCMaker_Dirent"]
+	path = libs/LibCMaker_Dirent
+	url = git@bitbucket.org:libcmaker/libcmaker_dirent.git
+[submodule "libs/LibCMaker_Expat"]
+	path = libs/LibCMaker_Expat
+	url = git@bitbucket.org:libcmaker/libcmaker_expat.git
+[submodule "libs/LibCMaker_FontConfig"]
+	path = libs/LibCMaker_FontConfig
+	url = git@bitbucket.org:libcmaker/libcmaker_fontconfig.git
+[submodule "libs/LibCMaker_FreeType"]
+	path = libs/LibCMaker_FreeType
+	url = git@bitbucket.org:libcmaker/libcmaker_freetype.git
+[submodule "libs/LibCMaker_GoogleTest"]
+	path = libs/LibCMaker_GoogleTest
+	url = git@bitbucket.org:libcmaker/libcmaker_googletest.git
+[submodule "libs/LibCMaker_HarfBuzz"]
+	path = libs/LibCMaker_HarfBuzz
+	url = git@bitbucket.org:libcmaker/libcmaker_harfbuzz.git
+[submodule "libs/LibCMaker_ICU"]
+	path = libs/LibCMaker_ICU
+	url = git@bitbucket.org:libcmaker/libcmaker_icu.git
+[submodule "libs/LibCMaker_STLCache"]
+	path = libs/LibCMaker_STLCache
+	url = git@bitbucket.org:libcmaker/libcmaker_stlcache.git
+[submodule "libs/LibCMaker_wxWidgets"]
+	path = libs/LibCMaker_wxWidgets
+	url = git@bitbucket.org:libcmaker/libcmaker_wxwidgets.git
