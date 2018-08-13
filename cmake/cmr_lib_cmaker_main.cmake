@@ -33,6 +33,8 @@ if(has_MODULES_DIR EQUAL -1)
   list(APPEND CMAKE_MODULE_PATH "${LIBCMAKER_MODULES_DIR}")
 endif()
 
+include(CMakeParseArguments)  # cmake_parse_arguments()
+
 include(cmr_printers)
 
 function(cmr_lib_cmaker_main)
@@ -115,8 +117,7 @@ function(cmr_lib_cmaker_main)
     cmr_print_error("Argument BUILD_DIR is not defined.")
   endif()
   if(lib_UNPARSED_ARGUMENTS)
-    cmr_print_error(
-      "There are unparsed arguments: ${lib_UNPARSED_ARGUMENTS}")
+    cmr_print_error("There are unparsed arguments: ${lib_UNPARSED_ARGUMENTS}")
   endif()
 
   if(lib_INSTALL)

@@ -21,6 +21,8 @@
 #    along with this program. If not, see <http://www.gnu.org/licenses/>.
 # ****************************************************************************
 
+include(CMakeParseArguments)  # cmake_parse_arguments()
+
 function(lib_cmaker_init)
   set(cmr_CMAKE_MIN_VER 3.3)
   cmake_minimum_required(VERSION ${cmr_CMAKE_MIN_VER})
@@ -42,7 +44,7 @@ function(lib_cmaker_init)
     list(APPEND CMAKE_MODULE_PATH "${LIBCMAKER_MODULES_DIR}")
     set(changed_CMAKE_MODULE_PATH ON)
   endif()
-  
+
   # Append library's LibCMaker modules dir to CMake module path.
   set(lcm_${cmr_lib_NAME}_MODULES_DIR "${lcm_${cmr_lib_NAME}_SRC_DIR}/cmake/modules")
   list(FIND CMAKE_MODULE_PATH ${lcm_${cmr_lib_NAME}_MODULES_DIR} has_MODULES_DIR)
@@ -69,7 +71,6 @@ function(lib_cmaker_init)
     # Optional args.
     COMPONENTS
   )
-  include(CMakeParseArguments)
   cmake_parse_arguments(arg
       "${options}" "${oneValueArgs}" "${multiValueArgs}" "${ARGN}")
   # -> arg_VERSION
@@ -95,8 +96,7 @@ function(lib_cmaker_init)
     cmr_print_error("Argument BUILD_DIR is not defined.")
   endif()
   if(arg_UNPARSED_ARGUMENTS)
-    cmr_print_error(
-      "There are unparsed arguments: ${arg_UNPARSED_ARGUMENTS}")
+    cmr_print_error("There are unparsed arguments: ${arg_UNPARSED_ARGUMENTS}")
   endif()
 
   # Set vars to PARENT_SCOPE.
@@ -115,7 +115,7 @@ function(lib_cmaker_init)
   set(arg_DOWNLOAD_DIR ${arg_DOWNLOAD_DIR} PARENT_SCOPE)
   set(arg_UNPACKED_DIR ${arg_UNPACKED_DIR} PARENT_SCOPE)
   set(arg_BUILD_DIR ${arg_BUILD_DIR} PARENT_SCOPE)
-  
+
   unset(lcm_CMAKE_ARGS PARENT_SCOPE)
 
 endfunction()
