@@ -55,16 +55,14 @@ function(cmr_build_rules)
   if(NOT lib_VERSION)
     cmr_print_error("Variable lib_VERSION is not defined.")
   endif()
-  if(NOT lib_BUILD_DIR)
-    cmr_print_error("Variable lib_BUILD_DIR is not defined.")
-  endif()
-
-  # Optional vars.
   if(NOT lib_DOWNLOAD_DIR)
-    set(lib_DOWNLOAD_DIR ${CMAKE_CURRENT_BINARY_DIR})
+    cmr_print_error("Variable lib_DOWNLOAD_DIR is not defined.")
   endif()
   if(NOT lib_UNPACKED_DIR)
-    set(lib_UNPACKED_DIR "${lib_DOWNLOAD_DIR}/sources")
+    cmr_print_error("Variable lib_UNPACKED_DIR is not defined.")
+  endif()
+  if(NOT lib_BUILD_DIR)
+    cmr_print_error("Variable lib_BUILD_DIR is not defined.")
   endif()
 
   cmr_get_download_params(

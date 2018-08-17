@@ -7,11 +7,11 @@
 macro(cmr_android_vars)
   if(ANDROID)
     # TODO: get new vars from NDK's toolchain.
-    
+
     set(cmr_LIB_VARS_ANDROID
       ANDROID
       ANDROID_NDK
-      
+
       # Configurable variables from
       # android-sdk/cmake/3.6.3155560/android.toolchain.cmake
       # (package version 3.6.3155560)
@@ -38,9 +38,9 @@ macro(cmr_android_vars)
       ANDROID_DISABLE_RELRO
       ANDROID_DISABLE_FORMAT_STRING_CHECKS
       ANDROID_CCACHE
-      
+
       CMAKE_FIND_ROOT_PATH
-      
+
       # Allow users to override these values
       # in case they want more strict behaviors.
       # For example, they may want to prevent the NDK's libz
@@ -55,7 +55,7 @@ macro(cmr_android_vars)
       ANDROID_NATIVE_API_LEVEL
       ANDROID_TOOLCHAIN_NAME
       ANDROID_UNIFIED_HEADERS
-      
+
       # From CMake 3.7+
       CMAKE_ANDROID_ANT_ADDITIONAL_OPTIONS
       CMAKE_ANDROID_API
@@ -92,7 +92,7 @@ macro(cmr_android_vars)
       CMAKE_ASM_ANDROID_TOOLCHAIN_PREFIX
       CMAKE_ASM_ANDROID_TOOLCHAIN_SUFFIX
     )
-  
+
     foreach(d ${cmr_LIB_VARS_ANDROID})
       if(DEFINED ${d})
         list(APPEND cmr_CMAKE_ARGS

@@ -23,17 +23,21 @@
 
 include(CMakeParseArguments)  # cmake_parse_arguments()
 
-include(cmr_print_status)
+function(cmr_find_package)
+  set(cmr_CMAKE_MIN_VER 3.3)
+  cmake_minimum_required(VERSION ${cmr_CMAKE_MIN_VER})
 
-function(cmr_find_package lib_NAME lib_VERSION cmlib_SRC_DIR)
+
   # Parse args.
   set(options
     # Optional args.
-    EXACT QUIET MODULE CONFIG NO_MODULE REQUIRED
+    EXACT QUIET MODULE CONFIG NO_MODULE REQUIRED NOT_USE_VERSION_IN_FIND_PACKAGE
   )
   set(oneValueArgs
+  # Required args.
+    LibCMaker_DIR NAME VERSION LIB_DIR
     # Optional args.
-    FIND_MODULE_NAME
+    FIND_MODULE_NAME CUSTOM_LOGIC_FILE
   )
   set(multiValueArgs
     # Optional args.
@@ -43,6 +47,26 @@ function(cmr_find_package lib_NAME lib_VERSION cmlib_SRC_DIR)
       "${options}" "${oneValueArgs}" "${multiValueArgs}" "${ARGN}")
   # -> find_EXACT
   # -> find_* ...
+
+  # Required args.
+  if(NOT find_LibCMaker_DIR)
+    message(FATAL_ERROR "Argument LibCMaker_DIR is not defined.")
+  endif()
+  if(NOT find_NAME)
+    message(FATAL_ERROR "Argument NAME is not defined.")
+  endif()
+  if(NOT find_VERSION)
+    message(FATAL_ERROR "Argument VERSION is not defined.")
+  endif()
+  if(NOT find_LIB_DIR)
+    message(FATAL_ERROR "Argument LIB_DIR is not defined.")
+  endif()
+  if(find_UNPARSED_ARGUMENTS)
+    message(FATAL_ERROR
+      "There are unparsed arguments: ${find_UNPARSED_ARGUMENTS}"
+    )
+  endif()
+
 
   if(find_EXACT)
     list(APPEND find_args EXACT)
@@ -61,53 +85,96 @@ function(cmr_find_package lib_NAME lib_VERSION cmlib_SRC_DIR)
   endif()
   if(find_COMPONENTS)
     list(APPEND find_args COMPONENTS ${find_COMPONENTS})
-    list(APPEND lib_cmaker_args COMPONENTS ${find_COMPONENTS})
   endif()
 
-  # Set vars and dirs.
-  string(TOUPPER ${lib_NAME} lib_NAME_UPPER)
-  string(TOLOWER ${lib_NAME} lib_NAME_LOWER)
-  set(cmr_NAME "LibCMaker_${lib_NAME}")
+  set(module_version ${find_VERSION})
+  if(find_NOT_USE_VERSION_IN_FIND_PACKAGE)
+    unset(module_version)
+  endif()
 
-  set(module_NAME ${lib_NAME})
+
+  # Set vars and dirs.
+  string(TOUPPER ${find_NAME} lib_NAME_UPPER)
+  string(TOLOWER ${find_NAME} lib_NAME_LOWER)
+  set(cmr_lib_NAME "LibCMaker_${find_NAME}")
+
+  set(module_NAME ${find_NAME})
   if(find_FIND_MODULE_NAME)
     set(module_NAME ${find_FIND_MODULE_NAME})
   endif()
 
+  # Append LibCMaker function dir to CMake module path.
+  set(cmr_func_DIR "${find_LibCMaker_DIR}/cmake")
+  list(FIND CMAKE_MODULE_PATH ${cmr_func_DIR} has_func_dir)
+  if(has_func_dir EQUAL -1)
+    list(APPEND CMAKE_MODULE_PATH "${cmr_func_DIR}")
+  endif()
+
+  # Append library's function dir to CMake module path.
+  set(lib_func_DIR "${find_LIB_DIR}/cmake")
+  list(FIND CMAKE_MODULE_PATH ${lib_func_DIR} has_func_dir)
+  if(has_func_dir EQUAL -1)
+    list(APPEND CMAKE_MODULE_PATH "${lib_func_DIR}")
+  endif()
+
   if(NOT cmr_DOWNLOAD_DIR)
-    set(cmr_DOWNLOAD_DIR ${CMAKE_BINARY_DIR}/download)
+    set(cmr_DOWNLOAD_DIR ${CMAKE_CURRENT_BINARY_DIR}/download)
   endif()
   if(NOT cmr_UNPACKED_DIR)
     set(cmr_UNPACKED_DIR ${cmr_DOWNLOAD_DIR}/unpacked)
   endif()
   if(NOT cmr_BUILD_DIR)
-    set(cmr_BUILD_DIR ${CMAKE_BINARY_DIR}/build_LibCMaker)
+    set(cmr_BUILD_DIR ${CMAKE_CURRENT_BINARY_DIR}/build_LibCMaker)
   endif()
-  set(lib_BUILD_DIR ${cmr_BUILD_DIR}/build_${lib_NAME})
+  set(lib_BUILD_DIR ${cmr_BUILD_DIR}/build_${find_NAME})
 
-  # Try to find already installed lib.
-  find_package(${module_NAME} ${lib_VERSION} QUIET ${find_args})
 
-  if(NOT ${lib_NAME}_FOUND AND NOT ${lib_NAME_UPPER}_FOUND)
-    cmr_print_status("${lib_NAME} is not installed, build and install it.")
+  include(cmr_lib_cmaker_main)
+  include(cmr_printers)
 
-    include(${cmlib_SRC_DIR}/lib_cmaker_${lib_NAME_LOWER}.cmake)
-    lib_cmaker_${lib_NAME_LOWER}(
-      VERSION       ${lib_VERSION}
-      DOWNLOAD_DIR  ${cmr_DOWNLOAD_DIR}
-      UNPACKED_DIR  ${cmr_UNPACKED_DIR}
-      BUILD_DIR     ${lib_BUILD_DIR}
-      ${lib_cmaker_args}
-    )
 
-    if(find_REQUIRED)
-      list(APPEND find_args REQUIRED)
-    endif()
-    find_package(${module_NAME} ${lib_VERSION} ${find_args})
-
-  else()
+  if(NOT find_QUIET)
     cmr_print_status(
-      "${lib_NAME} is installed, skip building and installing it."
+      "======== Build library: ${find_NAME} ${find_VERSION} ========"
     )
+
+    # Debug printers.
+    cmr_print_value(find_LibCMaker_DIR)
+
+    cmr_print_value(find_NAME)
+    cmr_print_value(find_VERSION)
+    cmr_print_value(find_COMPONENTS)
+
+    cmr_print_value(find_LIB_DIR)
+    cmr_print_value(cmr_DOWNLOAD_DIR)
+    cmr_print_value(cmr_UNPACKED_DIR)
+    cmr_print_value(cmr_BUILD_DIR)
+
+    cmr_print_value(find_NOT_USE_VERSION_IN_FIND_PACKAGE)
+    cmr_print_value(find_FIND_MODULE_NAME)
+    cmr_print_value(find_CUSTOM_LOGIC_FILE)
+  endif()
+
+  string(TOUPPER ${module_NAME} module_NAME_UPPER)
+
+  if(find_CUSTOM_LOGIC_FILE AND EXISTS ${find_CUSTOM_LOGIC_FILE})
+    include(${find_CUSTOM_LOGIC_FILE})
+  else()
+    # Try to find already installed lib.
+    find_package(${module_NAME} ${module_version} QUIET ${find_args})
+
+    if(NOT ${module_NAME}_FOUND AND NOT ${module_NAME_UPPER}_FOUND)
+      cmr_print_status("${find_NAME} is not built, build it.")
+
+      include(cmr_find_package_${lib_NAME_LOWER})
+
+      if(find_REQUIRED)
+        list(APPEND find_args REQUIRED)
+      endif()
+      find_package(${module_NAME} ${module_version} ${find_args})
+
+    else()
+      cmr_print_status("${find_NAME} is built, skip its building.")
+    endif()
   endif()
 endfunction()

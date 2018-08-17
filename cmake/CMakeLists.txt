@@ -28,8 +28,6 @@ project(LibCMaker_Tests)
 # For note. To show the compiler's stdout, https://stackoverflow.com/a/12841234
 #set(CMAKE_VERBOSE_MAKEFILE ON)
 
-list(INSERT CMAKE_MODULE_PATH 0
-  "${PROJECT_SOURCE_DIR}/modules"
-)
+list(INSERT CMAKE_MODULE_PATH 0 ${CMAKE_CURRENT_LIST_DIR})
 
 include(cmr_tests)

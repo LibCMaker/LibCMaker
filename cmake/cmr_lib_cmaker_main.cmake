@@ -21,18 +21,6 @@
 #    along with this program. If not, see <http://www.gnu.org/licenses/>.
 # ****************************************************************************
 
-if(NOT LIBCMAKER_SRC_DIR)
-  message(FATAL_ERROR
-    "Please set LIBCMAKER_SRC_DIR with path to LibCMaker root")
-endif()
-
-# Append LibCMaker modules dir to CMake module path.
-set(LIBCMAKER_MODULES_DIR "${LIBCMAKER_SRC_DIR}/cmake/modules")
-list(FIND CMAKE_MODULE_PATH ${LIBCMAKER_MODULES_DIR} has_MODULES_DIR)
-if(has_MODULES_DIR EQUAL -1)
-  list(APPEND CMAKE_MODULE_PATH "${LIBCMAKER_MODULES_DIR}")
-endif()
-
 include(CMakeParseArguments)  # cmake_parse_arguments()
 
 include(cmr_printers)
@@ -53,6 +41,7 @@ function(cmr_lib_cmaker_main)
 
   set(oneValueArgs
     # Required args.
+    LibCMaker_DIR
     NAME
     VERSION
     BASE_DIR
@@ -81,9 +70,9 @@ function(cmr_lib_cmaker_main)
   # -> lib_COMPONENTS
   # -> lib_* ...
 
-  cmr_print_value(LIBCMAKER_SRC_DIR)
+  cmr_print_value(lib_LibCMaker_DIR)
 
-  cmr_print_value(cmr_lib_NAME)
+  cmr_print_value(lib_NAME)
   cmr_print_value(lib_VERSION)
   cmr_print_value(lib_COMPONENTS)
   cmr_print_value(lib_LANGUAGES)
@@ -101,7 +90,10 @@ function(cmr_lib_cmaker_main)
   cmr_print_value(lib_CMAKE_ARGS)
 
   # Required args.
-  if(NOT cmr_lib_NAME)
+  if(NOT lib_LibCMaker_DIR)
+    cmr_print_error("Argument LibCMaker_DIR is not defined.")
+  endif()
+  if(NOT lib_NAME)
     cmr_print_error("Argument NAME is not defined.")
   endif()
   if(NOT lib_VERSION)
@@ -162,7 +154,7 @@ function(cmr_lib_cmaker_main)
   # Build args
   #-----------------------------------------------------------------------
 
-  set(cmr_CMAKE_ARGS)
+  unset(cmr_CMAKE_ARGS)
 
   # Lib specific args.
   if(DEFINED lib_CMAKE_ARGS)
@@ -250,7 +242,7 @@ function(cmr_lib_cmaker_main)
 
       # TODO: LibCMaker_Boost can not be builded with -j ! It need fix.
       #if(CMAKE_MAKE_PROGRAM MATCHES "make")
-      if(CMAKE_MAKE_PROGRAM MATCHES "make" AND NOT cmr_lib_NAME EQUAL "Boost")
+      if(CMAKE_MAKE_PROGRAM MATCHES "make" AND NOT lib_NAME EQUAL "Boost")
 
         if(NOT cmr_BUILD_MULTIPROC_CNT)
           include(ProcessorCount) # ProcessorCount
@@ -267,10 +259,10 @@ function(cmr_lib_cmaker_main)
 
   set(cmr_LIB_VARS
     # Args for cmr_lib_cmaker_main().
-    LIBCMAKER_SRC_DIR
+    lib_LibCMaker_DIR
     cmr_CMAKE_MIN_VER
 
-    cmr_lib_NAME
+    lib_NAME
     lib_VERSION
     lib_COMPONENTS
     lib_LANGUAGES
@@ -363,8 +355,7 @@ function(cmr_lib_cmaker_main)
     # Configure lib.
     file(MAKE_DIRECTORY ${lib_BUILD_DIR})
     execute_process(
-      COMMAND
-        ${CMAKE_COMMAND} ${LIBCMAKER_SRC_DIR} ${cmr_CMAKE_ARGS}
+      COMMAND ${CMAKE_COMMAND} ${lib_LibCMaker_DIR} ${cmr_CMAKE_ARGS}
       WORKING_DIRECTORY ${lib_BUILD_DIR}
       RESULT_VARIABLE configure_RESULT
     )
