@@ -38,6 +38,7 @@ function(cmr_find_package)
     LibCMaker_DIR NAME VERSION LIB_DIR
     # Optional args.
     FIND_MODULE_NAME CUSTOM_LOGIC_FILE
+    DOWNLOAD_DIR UNPACKED_DIR BUILD_DIR
   )
   set(multiValueArgs
     # Optional args.
@@ -117,15 +118,30 @@ function(cmr_find_package)
     list(APPEND CMAKE_MODULE_PATH "${lib_func_DIR}")
   endif()
 
-  if(NOT cmr_DOWNLOAD_DIR)
-    set(cmr_DOWNLOAD_DIR ${CMAKE_CURRENT_BINARY_DIR}/download)
+  if(find_DOWNLOAD_DIR)
+    set(cmr_DOWNLOAD_DIR ${find_DOWNLOAD_DIR})
+  else()
+    if(NOT cmr_DOWNLOAD_DIR)
+      set(cmr_DOWNLOAD_DIR ${CMAKE_CURRENT_BINARY_DIR}/download)
+    endif()
   endif()
-  if(NOT cmr_UNPACKED_DIR)
-    set(cmr_UNPACKED_DIR ${cmr_DOWNLOAD_DIR}/unpacked)
+
+  if(find_UNPACKED_DIR)
+    set(cmr_UNPACKED_DIR ${find_UNPACKED_DIR})
+  else()
+    if(NOT cmr_UNPACKED_DIR)
+      set(cmr_UNPACKED_DIR ${cmr_DOWNLOAD_DIR}/unpacked)
+    endif()
   endif()
-  if(NOT cmr_BUILD_DIR)
-    set(cmr_BUILD_DIR ${CMAKE_CURRENT_BINARY_DIR}/build_LibCMaker)
+
+  if(find_BUILD_DIR)
+    set(cmr_BUILD_DIR ${find_BUILD_DIR})
+  else()
+    if(NOT cmr_BUILD_DIR)
+      set(cmr_BUILD_DIR ${CMAKE_CURRENT_BINARY_DIR}/build_LibCMaker)
+    endif()
   endif()
+
   set(lib_BUILD_DIR ${cmr_BUILD_DIR}/build_${find_NAME})
 
 
