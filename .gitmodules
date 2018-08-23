@@ -28,6 +28,9 @@
 [submodule "libs/LibCMaker_SQLite3"]
 	path = libs/LibCMaker_SQLite3
 	url = git@bitbucket.org:libcmaker/libcmaker_sqlite3.git
+[submodule "libs/LibCMaker_SQLiteORM"]
+	path = libs/LibCMaker_SQLiteORM
+	url = git@bitbucket.org:libcmaker/libcmaker_sqliteorm.git
 [submodule "libs/LibCMaker_STLCache"]
 	path = libs/LibCMaker_STLCache
 	url = git@bitbucket.org:libcmaker/libcmaker_stlcache.git
