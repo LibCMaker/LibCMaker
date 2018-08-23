@@ -67,7 +67,7 @@ function(cmr_get_version_parts version out_MAJOR out_MINOR out_PATCH out_TWEAK)
   else()
     set(tweak "0")
   endif()
-  
+
   set(${out_MAJOR} "${major}" PARENT_SCOPE)
   set(${out_MINOR} "${minor}" PARENT_SCOPE)
   set(${out_PATCH} "${patch}" PARENT_SCOPE)
