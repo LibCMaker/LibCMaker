@@ -24,7 +24,7 @@
 include(CMakeParseArguments)  # cmake_parse_arguments()
 
 function(cmr_find_package)
-  set(cmr_CMAKE_MIN_VER 3.3)
+  set(cmr_CMAKE_MIN_VER 3.4)
   cmake_minimum_required(VERSION ${cmr_CMAKE_MIN_VER})
 
 
