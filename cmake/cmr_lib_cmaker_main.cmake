@@ -240,19 +240,27 @@ function(cmr_lib_cmaker_main)
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /MP${cmr_BUILD_MULTIPROC_CNT}")
       endif()
 
-      # TODO: LibCMaker_Boost can not be builded with -j ! It need fix.
-      #if(CMAKE_MAKE_PROGRAM MATCHES "make")
-      if(CMAKE_MAKE_PROGRAM MATCHES "make" AND NOT lib_NAME EQUAL "Boost")
+      if(CMAKE_MAKE_PROGRAM MATCHES "make"
+          OR CMAKE_MAKE_PROGRAM MATCHES "ninja")
 
-        if(NOT cmr_BUILD_MULTIPROC_CNT)
-          include(ProcessorCount) # ProcessorCount
-          ProcessorCount(CPU_CNT)
-          if(CPU_CNT GREATER 0)
-            set(cmr_BUILD_MULTIPROC_CNT ${CPU_CNT})
-          endif()
-        endif()
+#        if(NOT cmr_BUILD_MULTIPROC_CNT)
+#          include(ProcessorCount)  # ProcessorCount()
+#          ProcessorCount(CPU_CNT)
+#          if(CPU_CNT GREATER 0)
+#            set(cmr_BUILD_MULTIPROC_CNT ${CPU_CNT})
+#          endif()
+#        endif()
 
         set(tool_options "-j${cmr_BUILD_MULTIPROC_CNT}")
+        if(CMAKE_MAKE_PROGRAM MATCHES "ninja" AND NOT cmr_BUILD_MULTIPROC_CNT)
+          set(tool_options "")
+        endif()
+      endif()
+
+    else()  # if(NOT cmr_BUILD_MULTIPROC)
+      if(CMAKE_MAKE_PROGRAM MATCHES "make"
+          OR CMAKE_MAKE_PROGRAM MATCHES "ninja")
+        set(tool_options "-j1")
       endif()
     endif()
   endif()
