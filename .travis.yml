@@ -1,0 +1,31 @@
+# === Common ===
+
+sudo: false
+
+language: cpp
+
+
+# === Build matrix ===
+
+jobs:
+  include:
+# Trigger the building of the dependent libs.
+    - stage: Trigger downstream
+
+      before_install:
+        - gem install travis
+
+      before_script:
+        - cd ${TRAVIS_BUILD_DIR}/ci/travis
+
+      script:
+        # NOTE: LibCMaker lib triggers.
+        - ./trigger.sh LibCMaker LibCMaker_GoogleTest master $TRAVIS_ACCESS_TOKEN
+
+
+notifications:
+  email:
+    recipients:
+      - nfeodonit@yandex.com
+    on_success: change
+    on_failure: always
