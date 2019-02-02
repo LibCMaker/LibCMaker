@@ -11,6 +11,7 @@ jobs:
   include:
 # Trigger the building of the dependent libs.
     - stage: Trigger downstream
+      name: "Trigger downstream"
 
       before_install:
         - gem install travis
