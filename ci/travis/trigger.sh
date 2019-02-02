@@ -14,8 +14,8 @@ TRAVIS_ACCESS_TOKEN=$4
 MESSAGE=$5
 
 # fetch trigger-travis script and make executable
-curl -LO "https://raw.github.com/stephanmg/travis-dependent-builds/master/trigger-travis.sh"
-chmod +x trigger-travis.sh
+#curl -LO "https://raw.github.com/stephanmg/travis-dependent-builds/master/trigger-travis.sh"
+#chmod +x trigger-travis.sh
 
 # check for correct input
 #if [ $# -lt 4 ] ; then
@@ -26,7 +26,7 @@ chmod +x trigger-travis.sh
 #if [[ ($TRAVIS_BRANCH == $3) &&
 if [[ ($TRAVIS_PULL_REQUEST == false) &&
    ( (! $TRAVIS_JOB_NUMBER == *.*) || ($TRAVIS_JOB_NUMBER == *.1) ) ]] ; then
-   chmod +x trigger-travis.sh
+#   chmod +x trigger-travis.sh
    ./trigger-travis.sh $1 $2 $4 $3 $5
 fi
 
