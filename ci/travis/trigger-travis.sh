@@ -10,9 +10,9 @@ BRANCH=$4
 MESSAGE=$5
 
 # login to travis and get token
-travis login --skip-completion-check --github-token $TRAVIS_ACCESS_TOKEN
-travis whoami --skip-completion-check
-TOKEN=$(travis token --skip-completion-check)
+travis login --com --skip-completion-check --github-token $TRAVIS_ACCESS_TOKEN
+travis whoami --com --skip-completion-check
+TOKEN=$(travis token --com --skip-completion-check)
 IFS=' ' read -r -a array <<< "$TOKEN"
 TOKEN=${array[${#array[@]}-1]}
 
@@ -26,7 +26,7 @@ fi
 # for debugging
 echo "USER=$USER"
 echo "REPO=$REPO"
-echo "TOKEN: ${array[${#array[@]}-1]}"
+#echo "TOKEN: ${array[${#array[@]}-1]}"
 echo "BRANCH=$BRANCH"
 echo "MESSAGE=$MESSAGE"
 
@@ -37,15 +37,16 @@ BODY="{
   $MESSAGE
 }}"
 
-# make a POST request with curl (note %2F could be replaced with 
-# / and additional curl arguments, however this works too!)
+# Make a POST request with curl (note %2F).
+# The %2F in the request URL is required so that the owner and repository name
+# in the repository slug are interpreted as a single URL segment.
 curl -s -X POST \
   -H "Content-Type: application/json" \
   -H "Accept: application/json" \
   -H "Travis-API-Version: 3" \
   -H "Authorization: token ${TOKEN}" \
   -d "$BODY" \
-  https://api.travis-ci.org/repo/${USER}%2F${REPO}/requests \
+  https://api.travis-ci.com/repo/${USER}%2F${REPO}/requests \
   | tee /tmp/travis-request-output.$$.txt
 
 if grep -q '"@type": "error"' /tmp/travis-request-output.$$.txt; then
