@@ -16,10 +16,11 @@ jobs:
       before_install:
         - gem install travis
 
-      before_script:
-        - cd ${TRAVIS_BUILD_DIR}/ci/travis
-
       script:
+        - cp ${TRAVIS_BUILD_DIR}/ci/travis/trigger.sh ${TRAVIS_BUILD_DIR}/
+        - cp ${TRAVIS_BUILD_DIR}/ci/travis/trigger-travis.sh ${TRAVIS_BUILD_DIR}/
+        - cd ${TRAVIS_BUILD_DIR}
+
         # LibCMaker   GoogleTest  AGG
         #
         #                         Dirent      FontConfig
@@ -41,5 +42,5 @@ notifications:
   email:
     recipients:
       - nfeodonit@yandex.com
-    on_success: change
+    on_success: always
     on_failure: always
