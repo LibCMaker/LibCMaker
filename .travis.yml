@@ -20,6 +20,19 @@ jobs:
         - cd ${TRAVIS_BUILD_DIR}/ci/travis
 
       script:
+        # LibCMaker   GoogleTest  AGG
+        #
+        #                         Dirent      FontConfig
+        #                         Expat       FontConfig
+        #
+        #                         HarfBuzz    FreeType    FontConfig
+        #
+        #                         ICU         Boost
+        #                                     SQLite3     SQLiteModernCPP
+        #
+        #                         STLCache
+        #                         wxWidgets
+
         # NOTE: LibCMaker lib triggers.
         - ./trigger.sh LibCMaker LibCMaker_GoogleTest master $TRAVIS_ACCESS_TOKEN
 

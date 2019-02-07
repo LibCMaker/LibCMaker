@@ -20,7 +20,8 @@ TOKEN=${array[${#array[@]}-1]}
 if [ $# -eq 5 ] ; then
     MESSAGE=",\"message\": \"$5\""
 elif [ -n "$TRAVIS_REPO_SLUG" ] ; then
-    MESSAGE=",\"message\": \"Triggered from upstream build of $TRAVIS_REPO_SLUG by commit "`git rev-parse --short HEAD`"\""
+#    MESSAGE=",\"message\": \"Triggered from upstream build of $TRAVIS_REPO_SLUG by commit "`git rev-parse --short HEAD`"\""
+    MESSAGE=",\"message\": \"Commit "`git rev-parse --short HEAD`" from $TRAVIS_REPO_SLUG triggered this build.\""
 fi
 
 # for debugging
