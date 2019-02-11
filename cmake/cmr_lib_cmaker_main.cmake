@@ -228,29 +228,21 @@ function(cmr_lib_cmaker_main)
     if(cmr_BUILD_MULTIPROC)
       if(NOT cmr_BUILD_MULTIPROC_CNT)
         set(cmr_BUILD_MULTIPROC_CNT "")
+        include(ProcessorCount)  # ProcessorCount()
+        ProcessorCount(CPU_CNT)
+        if(CPU_CNT GREATER 0)
+          set(cmr_BUILD_MULTIPROC_CNT ${CPU_CNT})
+        endif()
       endif()
 
       # Enable /MP flag for Visual Studio 2008 and greater.
       if(MSVC AND MSVC_VERSION GREATER 1400)
-        # Just specify /MP by itself to have VS's build system automatically
-        # select how many threads to compile on
-        # (which usually is the maximum number of threads available).
-
         set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /MP${cmr_BUILD_MULTIPROC_CNT}")
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /MP${cmr_BUILD_MULTIPROC_CNT}")
       endif()
 
       if(CMAKE_MAKE_PROGRAM MATCHES "make"
           OR CMAKE_MAKE_PROGRAM MATCHES "ninja")
-
-#        if(NOT cmr_BUILD_MULTIPROC_CNT)
-#          include(ProcessorCount)  # ProcessorCount()
-#          ProcessorCount(CPU_CNT)
-#          if(CPU_CNT GREATER 0)
-#            set(cmr_BUILD_MULTIPROC_CNT ${CPU_CNT})
-#          endif()
-#        endif()
-
         set(tool_options "-j${cmr_BUILD_MULTIPROC_CNT}")
         if(CMAKE_MAKE_PROGRAM MATCHES "ninja" AND NOT cmr_BUILD_MULTIPROC_CNT)
           set(tool_options "")
@@ -287,6 +279,7 @@ function(cmr_lib_cmaker_main)
 
     cmr_PRINT_DEBUG
     cmr_BUILD_MULTIPROC
+    cmr_BUILD_MULTIPROC_CNT
     cmr_USE_MSVC_STATIC_RUNTIME
 
     SKIP_INSTALL_ALL
