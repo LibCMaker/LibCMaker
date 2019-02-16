@@ -2,7 +2,7 @@
 
 LibCMaker is the build system based on the CMake.
 
-At the moment, the assembly of all libraries is tested for Linux, Windows and Android (see notes below).
+At the moment, the assembly of all libraries is tested for Linux, Windows and Android (also see notes below).
 
 The repository contains a common LibCMaker build scripts.
 
@@ -36,6 +36,8 @@ Linux -- Ubuntu Xenial 16.04, CMake 3.4.0, Make, Matrix: [GCC 5.4.0 | Clang 7.0.
 Windows -- Windows Server version 1803, CMake 3.11.0, MSVC 2017, Release, Matrix: [x64, x32, WinXP], [shared, static].
 
 Android -- Ubuntu Xenial 16.04, CMake 3.6.0, Android NDK r19, Clang 8.0.2, Ninja, Release, Matrix: [shared + c++_shared, static + c++_static], [armeabi-v7a + API 16, arm64-v8a + API 21, x86 + API 16, x86_64 + API 21].
+
+The simple tests with GTest are compiling and running for testing the library work on the target platform (for Android is released only compiling).
 
 Note: Dirent is tested only on Windows.
 
