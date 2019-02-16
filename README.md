@@ -39,6 +39,8 @@ Note: Dirent is tested only on Windows.
 
 Note: wxWidgets is tested only on Linux and on Windows.
 
+Issues: the shared Windows build for FontConfig is not released.
+
 
  Library   | Systems   | Built with dependencies
  --------- | --------- | -------------------------
