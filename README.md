@@ -2,6 +2,8 @@
 
 LibCMaker is the build system based on the CMake.
 
+At the moment, the assembly of all libraries is tested for Linux, Windows and Android (see notes below).
+
 The repository contains a common LibCMaker build scripts.
 
 ## Some explanations
