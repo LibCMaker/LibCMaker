@@ -42,8 +42,8 @@ Note: wxWidgets is tested only on Linux and on Windows.
 Issues: the shared Windows build for FontConfig is not released.
 
 
- Library   | Systems   | Built with dependencies
- --------- | --------- | -------------------------
+ Library   | Status   | Built with dependencies
+ --------- | -------- | -------------------------
  [LibCMaker_AGG](https://github.com/LibCMaker/LibCMaker_AGG) <br> [AGG site](http://www.antigrain.com/) | [![Build Status](https://travis-ci.com/LibCMaker/LibCMaker_AGG.svg?branch=master)](https://travis-ci.com/LibCMaker/LibCMaker_AGG) | GTest
  [LibCMaker_Boost](https://github.com/LibCMaker/LibCMaker_Boost) <br> [Boost site](https://www.boost.org/) | [![Build Status](https://travis-ci.com/LibCMaker/LibCMaker_Boost.svg?branch=master)](https://travis-ci.com/LibCMaker/LibCMaker_Boost) | GTest, ICU
  [LibCMaker_Dirent](https://github.com/LibCMaker/LibCMaker_Dirent) <br> [Dirent site](https://github.com/tronkko/dirent) | [![Build Status](https://travis-ci.com/LibCMaker/LibCMaker_Dirent.svg?branch=master)](https://travis-ci.com/LibCMaker/LibCMaker_Dirent) | GTest
