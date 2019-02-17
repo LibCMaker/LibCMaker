@@ -43,6 +43,8 @@ Note: Dirent is tested only on Windows.
 
 Note: wxWidgets is tested only on Linux and on Windows.
 
+Note: SQLiteModernCPP requires CMake 3.8+ and CXX_STANDARD=17+ for Android NDK r18+.
+
 Issues: the shared Windows build for AGG is not released.
 
 
