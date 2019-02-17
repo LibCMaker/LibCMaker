@@ -27,6 +27,20 @@ and the compile commands for the different platforms in the
 LibCMaker_<LibName>/.travis.yml
 ```
 
+## Notes
+
+1. Dirent is tested only on Windows.
+
+2. wxWidgets is tested only on Linux and on Windows.
+
+3. SQLiteModernCPP requires CMake 3.8+ and CXX_STANDARD=17+ for Android NDK r18+.
+
+
+## Issues
+
+The shared Windows build for AGG is not released.
+
+
 ## Build status
 
 All libraries with Travis CI are tested in the following configurations:
@@ -38,14 +52,6 @@ Windows -- Windows Server version 1803, CMake 3.11.0, MSVC 2017, Release, Matrix
 Android -- Ubuntu Xenial 16.04, CMake 3.6.0, Android NDK r19, Clang 8.0.2, Ninja, Release, Matrix: [shared + c++_shared, static + c++_static], [armeabi-v7a + API 16, arm64-v8a + API 21, x86 + API 16, x86_64 + API 21].
 
 The simple tests with GTest are compiling and running for testing the library work on the target platform (test running is not released for Android, only compiling of tests).
-
-Note: Dirent is tested only on Windows.
-
-Note: wxWidgets is tested only on Linux and on Windows.
-
-Note: SQLiteModernCPP requires CMake 3.8+ and CXX_STANDARD=17+ for Android NDK r18+.
-
-Issues: the shared Windows build for AGG is not released.
 
 
  Library   | Status   | Built with dependencies
