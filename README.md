@@ -37,7 +37,7 @@ Windows -- Windows Server version 1803, CMake 3.11.0, MSVC 2017, Release, Matrix
 
 Android -- Ubuntu Xenial 16.04, CMake 3.6.0, Android NDK r19, Clang 8.0.2, Ninja, Release, Matrix: [shared + c++_shared, static + c++_static], [armeabi-v7a + API 16, arm64-v8a + API 21, x86 + API 16, x86_64 + API 21].
 
-The simple tests with GTest are compiling and running for testing the library work on the target platform (for Android is released only compiling).
+The simple tests with GTest are compiling and running for testing the library work on the target platform (test running is not released for Android, only compiling of tests).
 
 Note: Dirent is tested only on Windows.
 
@@ -59,7 +59,7 @@ Issues: the shared Windows build for AGG is not released.
  [LibCMaker_GoogleTest](https://github.com/LibCMaker/LibCMaker_GoogleTest) <br> [GoogleTest site](https://github.com/google/googletest) | [![Build Status](https://travis-ci.com/LibCMaker/LibCMaker_GoogleTest.svg?branch=master)](https://travis-ci.com/LibCMaker/LibCMaker_GoogleTest) |
  [LibCMaker_HarfBuzz](https://github.com/LibCMaker/LibCMaker_HarfBuzz) <br> [HarfBuzz site](http://www.harfbuzz.org/) | [![Build Status](https://travis-ci.com/LibCMaker/LibCMaker_HarfBuzz.svg?branch=master)](https://travis-ci.com/LibCMaker/LibCMaker_HarfBuzz) | GTest
  [LibCMaker_ICU](https://github.com/LibCMaker/LibCMaker_ICU) <br> [ICU site](http://site.icu-project.org/) | [![Build Status](https://travis-ci.com/LibCMaker/LibCMaker_ICU.svg?branch=master)](https://travis-ci.com/LibCMaker/LibCMaker_ICU) | GTest
- [LibCMaker_SQLite3](https://github.com/LibCMaker/LibCMaker_SQLite3) <br> [SQLite3 site](https://www.sqlite.org/) | [![Build Status](https://travis-ci.com/LibCMaker/LibCMaker_SQLite3.svg?branch=master)](https://travis-ci.com/LibCMaker/LibCMaker_SQLite3) | GTest, ICU
+ [LibCMaker_SQLite3](https://github.com/LibCMaker/LibCMaker_SQLite3) <br> [SQLite3 site](https://www.sqlite.org/) | [![Build Status](https://travis-ci.com/LibCMaker/LibCMaker_SQLite3.svg?branch=master)](https://travis-ci.com/LibCMaker/LibCMaker_SQLite3) | GTest, ICU (only Linux and Windows)
  [LibCMaker_SQLiteModernCPP](https://github.com/LibCMaker/LibCMaker_SQLiteModernCPP) <br> [SQLiteModernCPP site](https://github.com/SqliteModernCpp/sqlite_modern_cpp) | [![Build Status](https://travis-ci.com/LibCMaker/LibCMaker_SQLiteModernCPP.svg?branch=master)](https://travis-ci.com/LibCMaker/LibCMaker_SQLiteModernCPP) | GTest, SQLite3
  [LibCMaker_STLCache](https://github.com/LibCMaker/LibCMaker_STLCache) <br> [STL::Cache site](https://github.com/akashihi/stlcache) | [![Build Status](https://travis-ci.com/LibCMaker/LibCMaker_STLCache.svg?branch=master)](https://travis-ci.com/LibCMaker/LibCMaker_STLCache) | GTest
  [LibCMaker_wxWidgets](https://github.com/LibCMaker/LibCMaker_wxWidgets) <br> [wxWidgets site](https://www.wxwidgets.org/) | [![Build Status](https://travis-ci.com/LibCMaker/LibCMaker_wxWidgets.svg?branch=master)](https://travis-ci.com/LibCMaker/LibCMaker_wxWidgets) | GTest
