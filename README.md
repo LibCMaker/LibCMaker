@@ -38,18 +38,20 @@ LibCMaker_<LibName>/.travis.yml
 
 ## Issues
 
-The shared Windows build for AGG is not released.
+1. The shared Windows build for AGG is not released.
+
+2. If Boost is building with the ICU for Android and Windows, then the message "has_icu......yes" is not displayed due to the patch of the file '<boost>libs/regex/build/Jamfile.v2'.
 
 
 ## Build status
 
 All libraries with Travis CI are tested in the following configurations:
 
-Linux -- Ubuntu Xenial 16.04, CMake 3.4.0, Make, Matrix: [GCC 5.4.0 | Clang 7.0.0], [Debug, Release], [shared, static].
+Linux -- Ubuntu Xenial 16.04, CMake 3.4.0, Make, Matrix: [GCC 5.4.0 | Clang 7.0.0], [Debug | Release], [shared | static].
 
-Windows -- Windows Server version 1803, CMake 3.11.0, MSVC 2017, Release, Matrix: [x64, x32, WinXP], [shared, static].
+Windows -- Windows Server version 1803, CMake 3.11.0, MSVC 2017, Release, Matrix: [x64 | x32 | WinXP], [shared | static].
 
-Android -- Ubuntu Xenial 16.04, CMake 3.6.0, Android NDK r19, Clang 8.0.2, Ninja, Release, Matrix: [shared + c++_shared, static + c++_static], [armeabi-v7a + API 16, arm64-v8a + API 21, x86 + API 16, x86_64 + API 21].
+Android -- Ubuntu Xenial 16.04, CMake 3.6.0, Android NDK r19, Clang 8.0.2, Ninja, Release, Matrix: [shared + c++_shared | static + c++_static], [armeabi-v7a + API 16 | arm64-v8a + API 21 | x86 + API 16 | x86_64 + API 21].
 
 The simple tests with GTest are compiling and running for testing the library work on the target platform (test running is not released for Android, only compiling of tests).
 

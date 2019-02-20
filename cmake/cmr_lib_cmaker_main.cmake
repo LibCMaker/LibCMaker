@@ -374,7 +374,7 @@ function(cmr_lib_cmaker_main)
         list(LENGTH CMAKE_CONFIGURATION_TYPES config_cnt)
         if(config_cnt GREATER 1)
           cmr_print_error(
-            "Please set only one configuration (Debug, Release, ...) in CMAKE_CONFIGURATION_TYPES."
+            "Please set only one configuration in CMAKE_CONFIGURATION_TYPES. Debug or Release are supported."
           )
         endif()
         list(GET CMAKE_CONFIGURATION_TYPES 0 config_type)
