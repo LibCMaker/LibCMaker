@@ -40,7 +40,7 @@ LibCMaker_<LibName>/.travis.yml
 
 1. The shared Windows build for AGG is not released.
 
-2. If Boost is building with the ICU for Android and Windows, then the message "has_icu......yes" is not displayed due to the patch of the file '<boost>libs/regex/build/Jamfile.v2'.
+2. If Boost is building with the ICU for Android and Windows, then the message "has_icu......yes" is not displayed due to the patch of the file '(boost-src)/libs/regex/build/Jamfile.v2'.
 
 
 ## Build status
