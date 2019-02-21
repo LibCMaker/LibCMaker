@@ -42,6 +42,12 @@ LibCMaker_<LibName>/.travis.yml
 
 2. If Boost is building with the ICU for Android and Windows, then the message "has_icu......yes" is not displayed due to the patch of the file '(boost-src)/libs/regex/build/Jamfile.v2'.
 
+3. Boost is building without ICU on Travis CI for the static Windows x64 due to the failed test running on Travis CI with the following configuration:
+  - Boost 1.68.0, ICU 61.1 or 58.2
+  - Windows Server 1803
+  - MSVC 19.16.27023.1
+Test running is successful on the machine with Windows 7 Pro SP1 x64 (6.1.7601) and MSVC 19.16.27023.1.
+
 
 ## Build status
 
@@ -53,7 +59,7 @@ Windows -- Windows Server version 1803, CMake 3.11.0, MSVC 2017, Release, Matrix
 
 Android -- Ubuntu Xenial 16.04, CMake 3.6.0, Android NDK r19, Clang 8.0.2, Ninja, Release, Matrix: [shared + c++_shared | static + c++_static], [armeabi-v7a + API 16 | arm64-v8a + API 21 | x86 + API 16 | x86_64 + API 21].
 
-The simple tests with GTest are compiling and running for testing the library work on the target platform (test running is not released for Android, only compiling of tests).
+The simple tests with Google Test are compiling and running for testing the library work on the target platform (test running is not released for Android, only compiling of tests).
 
 
  Library   | Status   | Built with dependencies
