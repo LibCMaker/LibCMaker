@@ -36,7 +36,7 @@ LibCMaker_<LibName>/.travis.yml
 3. SQLiteModernCPP requires CMake 3.8+ and CXX_STANDARD=17+ for Android NDK r18+.
 
 
-## Issues
+## Known build issues
 
 1. The shared Windows build for AGG is not released.
 
