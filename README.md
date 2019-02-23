@@ -48,6 +48,8 @@ LibCMaker_<LibName>/.travis.yml
 
 5. These configurations are disabled on AppVeyor for Expat: MinGW-w64 x64 shared.
 
+6. These configurations are disabled on AppVeyor for FontConfig: MinGW-w64, [shared, static].
+
 
 ## Build status
 
