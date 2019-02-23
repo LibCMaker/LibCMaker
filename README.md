@@ -44,6 +44,10 @@ LibCMaker_<LibName>/.travis.yml
 
 3. (Build disabled on Travis CI.) Boost is building without ICU on Travis CI for the static Windows x64 due to the failed test running on Travis CI with the following configuration: Boost 1.68.0, ICU 61.1 or 58.2, Windows Server 1803, MSVC 19.16.27023.1. Test running is successful on the machine with Windows 7 Pro SP1 x64 (6.1.7601) and MSVC 19.16.27023.1.
 
+4. These configurations are disabled on AppVeyor for Boost: [MinGW-w64 | MSVC 2015], [shared, static].
+
+5. These configurations are disabled on AppVeyor for Expat: MinGW-w64 x64 shared.
+
 
 ## Build status
 
