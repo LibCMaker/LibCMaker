@@ -25,6 +25,7 @@ LibCMaker_<LibName>/samples/TestCompileWith<LibName>
 and the compile commands for the different platforms in the
 ```
 LibCMaker_<LibName>/.travis.yml
+LibCMaker_<LibName>/.appveyor.yml
 ```
 
 ## Notes
@@ -54,9 +55,9 @@ Following configurations are in Travis CI (2019-02-23):
 
 1. Linux -- Ubuntu Xenial 16.04, CMake 3.4.0, Make, Matrix: [GCC 5.4.0 | Clang 7.0.0], [Debug | Release], [shared | static].
 
-2. [Disabled] Windows -- Windows Server 1803, CMake 3.11.0, MSVC 2017, MSVC 19.16.27023.1, Release, Matrix: [x64 | x32 | WinXP], [shared | static].
+2. Android -- Ubuntu Xenial 16.04, CMake 3.6.0, Android NDK r19, Clang 8.0.2, Ninja, Release, Matrix: [shared + c++_shared | static + c++_static], [armeabi-v7a + API 16 | arm64-v8a + API 21 | x86 + API 16 | x86_64 + API 21].
 
-3. Android -- Ubuntu Xenial 16.04, CMake 3.6.0, Android NDK r19, Clang 8.0.2, Ninja, Release, Matrix: [shared + c++_shared | static + c++_static], [armeabi-v7a + API 16 | arm64-v8a + API 21 | x86 + API 16 | x86_64 + API 21].
+3. [Disabled] Windows -- Windows Server 1803, CMake 3.11.0, MSVC 2017, MSVC 19.16.27023.1, Release, Matrix: [x64 | x32 | WinXP], [shared | static].
 
 
 Following configurations are in AppVeyor (2019-02-23):
@@ -68,7 +69,7 @@ Following configurations are in AppVeyor (2019-02-23):
 3. Windows 6.3.9600, CMake 3.11.0, MSVC 2015, MSVC 19.0.24241.7, Release, x64, Matrix: [shared | static].
 
 
-The simple tests with Google Test are compiling and running for testing the library work on the target platform (test running is not released for Android, only compiling of tests).
+The simple tests with Google Test are compiling and running for testing the library work on the target platform (test running is not released for Android, only compiling of the tests).
 
 
  Library   | Travis CI   | AppVeyor   | Built with dependencies
