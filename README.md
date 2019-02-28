@@ -40,7 +40,7 @@ LibCMaker_<LibName>/.travis.yml
 
 1. If Boost is building with the ICU for Android and Windows, then the message "has_icu......yes" is not displayed due to the patch of the file '(boost-src)/libs/regex/build/Jamfile.v2'.
 
-2. (Build disabled on Travis CI.) Boost is building without ICU on Travis CI for the static Windows x64 due to the failed test running on Travis CI with the following configuration: Boost 1.68.0, ICU 61.1 or 58.2, Windows Server 1803, MSVC 19.16.27023.1. Test running is successful on the machine with Windows 7 Pro SP1 x64 (6.1.7601) and MSVC 19.16.27023.1.
+2. Boost is building without ICU on Travis CI and AppVeyor for the Windows x64 static because of the failed test running with the following configurations: Boost 1.68.0, [ICU 61.1, ICU 58.2], [Windows Server 1803, Windows 10.0.14393], [MSVC 19.16.27023.1, MSVC 19.16.27026.1].
 
 3. These configurations are disabled on AppVeyor for Boost: MSVC 2015.
 
