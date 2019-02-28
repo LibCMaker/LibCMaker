@@ -34,7 +34,9 @@ LibCMaker_<LibName>/.appveyor.yml
 
 2. wxWidgets is tested only on Linux and on Windows.
 
-3. SQLiteModernCPP requires CMake 3.8+ and CXX_STANDARD=17+ for Android NDK r18+.
+3. wxWidgets requires CMake 3.5+ for MSVC and MinGW-w64.
+
+4. SQLiteModernCPP requires CMake 3.8+ and CXX_STANDARD=17+ for Android NDK r18+.
 
 
 ## Known build issues
