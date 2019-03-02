@@ -51,7 +51,11 @@ LibCMaker_<LibName>/.appveyor.yml
 
 2. Boost is building without ICU on Travis CI and AppVeyor for the Windows x64 static because of the failed test running with the following configurations: Boost 1.68.0, [ICU 61.1, ICU 58.2], [Windows Server 1803, Windows 10.0.14393], [MSVC 19.16.27023.1, MSVC 19.16.27026.1].
 
-3. These configurations are disabled on AppVeyor for Boost: MSVC 2015.
+3. If Boost is building with MSVC 2015, then in the Boost.Build rule
+```
+using msvc : [version] : [c++-compile-command] : [compiler options] ;
+```
+can not be explicitly specified "c++-compile-command", build will be failed. This affects to LibCMaker_Boost, when one compiler detected by CMake is used for other CMake subprojects, and the compiler detected by the 'b2' tool is used for Boost (only in the case of using MSVC 2015). But they should be the same in the case of MSVC 2015.
 
 
 ## Build status
