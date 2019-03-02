@@ -49,7 +49,7 @@ LibCMaker_<LibName>/.appveyor.yml
 
 1. If Boost is building with the ICU for Android and Windows, then the message "has_icu......yes" is not displayed due to the patch of the file '(boost-src)/libs/regex/build/Jamfile.v2'.
 
-2. Boost is building without ICU on Travis CI and AppVeyor for the Windows x64 static because of the failed test running with the following configurations: Boost 1.68.0, [ICU 61.1, ICU 58.2], [Windows Server 1803, Windows 10.0.14393], [MSVC 19.16.27023.1, MSVC 19.16.27026.1].
+2. Boost is building without ICU on Travis CI and AppVeyor for the Windows x64 static because of the failed test running with the following configurations: Boost 1.68.0, [ICU 61.1, ICU 58.2], [Windows Server 1803, Windows 10.0.14393], [MSVC 2017 19.16.27023.1, MSVC 2017 19.16.27026.1, MSVC 2015 19.0.24241.7].
 
 3. If Boost is building with MSVC 2015, then in the Boost.Build rule
 ```
