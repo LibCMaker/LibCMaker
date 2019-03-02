@@ -36,7 +36,7 @@ LibCMaker_<LibName>/.appveyor.yml
 
 3. wxWidgets requires CMake 3.5+ for MSVC and MinGW-w64.
 
-4. Android NDK r18+ has not 'std::experimental' namespace for C++14. This affects to Boost and SQLiteModernCPP. In this case Boost can be comppiled with C++11 and C++17, SQLiteModernCPP can be compiled only with C++17. C++17 requires CMake 3.8+ and CXX_STANDARD=17.
+4. Android NDK r18+ does not have 'std::experimental' namespace for C++14. This affects to Boost and SQLiteModernCPP. In this case Boost can be comppiled with C++11 and C++17, SQLiteModernCPP can be compiled only with C++17. C++17 requires CMake 3.8+ and CXX_STANDARD=17.
 
 
 ## Known build issues
