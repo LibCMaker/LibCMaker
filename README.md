@@ -38,7 +38,7 @@ LibCMaker_<LibName>/.appveyor.yml
 
 4. Android NDK r18+ does not have 'std::experimental' namespace for C++14. This affects to Boost and SQLiteModernCPP. In this case Boost can be comppiled with C++11 and C++17, SQLiteModernCPP can be compiled only with C++17. C++17 requires CMake 3.8+ and CXX_STANDARD=17.
 
-5. MSVC does not have flags for C++11. MSVC 2015 Update 3 has /std:c++14 and /std:c++latest, no compiler flags is used by default. MSVC 2017 has /std:c++14, /std:c++17 and /std:c++latest, /std:c++14 is used by default. If in the CMake project CXX_STANDARD=11 then MSVC 2015 does not specify any C++ standard and MSVC 2017 specifies C++14.
+5. MSVC does not have the flags for C++11. MSVC 2015 Update 3 has /std:c++14 and /std:c++latest, no compiler flags is used by default. MSVC 2017 has /std:c++14, /std:c++17 and /std:c++latest, /std:c++14 is used by default. If in the CMake project CXX_STANDARD=11 then MSVC 2015 does not specify any C++ standard and MSVC 2017 specifies C++14.
 
 
 ## Known build issues
