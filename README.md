@@ -28,17 +28,21 @@ LibCMaker_<LibName>/.travis.yml
 LibCMaker_<LibName>/.appveyor.yml
 ```
 
-## Notes
+## Notes and requirements.
 
-1. Dirent is tested only on Windows.
+1. LibCMaker requires CMake 3.4+.
 
-2. wxWidgets is tested only on Linux and on Windows.
+2. ICU requires CMake 3.11+ for MSVC and 3.3+ for others.
 
 3. wxWidgets requires CMake 3.5+ for MSVC and MinGW-w64.
 
 4. Android NDK r18+ does not have 'std::experimental' namespace for C++14. This affects to Boost and SQLiteModernCPP. In this case Boost can be comppiled with C++11 and C++17, SQLiteModernCPP can be compiled only with C++17. C++17 requires CMake 3.8+ and CXX_STANDARD=17.
 
-5. MSVC does not have the flags for C++11. MSVC 2015 Update 3 has /std:c++14 and /std:c++latest, no compiler flags is used by default. MSVC 2017 has /std:c++14, /std:c++17 and /std:c++latest, /std:c++14 is used by default. If in the CMake project CXX_STANDARD=11 then MSVC 2015 does not specify any C++ standard and MSVC 2017 specifies C++14.
+5. MSVC does not have the flags for C++11. MSVC 2015 Update 3 has /std:c++14 and /std:c++latest, no flags for C++ standard is used by default. MSVC 2017 has /std:c++14, /std:c++17 and /std:c++latest, /std:c++14 is used by default. If in the CMake project CXX_STANDARD=11 then MSVC 2015 does not specify any C++ standard and MSVC 2017 specifies C++14. This affects to LibCMaker_Boost for the flag, which will or will not be passed to the 'b2' tool.
+
+6. Dirent is tested only on Windows.
+
+7. wxWidgets is tested only on Linux and on Windows.
 
 
 ## Known build issues
