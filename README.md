@@ -49,7 +49,7 @@ LibCMaker_<LibName>/.appveyor.yml
 
 1. If Boost is building with the ICU for Android and Windows, then the message "has_icu......yes" is not displayed due to the patch of the file '(boost-src)/libs/regex/build/Jamfile.v2'.
 
-2. Boost is building without ICU on Travis CI and AppVeyor for the Windows x64 static because of the failed test running with the following configurations: Boost 1.68.0, [ICU 61.1, ICU 58.2], [Windows Server 1803, Windows 10.0.14393], [MSVC 2017 19.16.27023.1, MSVC 2017 19.16.27026.1, MSVC 2015 19.0.24241.7].
+2. Boost is building without ICU on Travis CI and AppVeyor for the Windows x64 static because of the failed test running with the following configurations: [Boost 1.68.0 | Boost 1.69.0], [ICU 58.2 | ICU 61.1 | ICU 63.1], [MSVC 2017 19.16.27023.1 | MSVC 2017 19.16.27026.1 | MSVC 2015 19.0.24241.7], [Windows Server 1803 | Windows 10.0.14393].
 
 3. If Boost is building with MSVC 2015, then in the Boost.Build rule ```using msvc : [version] : [c++-compile-command] : [compiler options] ;``` can not be explicitly specified "c++-compile-command", build will be failed. This affects to LibCMaker_Boost, when one compiler detected by CMake is used for other CMake subprojects, and the compiler detected by the 'b2' tool is used for Boost (only in the case of using MSVC 2015). But they should be the same in the case of MSVC 2015.
 
