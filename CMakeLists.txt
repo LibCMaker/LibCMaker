@@ -40,8 +40,31 @@ if(NOT lib_LANGUAGES)
   message(FATAL_ERROR
     "Please set lib_LANGUAGES with library used languages.")
 endif()
-
 string(REPLACE " " ";" lib_LANGUAGES "${lib_LANGUAGES}")
+
+# To prevent the list expansion on an argument with ';'.
+# Restoring.
+# See also:
+# http://stackoverflow.com/a/20989991
+# http://stackoverflow.com/a/20985057
+if(lib_COMPONENTS)
+  string(REPLACE " " ";" lib_COMPONENTS "${lib_COMPONENTS}")
+endif()
+if(CMAKE_FIND_ROOT_PATH)
+  string(REPLACE " " ";" CMAKE_FIND_ROOT_PATH "${CMAKE_FIND_ROOT_PATH}")
+endif()
+if(CMAKE_PREFIX_PATH)
+  string(REPLACE " " ";" CMAKE_PREFIX_PATH "${CMAKE_PREFIX_PATH}")
+endif()
+if(CMAKE_INCLUDE_PATH)
+  string(REPLACE " " ";" CMAKE_INCLUDE_PATH "${CMAKE_INCLUDE_PATH}")
+endif()
+if(CMAKE_LIBRARY_PATH)
+  string(REPLACE " " ";" CMAKE_LIBRARY_PATH "${CMAKE_LIBRARY_PATH}")
+endif()
+if(CMAKE_PROGRAM_PATH)
+  string(REPLACE " " ";" CMAKE_PROGRAM_PATH "${CMAKE_PROGRAM_PATH}")
+endif()
 
 cmake_minimum_required(VERSION ${cmr_CMAKE_MIN_VER})
 # If not defined lib_LANGUAGES then default languages (C and CXX).

@@ -25,6 +25,12 @@ include(CMakeParseArguments)  # cmake_parse_arguments()
 
 function(cmr_find_package)
   set(cmr_CMAKE_MIN_VER 3.4)
+  if(APPLE)
+    set(cmr_CMAKE_MIN_VER 3.8)
+  endif()
+  if(IOS AND CMAKE_GENERATOR MATCHES "Xcode")
+    set(cmr_CMAKE_MIN_VER 3.15)
+  endif()
   cmake_minimum_required(VERSION ${cmr_CMAKE_MIN_VER})
 
 
@@ -32,6 +38,7 @@ function(cmr_find_package)
   set(options
     # Optional args.
     EXACT QUIET MODULE CONFIG NO_MODULE REQUIRED NOT_USE_VERSION_IN_FIND_PACKAGE
+    BUILD_HOST_TOOLS
   )
   set(oneValueArgs
   # Required args.

@@ -32,7 +32,7 @@ function(cmr_lib_cmaker_main)
     # Optional args.
     CONFIGURE BUILD BUILD_HOST_TOOLS INSTALL
   )
-  # Useful parameters for BUILD_HOST_TOOLS:
+  # Useful vars for BUILD_HOST_TOOLS:
   # HOST_TOOLS_CMAKE_TOOLCHAIN_FILE
   # HOST_TOOLS_CMAKE_GENERATOR
   # HOST_TOOLS_CMAKE_GENERATOR_PLATFORM
@@ -49,12 +49,6 @@ function(cmr_lib_cmaker_main)
     # Optional args.
     DOWNLOAD_DIR
     UNPACKED_DIR
-    # Optional args for cross compilation.
-    HOST_TOOLS_CMAKE_TOOLCHAIN_FILE
-    HOST_TOOLS_CMAKE_GENERATOR
-    HOST_TOOLS_CMAKE_GENERATOR_PLATFORM
-    HOST_TOOLS_CMAKE_GENERATOR_TOOLSET
-    HOST_TOOLS_CMAKE_MAKE_PROGRAM
   )
 
   set(multiValueArgs
@@ -188,34 +182,40 @@ function(cmr_lib_cmaker_main)
     endforeach()
 
   else() # if(lib_BUILD_HOST_TOOLS)
-    cmr_print_value(lib_HOST_TOOLS_CMAKE_TOOLCHAIN_FILE)
-    cmr_print_value(lib_HOST_TOOLS_CMAKE_GENERATOR)
-    cmr_print_value(lib_HOST_TOOLS_CMAKE_GENERATOR_PLATFORM)
-    cmr_print_value(lib_HOST_TOOLS_CMAKE_GENERATOR_TOOLSET)
-    cmr_print_value(lib_HOST_TOOLS_CMAKE_MAKE_PROGRAM)
+    cmr_print_value(HOST_TOOLS_CMAKE_TOOLCHAIN_FILE)
+    cmr_print_value(HOST_TOOLS_CMAKE_GENERATOR)
+    cmr_print_value(HOST_TOOLS_CMAKE_GENERATOR_PLATFORM)
+    cmr_print_value(HOST_TOOLS_CMAKE_GENERATOR_TOOLSET)
+    cmr_print_value(HOST_TOOLS_CMAKE_MAKE_PROGRAM)
 
     set(cmr_LIB_VARS
-      lib_HOST_TOOLS_CMAKE_TOOLCHAIN_FILE
-      lib_HOST_TOOLS_CMAKE_GENERATOR
-      lib_HOST_TOOLS_CMAKE_GENERATOR_PLATFORM
-      lib_HOST_TOOLS_CMAKE_GENERATOR_TOOLSET
-      lib_HOST_TOOLS_CMAKE_MAKE_PROGRAM
+      HOST_TOOLS_CMAKE_TOOLCHAIN_FILE
+      HOST_TOOLS_CMAKE_GENERATOR
+      HOST_TOOLS_CMAKE_GENERATOR_PLATFORM
+      HOST_TOOLS_CMAKE_GENERATOR_TOOLSET
+      HOST_TOOLS_CMAKE_MAKE_PROGRAM
     )
 
     foreach(d ${cmr_LIB_VARS})
+      string(REPLACE "HOST_TOOLS_" "" out_d ${d})
       if(DEFINED ${d})
-        string(REPLACE "lib_HOST_TOOLS_" "" out_d ${d})
         list(APPEND cmr_CMAKE_ARGS
           -D${out_d}=${${d}}
+        )
+      elseif(DEFINED ${out_d})
+        list(APPEND cmr_CMAKE_ARGS
+          -D${out_d}=${${out_d}}
         )
       endif()
     endforeach()
   endif()
 
-  # Android specifics.
   if(NOT lib_BUILD_HOST_TOOLS)
-    include(cmr_android_vars)
-    cmr_android_vars()
+    # Android specifics.
+    # TODO: BEFORE COMMIT !!! Delete the file 'cmr_android_vars.cmake'.
+    include(cmr_vars_android)
+    # iOS specifics.
+    include(cmr_vars_ios)
   endif()
 
   if(lib_BUILD)
@@ -247,6 +247,8 @@ function(cmr_lib_cmaker_main)
         if(CMAKE_MAKE_PROGRAM MATCHES "ninja" AND NOT cmr_BUILD_MULTIPROC_CNT)
           set(tool_options "")
         endif()
+      elseif(CMAKE_MAKE_PROGRAM MATCHES "xcodebuild")
+        set(tool_options -jobs ${cmr_BUILD_MULTIPROC_CNT})
       endif()
 
     else()  # if(NOT cmr_BUILD_MULTIPROC)
@@ -300,6 +302,7 @@ function(cmr_lib_cmaker_main)
 
     CMAKE_INSTALL_PREFIX
     CMAKE_PREFIX_PATH
+
     CMAKE_INCLUDE_PATH
     CMAKE_LIBRARY_PATH
     CMAKE_PROGRAM_PATH
@@ -308,11 +311,14 @@ function(cmr_lib_cmaker_main)
     CMAKE_C_STANDARD_REQUIRED
     CMAKE_CXX_STANDARD
     CMAKE_CXX_STANDARD_REQUIRED
+
+    CMAKE_OSX_SYSROOT
+    CMAKE_XCODE_ATTRIBUTE_DEVELOPMENT_TEAM
+    CMAKE_XCODE_GENERATE_TOP_LEVEL_PROJECT_ONLY
   )
 
   if(NOT lib_BUILD_HOST_TOOLS)
     list(APPEND cmr_LIB_VARS
-
       # Standard CMake vars.
       CMAKE_FIND_ROOT_PATH
 
@@ -329,7 +335,22 @@ function(cmr_lib_cmaker_main)
       CMAKE_SHARED_LINKER_FLAGS
       CMAKE_MODULE_LINKER_FLAGS
       CMAKE_EXE_LINKER_FLAGS
+      CMAKE_C_LINK_FLAGS
+      CMAKE_CXX_LINK_FLAGS
+
+      # TODO:
+      #CMAKE_CXX_FLAGS_RELWITHDEBINFO
+      #CMAKE_CXX_FLAGS_MINSIZEREL
     )
+
+    if(ANDROID)
+      list(APPEND cmr_LIB_VARS
+        CMAKE_FIND_ROOT_PATH_MODE_INCLUDE
+        CMAKE_FIND_ROOT_PATH_MODE_LIBRARY
+        CMAKE_FIND_ROOT_PATH_MODE_PACKAGE
+        CMAKE_FIND_ROOT_PATH_MODE_PROGRAM
+      )
+    endif()
   endif()
 
   foreach(d ${cmr_LIB_VARS})
