@@ -30,11 +30,11 @@ LibCMaker_<LibName>/.appveyor.yml
 
 ## Notes and requirements.
 
-1. LibCMaker requires CMake 3.4+.
+1. LibCMaker requires CMake 3.8+ for macOS ("Xcode" and "Unix Makefiles" generators), CMake 3.15+ for iOS ("Xcode" generators) and CMake 3.4+ for others. (CMake 3.14 contains a bug on iOS for CMAKE_FIND_ROOT_PATH_* variables.)
 
-2. ICU requires CMake 3.11+ for MSVC and 3.3+ for others.
+2. ICU requires CMake 3.11+ for "Visual Studio" generator, CMake 3.12+ for "Xcode" generator and 3.4+ for others.
 
-3. wxWidgets requires CMake 3.5+ for MSVC and MinGW-w64.
+3. wxWidgets requires CMake 3.5+ for MSVC and MinGW-w64, CMake 3.12+ for "Xcode" generator, CMake 3.10+ is recommended by developers of wxWidgets.
 
 4. Android NDK r18+ does not have 'std::experimental' namespace for C++14. This affects to Boost and SQLiteModernCPP. In this case Boost can be comppiled with C++11 and C++17, SQLiteModernCPP can be compiled only with C++17. C++17 requires CMake 3.8+ and CXX_STANDARD=17.
 
@@ -42,7 +42,9 @@ LibCMaker_<LibName>/.appveyor.yml
 
 6. Dirent is tested only on Windows.
 
-7. wxWidgets is tested only on Linux and on Windows.
+7. wxWidgets is tested on Linux, Windows and macOS.
+
+8. LibCMaker_Boost does not work with OS X universal binaries, CMAKE_OSX_ARCHITECTURES must contain only one architecture.
 
 
 ## Known build issues
@@ -67,7 +69,6 @@ Following configurations are in Travis CI (2019-02-23):
 
 3. [Disabled, used AppVeyor] Windows -- Windows Server 1803, CMake 3.11.0, MSVC 2017, MSVC 19.16.27023.1, Release, Matrix: [x64 | x32 | WinXP], [shared | static].
 
-
 Following configurations are in AppVeyor (2019-02-23):
 
 1. Windows 10.0.14393, CMake 3.11.0, MSVC 2017, MSVC 19.16.27026.1, Release, Matrix: [x64 | x32 | WinXP], [shared | static].
@@ -80,8 +81,8 @@ Following configurations are in AppVeyor (2019-02-23):
 The simple tests with Google Test are compiling and running for testing the library work on the target platform (test running is not released for Android, only compiling of the tests).
 
 
- Library   | Travis CI   | AppVeyor   | Built with dependencies
- --------- | ----------- | ---------- | -------------------------
+ Library   | Travis CI <br> Linux <br> Android <br> macOS <br> iOS   | AppVeyor <br> MSVC 2017 <br> MinGW-w64 <br> MSVC 2015   | Built with dependencies
+ --------- | ------------------------------------------------------- | ------------------------------------------------------- | -------------------------
  [LibCMaker_AGG](https://github.com/LibCMaker/LibCMaker_AGG) <br> [AGG site](http://www.antigrain.com/) | [![Build Status](https://travis-ci.com/LibCMaker/LibCMaker_AGG.svg?branch=master)](https://travis-ci.com/LibCMaker/LibCMaker_AGG) | [![Build status](https://ci.appveyor.com/api/projects/status/github/LibCMaker/LibCMaker_AGG?branch=master&svg=true)](https://ci.appveyor.com/project/NikitaFeodonit/libcmaker-agg/branch/master) | GTest
  [LibCMaker_Boost](https://github.com/LibCMaker/LibCMaker_Boost) <br> [Boost site](https://www.boost.org/) | [![Build Status](https://travis-ci.com/LibCMaker/LibCMaker_Boost.svg?branch=master)](https://travis-ci.com/LibCMaker/LibCMaker_Boost) | [![Build status](https://ci.appveyor.com/api/projects/status/github/LibCMaker/LibCMaker_Boost?branch=master&svg=true)](https://ci.appveyor.com/project/NikitaFeodonit/libcmaker-boost/branch/master) | GTest, ICU
  [LibCMaker_Dirent](https://github.com/LibCMaker/LibCMaker_Dirent) <br> [Dirent site](https://github.com/tronkko/dirent) | [![Build Status](https://travis-ci.com/LibCMaker/LibCMaker_Dirent.svg?branch=master)](https://travis-ci.com/LibCMaker/LibCMaker_Dirent) | [![Build status](https://ci.appveyor.com/api/projects/status/github/LibCMaker/LibCMaker_Dirent?branch=master&svg=true)](https://ci.appveyor.com/project/NikitaFeodonit/libcmaker-dirent/branch/master) | GTest
