@@ -257,6 +257,23 @@ function(cmr_lib_cmaker_main)
         set(tool_options "-j1")
       endif()
     endif()
+
+    if(CMAKE_GENERATOR MATCHES "Visual Studio.*"
+        AND cmr_VS_GENERATOR_VERBOSITY_LEVEL)
+      # See:
+      # https://docs.microsoft.com/en-us/visualstudio/msbuild/msbuild-command-line-reference?view=vs-2019
+      # q[uiet], m[inimal], n[ormal], d[etailed], and diag[nostic]
+      set(tool_options "/verbosity:${cmr_VS_GENERATOR_VERBOSITY_LEVEL}")
+    endif()
+
+    if(CMAKE_GENERATOR MATCHES "Xcode"
+        AND cmr_XCODE_GENERATOR_VERBOSITY_LEVEL)
+      # See:
+      # xcodebuild --help
+      # -verbose -quiet
+      set(tool_options "${cmr_XCODE_GENERATOR_VERBOSITY_LEVEL}")
+    endif()
+
   endif()
 
   set(cmr_LIB_VARS
@@ -282,7 +299,9 @@ function(cmr_lib_cmaker_main)
     cmr_PRINT_DEBUG
     cmr_BUILD_MULTIPROC
     cmr_BUILD_MULTIPROC_CNT
-    cmr_USE_MSVC_STATIC_RUNTIME
+    cmr_USE_STATIC_RUNTIME
+    cmr_VS_GENERATOR_VERBOSITY_LEVEL
+    cmr_XCODE_GENERATOR_VERBOSITY_LEVEL
 
     SKIP_INSTALL_ALL
     SKIP_INSTALL_BINARIES
