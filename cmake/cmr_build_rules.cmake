@@ -120,7 +120,7 @@ function(cmr_build_rules)
     if(cmr_USE_STATIC_RUNTIME AND NOT BUILD_SHARED_LIBS)
       if(MINGW)
         set(STATIC_LINKER_FLAGS "-static")
-      else()
+      elseif(NOT ("${CMAKE_CXX_COMPILER_ID}" MATCHES "Clang" AND APPLE))
         set(STATIC_LINKER_FLAGS "-static-libgcc -static-libstdc++")
       endif()
       set(CMAKE_EXE_LINKER_FLAGS
