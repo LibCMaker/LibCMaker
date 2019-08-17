@@ -58,7 +58,7 @@ LibCMaker_<LibName>/.appveyor.yml
 
 ## Notes about CMake
 
-1. If the ```cmake_minimum_required()``` command has a version lower than 3.0, CMake does not set @rpath in the shared libraries on macOS. About RPATH with CMake see [RPATH handling](https://gitlab.kitware.com/cmake/community/wikis/doc/cmake/RPATH-handling).
+1. If the ```cmake_minimum_required()``` command has a version lower than 3.0, CMake does not set ```@rpath``` in the shared libraries on macOS, see [CMP0042](https://cmake.org/cmake/help/latest/policy/CMP0042.html). About RPATH with CMake see [RPATH handling](https://gitlab.kitware.com/cmake/community/wikis/doc/cmake/RPATH-handling).
 
 2. CMake 3.14 contains a bug on iOS for CMAKE_FIND_ROOT_PATH_* variables. Use CMake 3.15+ for iOS.
 
