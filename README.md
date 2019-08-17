@@ -76,6 +76,10 @@ Following configurations are in Travis CI (2019-02-23):
 
 3. [Disabled, used AppVeyor] Windows -- Windows Server 1803, CMake 3.11.0, MSVC 2017, MSVC 19.16.27023.1, Release, Matrix: [x64 | x32 | WinXP], [shared | static].
 
+4. macOS -- Mac OS X 10.14.4, CMake 3.8.0 and 3.12.0 (see 'Notes and requirements'), Xcode 10.2.1, Apple Clang 10.0.1, Matrix: CMake generator ["Xcode" | "Unix Makefiles"], [Debug | Release], [shared | static].
+
+5. iOS -- Mac OS X 10.14.4, CMake 3.15.0, Xcode 10.2.1, Apple Clang 10.0.1, SDK iPhoneSimulator12.2, platform SIMULATOR64, CMake generator "Xcode", Matrix: [Debug | Release], [shared | static].
+
 Following configurations are in AppVeyor (2019-02-23):
 
 1. Windows 10.0.14393, CMake 3.11.0, MSVC 2017, MSVC 19.16.27026.1, Release, Matrix: [x64 | x32 | WinXP], [shared | static].
