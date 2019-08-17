@@ -30,21 +30,21 @@ LibCMaker_<LibName>/.appveyor.yml
 
 ## Notes and requirements.
 
-1. LibCMaker requires CMake 3.8+ for macOS ("Xcode" and "Unix Makefiles" generators), CMake 3.15+ for iOS ("Xcode" generators) and CMake 3.4+ for others.
+1. LibCMaker requires CMake 3.8+ for macOS ("Xcode" and "Unix Makefiles" generators), CMake 3.15+ for iOS ("Xcode" generator) and CMake 3.4+ for others.
 
 2. ICU requires CMake 3.11+ for "Visual Studio" generator, CMake 3.12+ for "Xcode" generator and 3.4+ for others.
 
 3. wxWidgets requires CMake 3.5+ for MSVC and MinGW-w64, CMake 3.12+ for "Xcode" generator, CMake 3.10+ is recommended by developers of wxWidgets.
 
-4. Android NDK r18+ does not have 'std::experimental' namespace for C++14. This affects to Boost and SQLiteModernCPP. In this case Boost can be comppiled with C++11 and C++17, SQLiteModernCPP can be compiled only with C++17. C++17 requires CMake 3.8+ and CXX_STANDARD=17.
+4. Android NDK r18+ does not have 'std::experimental' namespace for C++14. This affects to Boost and SQLiteModernCPP. In this case Boost can be comppiled with C++11 and C++17, SQLiteModernCPP can be compiled only with C++17. C++17 requires CMake 3.8+ and ```CXX_STANDARD=17```.
 
-5. MSVC does not have the flags for C++11. MSVC 2015 Update 3 has /std:c++14 and /std:c++latest, no flags for C++ standard is used by default. MSVC 2017 has /std:c++14, /std:c++17 and /std:c++latest, /std:c++14 is used by default. If in the CMake project CXX_STANDARD=11 then MSVC 2015 does not specify any C++ standard and MSVC 2017 specifies C++14. This affects to LibCMaker_Boost for the flag, which will or will not be passed to the 'b2' tool.
+5. MSVC does not have the flags for C++11. MSVC 2015 Update 3 has ```/std:c++14``` and ```/std:c++latest```, no flags for C++ standard is used by default. MSVC 2017 has ```/std:c++14```, ```/std:c++17``` and ```/std:c++latest```, ```/std:c++14``` is used by default. If in the CMake project ```CXX_STANDARD=11``` then MSVC 2015 does not specify any C++ standard and MSVC 2017 specifies C++14. This affects to LibCMaker_Boost for the flag, which will or will not be passed to the 'b2' tool.
 
 6. Dirent is tested only on Windows.
 
 7. wxWidgets is tested on Linux, Windows and macOS.
 
-8. LibCMaker_Boost does not work with OS X universal binaries, CMAKE_OSX_ARCHITECTURES must contain only one architecture.
+8. LibCMaker_Boost does not work with OS X universal binaries, ```CMAKE_OSX_ARCHITECTURES``` must contain only one architecture.
 
 
 ## Known build issues
@@ -60,7 +60,7 @@ LibCMaker_<LibName>/.appveyor.yml
 
 1. If the ```cmake_minimum_required()``` command has a version lower than 3.0, CMake does not set ```@rpath``` in the shared libraries on macOS, see [CMP0042](https://cmake.org/cmake/help/latest/policy/CMP0042.html). About RPATH with CMake see [RPATH handling](https://gitlab.kitware.com/cmake/community/wikis/doc/cmake/RPATH-handling).
 
-2. CMake 3.14 contains a bug on iOS for CMAKE_FIND_ROOT_PATH_* variables. Use CMake 3.15+ for iOS.
+2. CMake 3.14 contains a bug on iOS for ```CMAKE_FIND_ROOT_PATH_*``` variables. Use CMake 3.15+ for iOS.
 
 
 ## Build status
