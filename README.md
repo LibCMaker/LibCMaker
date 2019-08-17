@@ -56,9 +56,9 @@ LibCMaker_<LibName>/.appveyor.yml
 3. If Boost is building with MSVC 2015, then in the Boost.Build rule ```using msvc : [version] : [c++-compile-command] : [compiler options] ;``` can not be explicitly specified "c++-compile-command", build will be failed. This affects to LibCMaker_Boost, when one compiler detected by CMake is used for other CMake subprojects, and the compiler detected by the 'b2' tool is used for Boost (only in the case of using MSVC 2015). But they should be the same in the case of MSVC 2015.
 
 
-## Notes for CMake developers
+## Notes about CMake
 
-1. If the ```cmake_minimum_required()``` command has a version lower than 3.0, CMake does not set @rpath in dynamic libraries on macOS. About RPATH with CMake see [RPATH handling](https://gitlab.kitware.com/cmake/community/wikis/doc/cmake/RPATH-handling).
+1. If the ```cmake_minimum_required()``` command has a version lower than 3.0, CMake does not set @rpath in the shared libraries on macOS. About RPATH with CMake see [RPATH handling](https://gitlab.kitware.com/cmake/community/wikis/doc/cmake/RPATH-handling).
 
 2. CMake 3.14 contains a bug on iOS for CMAKE_FIND_ROOT_PATH_* variables. Use CMake 3.15+ for iOS.
 
