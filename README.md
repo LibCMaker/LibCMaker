@@ -53,6 +53,8 @@ LibCMaker_<LibName>/.appveyor.yml
 
 2. If Boost is building with MSVC 2015, then in the Boost.Build rule ```using msvc : [version] : [c++-compile-command] : [compiler options] ;``` can not be explicitly specified "c++-compile-command", build will be failed. This affects to LibCMaker_Boost, when one compiler detected by CMake is used for other CMake subprojects, and the compiler detected by the 'b2' tool is used for Boost (only in the case of using MSVC 2015). But they should be the same in the case of MSVC 2015.
 
+3. Boost.Container building is skipped on macOS and iOS for CMake generator "Unix Makefiles".
+
 
 ## Notes about CMake
 
