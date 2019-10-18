@@ -65,9 +65,9 @@ LibCMaker_<LibName>/.appveyor.yml
 
 ## Notes about CI building and testing
 
-1. The simple tests with Google Test are compiling and running for testing the library work on the target platform. Test running is not released for Android and iOS, only compiling of the tests.
+1. The simple tests with Google Test are compiling (Linux, Windows, macOS, Android, iOS) and running (Linux, Windows, macOS) for testing the library work on the target platform.
 
-2. SQLite3 is building on CI with ICU on Linux, Windows and macOS only. But technically the building is possible for Android and iOS too, see the building of Boost with ICU.
+2. SQLite3 is building on CI with ICU on Linux, Windows and macOS only. But technically the building is possible for Android and iOS too, see the Boost building with ICU.
 
 
 ## CI build configurations
