@@ -28,7 +28,7 @@ LibCMaker_<LibName>/.travis.yml
 LibCMaker_<LibName>/.appveyor.yml
 ```
 
-## Notes and requirements.
+## Notes and requirements
 
 1. LibCMaker requires CMake 3.8+ for macOS ("Xcode" and "Unix Makefiles" generators), CMake 3.15+ for iOS ("Xcode" generator) and CMake 3.4+ for others.
 
@@ -63,10 +63,16 @@ LibCMaker_<LibName>/.appveyor.yml
 2. CMake 3.14 contains a bug on iOS for ```CMAKE_FIND_ROOT_PATH_*``` variables. Use CMake 3.15+ for iOS.
 
 
-## Build status
+## Notes about CI building and testing
+
+1. The simple tests with Google Test are compiling and running for testing the library work on the target platform. Test running is not released for Android and iOS, only compiling of the tests.
+
+2. SQLite3 is building on CI with ICU on Linux, Windows and macOS only. But technically the building is possible for Android and iOS too, see the building of Boost with ICU.
+
+
+## CI build configurations
 
 All libraries are tested with Travis CI and AppVeyor.
-
 
 Following configurations are in Travis CI (2019-02-23):
 
@@ -89,8 +95,7 @@ Following configurations are in AppVeyor (2019-02-23):
 3. Windows 6.3.9600, CMake 3.11.0, MSVC 2015, MSVC 19.0.24241.7, Release, x64, Matrix: [shared | static].
 
 
-The simple tests with Google Test are compiling and running for testing the library work on the target platform (test running is not released for Android and iOS, only compiling of the tests).
-
+## CI build status
 
  *Library*   | *Travis CI* <br> Linux <br> Android <br> macOS <br> iOS   | *AppVeyor* <br> MSVC 2017 <br> MinGW-w64 <br> MSVC 2015   | *Built with dependencies*
  ----------- | --------------------------------------------------------- | --------------------------------------------------------- | ---------------------------
@@ -105,7 +110,7 @@ The simple tests with Google Test are compiling and running for testing the libr
  [LibCMaker_ICU](https://github.com/LibCMaker/LibCMaker_ICU) <br> [ICU site](http://site.icu-project.org/) | [![Build Status](https://travis-ci.com/LibCMaker/LibCMaker_ICU.svg?branch=master)](https://travis-ci.com/LibCMaker/LibCMaker_ICU) | [![Build status](https://ci.appveyor.com/api/projects/status/github/LibCMaker/LibCMaker_ICU?branch=master&svg=true)](https://ci.appveyor.com/project/NikitaFeodonit/libcmaker-icu/branch/master) | GTest
  [LibCMaker_libpng](https://github.com/LibCMaker/LibCMaker_libpng) <br> [libpng site](http://www.libpng.org/pub/png/libpng.html) | [![Build Status](https://travis-ci.com/LibCMaker/LibCMaker_libpng.svg?branch=master)](https://travis-ci.com/LibCMaker/LibCMaker_libpng) | [![Build status](https://ci.appveyor.com/api/projects/status/github/LibCMaker/LibCMaker_libpng?branch=master&svg=true)](https://ci.appveyor.com/project/NikitaFeodonit/libcmaker-libpng/branch/master) | GTest, zlib
  [LibCMaker_Pixman](https://github.com/LibCMaker/LibCMaker_Pixman) <br> [Pixman site](http://www.pixman.org/) | [![Build Status](https://travis-ci.com/LibCMaker/LibCMaker_Pixman.svg?branch=master)](https://travis-ci.com/LibCMaker/LibCMaker_Pixman) | [![Build status](https://ci.appveyor.com/api/projects/status/github/LibCMaker/LibCMaker_Pixman?branch=master&svg=true)](https://ci.appveyor.com/project/NikitaFeodonit/libcmaker-pixman/branch/master) | GTest
- [LibCMaker_SQLite3](https://github.com/LibCMaker/LibCMaker_SQLite3) <br> [SQLite3 site](https://www.sqlite.org/) | [![Build Status](https://travis-ci.com/LibCMaker/LibCMaker_SQLite3.svg?branch=master)](https://travis-ci.com/LibCMaker/LibCMaker_SQLite3) | [![Build status](https://ci.appveyor.com/api/projects/status/github/LibCMaker/LibCMaker_SQLite3?branch=master&svg=true)](https://ci.appveyor.com/project/NikitaFeodonit/libcmaker-sqlite3/branch/master) | GTest, ICU (only Linux, Windows, macOS)
+ [LibCMaker_SQLite3](https://github.com/LibCMaker/LibCMaker_SQLite3) <br> [SQLite3 site](https://www.sqlite.org/) | [![Build Status](https://travis-ci.com/LibCMaker/LibCMaker_SQLite3.svg?branch=master)](https://travis-ci.com/LibCMaker/LibCMaker_SQLite3) | [![Build status](https://ci.appveyor.com/api/projects/status/github/LibCMaker/LibCMaker_SQLite3?branch=master&svg=true)](https://ci.appveyor.com/project/NikitaFeodonit/libcmaker-sqlite3/branch/master) | GTest, ICU (only Linux, Windows, macOS, see notes)
  [LibCMaker_SQLiteModernCPP](https://github.com/LibCMaker/LibCMaker_SQLiteModernCPP) <br> [SQLiteModernCPP site](https://github.com/SqliteModernCpp/sqlite_modern_cpp) | [![Build Status](https://travis-ci.com/LibCMaker/LibCMaker_SQLiteModernCPP.svg?branch=master)](https://travis-ci.com/LibCMaker/LibCMaker_SQLiteModernCPP) | [![Build status](https://ci.appveyor.com/api/projects/status/github/LibCMaker/LibCMaker_SQLiteModernCPP?branch=master&svg=true)](https://ci.appveyor.com/project/NikitaFeodonit/libcmaker-sqlitemoderncpp/branch/master) | GTest, SQLite3
  [LibCMaker_STLCache](https://github.com/LibCMaker/LibCMaker_STLCache) <br> [STL::Cache site](https://github.com/akashihi/stlcache) | [![Build Status](https://travis-ci.com/LibCMaker/LibCMaker_STLCache.svg?branch=master)](https://travis-ci.com/LibCMaker/LibCMaker_STLCache) | [![Build status](https://ci.appveyor.com/api/projects/status/github/LibCMaker/LibCMaker_STLCache?branch=master&svg=true)](https://ci.appveyor.com/project/NikitaFeodonit/libcmaker-stlcache/branch/master) | GTest
  [LibCMaker_wxWidgets](https://github.com/LibCMaker/LibCMaker_wxWidgets) <br> [wxWidgets site](https://www.wxwidgets.org/) | [![Build Status](https://travis-ci.com/LibCMaker/LibCMaker_wxWidgets.svg?branch=master)](https://travis-ci.com/LibCMaker/LibCMaker_wxWidgets) | [![Build status](https://ci.appveyor.com/api/projects/status/github/LibCMaker/LibCMaker_wxWidgets?branch=master&svg=true)](https://ci.appveyor.com/project/NikitaFeodonit/libcmaker-wxwidgets/branch/master) | GTest
