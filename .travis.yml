@@ -32,8 +32,10 @@ jobs:
         #                         ICU         Boost
         #                                     SQLite3     SQLiteModernCPP
         #
+        #                         Pixman      Cairo
         #                         STLCache
         #                         wxWidgets
+        #                         zlib        libpng      Cairo
 
         # NOTE: LibCMaker lib triggers.
         - ./trigger.sh LibCMaker LibCMaker_GoogleTest master $TRAVIS_ACCESS_TOKEN
