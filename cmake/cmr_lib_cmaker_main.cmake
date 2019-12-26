@@ -212,7 +212,6 @@ function(cmr_lib_cmaker_main)
 
   if(NOT lib_BUILD_HOST_TOOLS)
     # Android specifics.
-    # TODO: BEFORE COMMIT !!! Delete the file 'cmr_android_vars.cmake'.
     include(cmr_vars_android)
     # iOS specifics.
     include(cmr_vars_ios)
