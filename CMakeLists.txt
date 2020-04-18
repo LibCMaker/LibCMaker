@@ -66,9 +66,16 @@ if(CMAKE_PROGRAM_PATH)
   string(REPLACE " " ";" CMAKE_PROGRAM_PATH "${CMAKE_PROGRAM_PATH}")
 endif()
 
+set(cmr_main_CMAKE_FIND_ROOT_PATH ${CMAKE_FIND_ROOT_PATH})
+
 cmake_minimum_required(VERSION ${cmr_CMAKE_MIN_VER})
 # If not defined lib_LANGUAGES then default languages (C and CXX).
 project(LibCMaker_${lib_NAME} ${lib_LANGUAGES})
+
+if(ANDROID OR IOS)
+  # android.toolchain.cmake resets CMAKE_FIND_ROOT_PATH.
+  list(APPEND CMAKE_FIND_ROOT_PATH "${cmr_main_CMAKE_FIND_ROOT_PATH}")
+endif()
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake")
 list(APPEND CMAKE_MODULE_PATH "${lib_BASE_DIR}/cmake")
