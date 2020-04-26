@@ -117,7 +117,8 @@ function(cmr_build_rules)
 
   elseif(("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
       OR ("${CMAKE_CXX_COMPILER_ID}" MATCHES "Clang"))
-    if(cmr_USE_STATIC_RUNTIME AND NOT BUILD_SHARED_LIBS)
+    if(NOT ANDROID AND NOT IOS
+        AND cmr_USE_STATIC_RUNTIME AND NOT BUILD_SHARED_LIBS)
       if(MINGW)
         set(STATIC_LINKER_FLAGS "-static")
       elseif(NOT ("${CMAKE_CXX_COMPILER_ID}" MATCHES "Clang" AND APPLE))
