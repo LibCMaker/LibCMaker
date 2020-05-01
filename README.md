@@ -62,10 +62,12 @@ LibCMaker_<LibName>/.appveyor.yml
 
 2. CMake 3.14 contains a bug on iOS for ```CMAKE_FIND_ROOT_PATH_*``` variables. Use CMake 3.15+ for iOS.
 
+3. CMake 3.8 - 3.11 sets the compiler flag '-std=gnu++1z' for C++17 for GCC and Clang, CMake 3.12+ sets the compiler flag "-std=gnu++17".
+
 
 ## Notes about CI building and testing
 
-1. The simple tests with Google Test are compiling (Linux, Windows, macOS, Android, iOS) and running (Linux, Windows, macOS) for testing the library work on the target platform.
+1. The simple tests with Google Test are compiling (Linux, Windows, macOS, Android, iOS) and running (Linux, Windows, macOS, Android with emulator) for testing the library work on the target platform.
 
 2. SQLite3 is building on CI with ICU on Linux, Windows and macOS only. But technically the building is possible for Android and iOS too, see the Boost building with ICU.
 
