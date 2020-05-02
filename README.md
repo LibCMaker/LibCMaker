@@ -64,6 +64,8 @@ LibCMaker_<LibName>/.appveyor.yml
 
 3. CMake 3.8 - 3.11 sets the compiler flag ```-std=gnu++1z``` for C++17 for GCC and Clang, CMake 3.12+ sets the compiler flag ```-std=gnu++17```.
 
+4. Target property LINK_WHAT_YOU_USE does not work for MINGW (```Error running 'ldd': The system cannot find the file specified```) and for generator "Unix Makefiles" on APPLE (```ld: unknown option: --no-as-needed```).
+
 
 ## Notes about Android emulator
 
