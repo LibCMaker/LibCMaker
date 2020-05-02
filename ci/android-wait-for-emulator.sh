@@ -24,12 +24,12 @@ done
 
 # After the end of the boot animation, the emulator is fully ready after
 # at least 6 minutes. We make an extra time reserve in one minute.
-for i in {1..42}  # 42 * 10 sec = 7 minutes
-do
-  bootanim=$(adb -e shell getprop init.svc.bootanim 2>&1 &)
-  echo "Waiting for emulator to start, ${failcounter} seconds, 'bootanim' status: '${bootanim}'"
-  failcounter=$(( failcounter + step_sec ))
-  sleep ${step_sec}
-done
+#for i in {1..42}  # 42 * 10 sec = 7 minutes
+#do
+#  bootanim=$(adb -e shell getprop init.svc.bootanim 2>&1 &)
+#  echo "Waiting for emulator to start, ${failcounter} seconds, 'bootanim' status: '${bootanim}'"
+#  failcounter=$(( failcounter + step_sec ))
+#  sleep ${step_sec}
+#done
 
 echo "Emulator is ready"
