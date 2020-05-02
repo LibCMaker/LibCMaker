@@ -73,7 +73,7 @@ LibCMaker_<LibName>/.appveyor.yml
 
 3. 'x86' API 24 emulator does not start on Linux with success. API 23 on Linux works fine.
 
-4. API 16-21 emulator does not have ```tar``` commad (```adb shell tar```, used in the testing). API 23+ has it (API 22 is not checked.).
+4. Emulator has ```tar``` commad (```adb shell tar```, used in the testing) since API 23.
 
 
 ## Notes about CI building and testing
