@@ -71,9 +71,9 @@ LibCMaker_<LibName>/.appveyor.yml
 
 2. 'armeabi-v7a' API 16 emulator on Linux executes programs regularly with "Illegal instruction". API 24 on Linux works fine.
 
-3. 'x86' API 24 emulator does not start on Linux with success.
+3. 'x86' API 24 emulator does not start on Linux with success. API 23 on Linux works fine.
 
-4. API 16 emulator does not have ```tar``` commad (```adb shell tar```). API 23 and API 24 have it (others are not checked.).
+4. API 16-21 emulator does not have ```tar``` commad (```adb shell tar```, used in the testing). API 23+ has it (API 22 is not checked.).
 
 
 ## Notes about CI building and testing
