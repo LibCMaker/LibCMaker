@@ -65,6 +65,17 @@ LibCMaker_<LibName>/.appveyor.yml
 3. CMake 3.8 - 3.11 sets the compiler flag ```-std=gnu++1z``` for C++17 for GCC and Clang, CMake 3.12+ sets the compiler flag ```-std=gnu++17```.
 
 
+## Notes about Android emulator
+
+1. 'arm64-v8a' emulator (any API level) does not start on Linux with success, boot animation is not ending.
+
+2. 'armeabi-v7a' API 16 emulator on Linux executes programs regularly with "Illegal instruction". API 24 on Linux works fine.
+
+3. 'x86' API 24 emulator does not start on Linux with success.
+
+4. API 16 emulator does not have ```tar``` commad (```adb shell tar```). API 23 and API 24 have it (others are not checked.).
+
+
 ## Notes about CI building and testing
 
 1. The simple tests with Google Test are compiling (Linux, Windows, macOS, Android, iOS) and running (Linux, Windows, macOS, Android with emulator) for testing the library work on the target platform.
