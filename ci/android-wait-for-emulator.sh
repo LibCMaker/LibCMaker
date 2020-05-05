@@ -8,10 +8,17 @@ bootanim=""
 failcounter=0
 step_sec=10
 timeout_in_sec=600  # 10 minutes
+timeout_in_sec_for_arm64=300  # 5 minutes
 
 until [[ "${bootanim}" =~ "stopped" ]]; do
   bootanim=$(adb -e shell getprop init.svc.bootanim 2>&1 &)
   echo "Waiting for emulator to start, ${failcounter} seconds, 'bootanim' status: '${bootanim}'"
+
+  if [[ ${cmr_ANDROID_ABI} == "arm64-v8a"
+      && ${failcounter} -gt ${timeout_in_sec_for_arm64} ]] ; then
+    echo "WARNING: 'arm64-v8a' emulator (any API level) does not start on Linux with success, boot animation is not ending."
+    exit 0
+  fi
 
   if [[ ${failcounter} -gt ${timeout_in_sec} ]]; then
     echo "Timeout (${timeout_in_sec} seconds) reached; failed to start emulator"
