@@ -269,7 +269,8 @@ function(cmr_lib_cmaker_main)
         AND cmr_XCODE_GENERATOR_VERBOSITY_LEVEL)
       # See:
       # xcodebuild --help
-      # -verbose -quiet
+      # -quiet    Do not print any output except for warnings and errors.
+      # -verbose  Provide additional status output.
       set(tool_options "${cmr_XCODE_GENERATOR_VERBOSITY_LEVEL}")
     endif()
 
