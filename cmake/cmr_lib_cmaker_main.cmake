@@ -142,6 +142,9 @@ function(cmr_lib_cmaker_main)
   if(CMAKE_PROGRAM_PATH)
     string(REPLACE ";" " " CMAKE_PROGRAM_PATH "${CMAKE_PROGRAM_PATH}")
   endif()
+  if(CMAKE_INSTALL_RPATH)
+    string(REPLACE ";" " " CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_RPATH}")
+  endif()
 
 
   #-----------------------------------------------------------------------
@@ -337,6 +340,12 @@ function(cmr_lib_cmaker_main)
     CMAKE_OSX_SYSROOT
     CMAKE_XCODE_ATTRIBUTE_DEVELOPMENT_TEAM
     CMAKE_XCODE_GENERATE_TOP_LEVEL_PROJECT_ONLY
+
+    CMAKE_MACOSX_BUNDLE
+    CMAKE_FRAMEWORK
+    CMAKE_BUILD_WITH_INSTALL_RPATH
+    CMAKE_INSTALL_RPATH
+    CMAKE_INSTALL_RPATH_USE_LINK_PATH
   )
 
   if(NOT lib_BUILD_HOST_TOOLS)
