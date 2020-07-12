@@ -330,6 +330,15 @@ macro(cmr_common_sample_test_2nd_part)
       COMMAND ${adb_exec} shell "if [ -d \"${TEST_WORK_DIR}\" ] ; then rm -r \"${TEST_WORK_DIR}\" ; fi"
     )
 
+    if(PROJECT_NAME STREQUAL "LibCMaker_Boost_Compile_Test"
+        OR PROJECT_NAME STREQUAL "LibCMaker_ICU_Compile_Test")
+      add_test(NAME push_icu_data
+        COMMAND ${adb_exec} push
+          "${cmr_INSTALL_DIR}/share/icu"
+          "${TEST_WORK_DIR}/share/icu"
+      )
+    endif()
+
     if(BUILD_SHARED_LIBS)
       add_test(NAME check_tar
         COMMAND ${adb_exec} shell tar --help
@@ -424,6 +433,17 @@ macro(cmr_common_sample_test_2nd_part)
       XCODE_ATTRIBUTE_IPHONEOS_DEPLOYMENT_TARGET ${IOS_DEPLOYMENT_TARGET}
       XCODE_ATTRIBUTE_TARGETED_DEVICE_FAMILY ${IOS_DEVICE_FAMILY}
     )
+
+    if(PROJECT_NAME STREQUAL "LibCMaker_Boost_Compile_Test"
+        OR PROJECT_NAME STREQUAL "LibCMaker_ICU_Compile_Test")
+      add_custom_command(TARGET ${test_NAME} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E make_directory
+          "${IOS_TEST_APP_BIN_DIR}/share/icu"
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+          "${CMAKE_INSTALL_PREFIX}/share/icu"
+          "${IOS_TEST_APP_BIN_DIR}/share/icu/"
+      )
+    endif()
 
     if(BUILD_SHARED_LIBS)
       add_custom_command(TARGET ${test_NAME} POST_BUILD
