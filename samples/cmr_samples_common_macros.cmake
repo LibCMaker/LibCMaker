@@ -331,6 +331,16 @@ macro(cmr_common_sample_test_2nd_part)
     )
 
     if(BUILD_SHARED_LIBS)
+      add_test(NAME check_tar
+        COMMAND ${adb_exec} shell tar --help
+      )
+      set_tests_properties(check_tar PROPERTIES
+        PASS_REGULAR_EXPRESSION "usage: tar"
+      )
+      set_tests_properties(check_tar PROPERTIES
+        FAIL_REGULAR_EXPRESSION "tar: not found"
+      )
+
       # Fix for the adb error on the arm devices if use the adb push
       # for the directory with the soft symlinks:
       # adb: error: failed to copy '<soft symlink>' to '/data/local/tmp/<soft symlink>': remote symlink failed: Permission denied
