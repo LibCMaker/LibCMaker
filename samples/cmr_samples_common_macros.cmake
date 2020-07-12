@@ -437,7 +437,7 @@ macro(cmr_common_sample_test_2nd_part)
       if(PROJECT_NAME STREQUAL "LibCMaker_GoogleTest_Compile_Test")
         add_custom_command(TARGET ${test_NAME} POST_BUILD
           COMMAND ${CMAKE_COMMAND} -E copy
-            "${PROJECT_BINARY_DIR}/libLibCMaker_GoogleTest_Compile_Test.dylib"
+            "${PROJECT_BINARY_DIR}/$<CONFIG>-iphonesimulator/libLibCMaker_GoogleTest_Compile_Test.dylib"
             "${IOS_TEST_APP_BIN_DIR}/lib/libLibCMaker_GoogleTest_Compile_Test.dylib"
         )
       endif()
