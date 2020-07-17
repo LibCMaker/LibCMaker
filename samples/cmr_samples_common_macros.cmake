@@ -97,7 +97,15 @@ macro(cmr_common_sample_1st_part)
     if(IOS_DISABLE_CODESIGN)
       set(IOS_CODE_SIGN_IDENTITY "")
     endif()
-    set(IOS_DEPLOYMENT_TARGET 8.0)  # Deployment target version of iOS.
+
+    # NOTE:
+    # Link error:
+    # "targeted OS version does not support use of thread local variables".
+    # C++11 concept not supported all iOS platforms,
+    # thread_local is allowed beginning with iOS 9 for Xcode 10.
+    # Xcode 9 + iOS 8 compiles OK.
+    set(IOS_DEPLOYMENT_TARGET 9.0)  # Deployment target version of iOS.
+
     # Set to "1" to target iPhone, "2" to target iPad, "1,2" to target both.
     set(IOS_DEVICE_FAMILY "1")
 
