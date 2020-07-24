@@ -104,7 +104,7 @@ macro(cmr_common_sample_1st_part)
     # C++11 concept not supported all iOS platforms,
     # thread_local is allowed beginning with iOS 9 for Xcode 10.
     # Xcode 9 + iOS 8 compiles OK.
-    set(IOS_DEPLOYMENT_TARGET 9.0)  # Deployment target version of iOS.
+    set(IOS_DEPLOYMENT_TARGET "9.0")  # Deployment target version of iOS.
 
     # Set to "1" to target iPhone, "2" to target iPad, "1,2" to target both.
     set(IOS_DEVICE_FAMILY "1")
@@ -486,12 +486,34 @@ macro(cmr_common_sample_test_2nd_part)
       )
     endif()
 
-    add_test(NAME install_${test_NAME}
-      COMMAND xcrun simctl install booted ${IOS_TEST_APP_FULL_BIN_DIR}/
-    )
+#    add_test(NAME install_${test_NAME}
+#      COMMAND xcrun simctl install booted ${IOS_TEST_APP_FULL_BIN_DIR}/
+#    )
+#
+#    if(PROJECT_NAME STREQUAL "LibCMaker_Boost_Compile_Test"
+#        OR PROJECT_NAME STREQUAL "LibCMaker_ICU_Compile_Test")
+#      add_test(NAME copy_icu_dat_file_of_${test_NAME}
+#        COMMAND bash -c
+#          "TEST_APP_HOME_DIR=$(xcrun simctl get_app_container booted ${IOS_APP_BUNDLE_IDENTIFIER_GTEST} data) && cp -R ${CMAKE_INSTALL_PREFIX}/share $TEST_APP_HOME_DIR"
+#      )
+#    endif()
+#
+#    add_test(NAME ${test_NAME}
+#      COMMAND xcrun simctl launch --console-pty booted
+#        ${IOS_APP_BUNDLE_IDENTIFIER_GTEST}
+#    )
+
+    if(PROJECT_NAME STREQUAL "LibCMaker_Boost_Compile_Test"
+        OR PROJECT_NAME STREQUAL "LibCMaker_ICU_Compile_Test")
+      add_test(NAME copy_icu_dat_file_of_${test_NAME}
+        COMMAND bash -c
+          "TEST_APP_HOME_DIR=$(xcrun simctl getenv booted HOME) && cp -R ${CMAKE_INSTALL_PREFIX}/share $TEST_APP_HOME_DIR"
+      )
+    endif()
+
     add_test(NAME ${test_NAME}
-      COMMAND xcrun simctl launch --console-pty booted
-        ${IOS_APP_BUNDLE_IDENTIFIER_GTEST}
+      COMMAND xcrun simctl spawn booted
+        ${IOS_TEST_APP_FULL_BIN_DIR}/${test_NAME}
     )
 
     # NOTE: Use '--console-pty' with 'xcrun simctl launch' for Travis CI,
