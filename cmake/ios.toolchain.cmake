@@ -1,3 +1,7 @@
+# The code is from
+# https://github.com/leetal/ios-cmake/blob/master/ios.toolchain.cmake
+
+
 # This file is part of the ios-cmake project. It was retrieved from
 # https://github.com/cristeab/ios-cmake.git, which is a fork of
 # https://code.google.com/p/ios-cmake/. Which in turn is based off of
@@ -679,18 +683,19 @@ set(CMAKE_FRAMEWORK_PATH
 
 set(IOS_TOOLCHAIN_HAS_RUN TRUE CACHE BOOL "Has the CMake toolchain run already?" ${FORCE_CACHE})
 
-# By default, search both the specified iOS SDK and the remainder of the host filesystem.
+# By default, only search the remainder of the host filesystem.
 if(NOT CMAKE_FIND_ROOT_PATH_MODE_PROGRAM)
-  set(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM BOTH CACHE STRING "" ${FORCE_CACHE})
+  set(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER CACHE STRING "" ${FORCE_CACHE})
 endif()
+# By default, only search the specified iOS SDK, not the remainder of the host filesystem.
 if(NOT CMAKE_FIND_ROOT_PATH_MODE_LIBRARY)
-  set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY BOTH CACHE STRING "" ${FORCE_CACHE})
+  set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY CACHE STRING "" ${FORCE_CACHE})
 endif()
 if(NOT CMAKE_FIND_ROOT_PATH_MODE_INCLUDE)
-  set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE BOTH CACHE STRING "" ${FORCE_CACHE})
+  set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY CACHE STRING "" ${FORCE_CACHE})
 endif()
 if(NOT CMAKE_FIND_ROOT_PATH_MODE_PACKAGE)
-  set(CMAKE_FIND_ROOT_PATH_MODE_PACKAGE BOTH CACHE STRING "" ${FORCE_CACHE})
+  set(CMAKE_FIND_ROOT_PATH_MODE_PACKAGE ONLY CACHE STRING "" ${FORCE_CACHE})
 endif()
 
 #
@@ -718,8 +723,8 @@ macro(find_host_package)
   set(IOS FALSE)
   find_package(${ARGN})
   set(IOS TRUE)
-  set(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM BOTH)
-  set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY BOTH)
-  set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE BOTH)
-  set(CMAKE_FIND_ROOT_PATH_MODE_PACKAGE BOTH)
+  set(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)
+  set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
+  set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
+  set(CMAKE_FIND_ROOT_PATH_MODE_PACKAGE ONLY)
 endmacro(find_host_package)
