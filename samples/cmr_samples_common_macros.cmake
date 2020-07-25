@@ -486,35 +486,36 @@ macro(cmr_common_sample_test_2nd_part)
       )
     endif()
 
-#    add_test(NAME install_${test_NAME}
-#      COMMAND xcrun simctl install booted ${IOS_TEST_APP_FULL_BIN_DIR}/
-#    )
-#
-#    if(PROJECT_NAME STREQUAL "LibCMaker_Boost_Compile_Test"
-#        OR PROJECT_NAME STREQUAL "LibCMaker_ICU_Compile_Test")
-#      add_test(NAME copy_icu_dat_file_of_${test_NAME}
-#        COMMAND bash -c
-#          "TEST_APP_HOME_DIR=$(xcrun simctl get_app_container booted ${IOS_APP_BUNDLE_IDENTIFIER_GTEST} data) && cp -R ${CMAKE_INSTALL_PREFIX}/share $TEST_APP_HOME_DIR"
-#      )
-#    endif()
-#
-#    add_test(NAME ${test_NAME}
-#      COMMAND xcrun simctl launch --console-pty booted
-#        ${IOS_APP_BUNDLE_IDENTIFIER_GTEST}
-#    )
-
     if(PROJECT_NAME STREQUAL "LibCMaker_Boost_Compile_Test"
         OR PROJECT_NAME STREQUAL "LibCMaker_ICU_Compile_Test")
       add_test(NAME copy_icu_dat_file_of_${test_NAME}
         COMMAND bash -c
           "TEST_APP_HOME_DIR=$(xcrun simctl getenv booted HOME) && cp -R ${CMAKE_INSTALL_PREFIX}/share $TEST_APP_HOME_DIR"
       )
-    endif()
+      add_test(NAME ${test_NAME}
+        COMMAND xcrun simctl spawn booted
+          ${IOS_TEST_APP_FULL_BIN_DIR}/${test_NAME}
+      )
 
-    add_test(NAME ${test_NAME}
-      COMMAND xcrun simctl spawn booted
-        ${IOS_TEST_APP_FULL_BIN_DIR}/${test_NAME}
-    )
+    else()  # With install app.
+      add_test(NAME install_${test_NAME}
+        COMMAND xcrun simctl install booted ${IOS_TEST_APP_FULL_BIN_DIR}/
+      )
+
+#      if(PROJECT_NAME STREQUAL "LibCMaker_Boost_Compile_Test"
+#          OR PROJECT_NAME STREQUAL "LibCMaker_ICU_Compile_Test")
+#        # Must be after the app installing
+#        add_test(NAME copy_icu_dat_file_of_${test_NAME}
+#          COMMAND bash -c
+#            "TEST_APP_HOME_DIR=$(xcrun simctl get_app_container booted ${IOS_APP_BUNDLE_IDENTIFIER_GTEST} data) && cp -R ${CMAKE_INSTALL_PREFIX}/share $TEST_APP_HOME_DIR"
+#        )
+#      endif()
+
+      add_test(NAME ${test_NAME}
+        COMMAND xcrun simctl launch --console-pty booted
+          ${IOS_APP_BUNDLE_IDENTIFIER_GTEST}
+      )
+    endif()
 
     # NOTE: Use '--console-pty' with 'xcrun simctl launch' for Travis CI,
     # not '--console'. With '--console' is error:
