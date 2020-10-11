@@ -322,7 +322,6 @@ function(cmr_lib_cmaker_main)
     CMAKE_CFG_INTDIR
     CMAKE_CONFIGURATION_TYPES
 
-    CMAKE_INSTALL_PREFIX
     CMAKE_PREFIX_PATH
 
     CMAKE_INCLUDE_PATH
@@ -347,6 +346,12 @@ function(cmr_lib_cmaker_main)
     CMAKE_INSTALL_RPATH
     CMAKE_INSTALL_RPATH_USE_LINK_PATH
   )
+
+  if(NOT DEFINED cmr_INSTALL_DIR)
+    list(APPEND cmr_LIB_VARS
+      CMAKE_INSTALL_PREFIX
+    )
+  endif()
 
   if(NOT lib_BUILD_HOST_TOOLS)
     list(APPEND cmr_LIB_VARS
@@ -391,6 +396,12 @@ function(cmr_lib_cmaker_main)
       )
     endif()
   endforeach()
+
+  if(DEFINED cmr_INSTALL_DIR)
+    list(APPEND cmr_CMAKE_ARGS
+      -DCMAKE_INSTALL_PREFIX=${cmr_INSTALL_DIR}
+    )
+  endif()
 
 
   #-----------------------------------------------------------------------

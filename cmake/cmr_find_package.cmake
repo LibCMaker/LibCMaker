@@ -172,6 +172,7 @@ function(cmr_find_package)
     cmr_print_value(cmr_DOWNLOAD_DIR)
     cmr_print_value(cmr_UNPACKED_DIR)
     cmr_print_value(cmr_BUILD_DIR)
+    cmr_print_value(cmr_INSTALL_DIR)
 
     cmr_print_value(find_NOT_USE_VERSION_IN_FIND_PACKAGE)
     cmr_print_value(find_FIND_MODULE_NAME)

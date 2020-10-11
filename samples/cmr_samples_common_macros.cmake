@@ -165,18 +165,6 @@ macro(cmr_common_sample_1st_part)
 
 
   #-----------------------------------------------------------------------
-  # Configure for find_package()
-  #-----------------------------------------------------------------------
-
-  # Set CMake's search path for find_*() commands.
-  list(APPEND CMAKE_PREFIX_PATH "${CMAKE_INSTALL_PREFIX}")
-
-  if(ANDROID OR IOS)
-    list(APPEND CMAKE_FIND_ROOT_PATH "${CMAKE_INSTALL_PREFIX}")
-  endif()
-
-
-  #-----------------------------------------------------------------------
   # Set path vars
   #-----------------------------------------------------------------------
 
@@ -185,6 +173,18 @@ macro(cmr_common_sample_1st_part)
 
   if(NOT cmr_UNPACKED_DIR)
     set(cmr_UNPACKED_DIR "${PROJECT_BINARY_DIR}/download/unpacked")
+  endif()
+
+
+  #-----------------------------------------------------------------------
+  # Configure for find_package()
+  #-----------------------------------------------------------------------
+
+  # Set CMake's search path for find_*() commands.
+  list(APPEND CMAKE_PREFIX_PATH "${cmr_INSTALL_DIR}")
+
+  if(ANDROID OR IOS)
+    list(APPEND CMAKE_FIND_ROOT_PATH "${cmr_INSTALL_DIR}")
   endif()
 
 
@@ -267,7 +267,7 @@ macro(cmr_common_sample_2nd_part)
         COMMAND ${CMAKE_COMMAND} -E make_directory
           "${IOS_MAIN_APP_BIN_DIR}/lib"
         COMMAND ${CMAKE_COMMAND} -E copy_directory
-          "${CMAKE_INSTALL_PREFIX}/lib"
+          "${cmr_INSTALL_DIR}/lib"
           "${IOS_MAIN_APP_BIN_DIR}/lib/"
       )
     endif()
@@ -407,6 +407,7 @@ macro(cmr_common_sample_test_2nd_part)
     add_test(NAME chmod_${test_NAME}
       COMMAND ${adb_exec} shell chmod 775 "${TEST_WORK_DIR}/${test_NAME}"
     )
+    # TODO: is test "cd_to_work_dir" needed?
     add_test(NAME cd_to_work_dir COMMAND ${adb_exec} shell
       cd "${TEST_WORK_DIR}"
     )
@@ -448,7 +449,7 @@ macro(cmr_common_sample_test_2nd_part)
         COMMAND ${CMAKE_COMMAND} -E make_directory
           "${IOS_TEST_APP_BIN_DIR}/share/icu"
         COMMAND ${CMAKE_COMMAND} -E copy_directory
-          "${CMAKE_INSTALL_PREFIX}/share/icu"
+          "${cmr_INSTALL_DIR}/share/icu"
           "${IOS_TEST_APP_BIN_DIR}/share/icu/"
       )
     endif()
@@ -458,7 +459,7 @@ macro(cmr_common_sample_test_2nd_part)
         COMMAND ${CMAKE_COMMAND} -E make_directory
           "${IOS_TEST_APP_BIN_DIR}/lib"
         COMMAND ${CMAKE_COMMAND} -E copy_directory
-          "${CMAKE_INSTALL_PREFIX}/lib"
+          "${cmr_INSTALL_DIR}/lib"
           "${IOS_TEST_APP_BIN_DIR}/lib/"
       )
 
@@ -490,7 +491,7 @@ macro(cmr_common_sample_test_2nd_part)
         OR PROJECT_NAME STREQUAL "LibCMaker_ICU_Compile_Test")
       add_test(NAME copy_icu_dat_file_of_${test_NAME}
         COMMAND bash -c
-          "TEST_APP_HOME_DIR=$(xcrun simctl getenv booted HOME) && cp -R ${CMAKE_INSTALL_PREFIX}/share $TEST_APP_HOME_DIR"
+          "TEST_APP_HOME_DIR=$(xcrun simctl getenv booted HOME) && cp -R ${cmr_INSTALL_DIR}/share $TEST_APP_HOME_DIR"
       )
       add_test(NAME ${test_NAME}
         COMMAND xcrun simctl spawn booted
@@ -507,7 +508,7 @@ macro(cmr_common_sample_test_2nd_part)
 #        # Must be after the app installing
 #        add_test(NAME copy_icu_dat_file_of_${test_NAME}
 #          COMMAND bash -c
-#            "TEST_APP_HOME_DIR=$(xcrun simctl get_app_container booted ${IOS_APP_BUNDLE_IDENTIFIER_GTEST} data) && cp -R ${CMAKE_INSTALL_PREFIX}/share $TEST_APP_HOME_DIR"
+#            "TEST_APP_HOME_DIR=$(xcrun simctl get_app_container booted ${IOS_APP_BUNDLE_IDENTIFIER_GTEST} data) && cp -R ${cmr_INSTALL_DIR}/share $TEST_APP_HOME_DIR"
 #        )
 #      endif()
 
