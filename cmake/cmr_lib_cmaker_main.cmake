@@ -264,7 +264,7 @@ function(cmr_lib_cmaker_main)
         AND cmr_VS_GENERATOR_VERBOSITY_LEVEL)
       # See:
       # https://docs.microsoft.com/en-us/visualstudio/msbuild/msbuild-command-line-reference?view=vs-2019
-      # q[uiet], m[inimal], n[ormal], d[etailed], and diag[nostic]
+      # q[uiet], m[inimal], n[ormal] (default), d[etailed], and diag[nostic]
       set(tool_options "/verbosity:${cmr_VS_GENERATOR_VERBOSITY_LEVEL}")
     endif()
 
