@@ -24,9 +24,9 @@
 include(CMakeParseArguments)  # cmake_parse_arguments()
 
 function(cmr_find_package)
-  set(cmr_CMAKE_MIN_VER 3.4)
+  set(cmr_CMAKE_MIN_VER 3.9)
   if(APPLE)
-    set(cmr_CMAKE_MIN_VER 3.8)
+    set(cmr_CMAKE_MIN_VER 3.9)
   endif()
   if(IOS AND CMAKE_GENERATOR MATCHES "Xcode")
     set(cmr_CMAKE_MIN_VER 3.15)

@@ -25,9 +25,9 @@ macro(cmr_get_cmake_min_ver)
   if(IOS)
     set(cmr_CMAKE_MIN_VER 3.15)
   elseif(APPLE)  # macOS
-    set(cmr_CMAKE_MIN_VER 3.8)
+    set(cmr_CMAKE_MIN_VER 3.9)
   else()
-    set(cmr_CMAKE_MIN_VER 3.7)
+    set(cmr_CMAKE_MIN_VER 3.9)
   endif()
 
   if(${ARGC} GREATER 0)
