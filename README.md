@@ -12,11 +12,11 @@ At the stage of the configuring of the main project by CMake, the following step
 
 1. The library sources are downloading from the official library sources.
 
-2. Library is compiling.
+2. The library is compiling.
 
-3. Library is installing.
+3. The library is installing.
 
-4. Library is finding by the CMake command find_package(<LibName>) in the main CMake project.
+4. The library is finding by the CMake command ```find_package(<LibName>)``` in the main CMake project.
 
 For the examples of the usage please see the samples in the
 ```
@@ -30,7 +30,7 @@ LibCMaker_<LibName>/.appveyor.yml
 
 ## Notes and requirements
 
-1. LibCMaker requires CMake 3.8+ for macOS ("Xcode" and "Unix Makefiles" generators), CMake 3.15+ for iOS ("Xcode" generator) and CMake 3.4+ for others.
+1. LibCMaker requires CMake 3.15+ for iOS ("Xcode" generator) and CMake 3.9+ for others.
 
 2. ICU requires CMake 3.11+ for "Visual Studio" generator, CMake 3.12+ for "Xcode" generator and 3.4+ for others.
 
@@ -93,13 +93,13 @@ All libraries are tested with Travis CI and AppVeyor.
 
 Following configurations are in Travis CI (2019-02-23):
 
-1. Linux -- Ubuntu Xenial 16.04, CMake 3.4.0, Make, Matrix: [GCC 5.4.0 | Clang 7.0.0], [Debug | Release], [shared | static].
+1. Linux -- Ubuntu Xenial 16.04, CMake 3.9.0, Make, Matrix: [GCC 5.4.0 | Clang 7.0.0], [Debug | Release], [shared | static].
 
-2. Android -- Ubuntu Xenial 16.04, CMake 3.6.0, Android NDK r19, Clang 8.0.2, Ninja, Release, Matrix: [shared + c++_shared | static + c++_static], [armeabi-v7a + API 16 | arm64-v8a + API 21 | x86 + API 16 | x86_64 + API 21].
+2. Android -- Ubuntu Xenial 16.04, CMake 3.9.0, Android NDK r19, Clang 8.0.2, Ninja, Release, Matrix: [shared + c++_shared | static + c++_static], [armeabi-v7a + API 16 | arm64-v8a + API 21 | x86 + API 16 | x86_64 + API 21].
 
 3. [Disabled, used AppVeyor] Windows -- Windows Server 1803, CMake 3.11.0, MSVC 2017, MSVC 19.16.27023.1, Release, Matrix: [x64 | x32 | WinXP], [shared | static].
 
-4. macOS -- Mac OS X 10.14.4, CMake 3.8.0 and 3.12.0 (see 'Notes and requirements'), Xcode 10.2.1, Apple Clang 10.0.1, Matrix: CMake generator ["Xcode" | "Unix Makefiles"], [Debug | Release], [shared | static].
+4. macOS -- Mac OS X 10.14.4, CMake 3.9.0 and 3.12.0 (see 'Notes and requirements'), Xcode 10.2.1, Apple Clang 10.0.1, Matrix: CMake generator ["Xcode" | "Unix Makefiles"], [Debug | Release], [shared | static].
 
 5. iOS -- Mac OS X 10.14.4, CMake 3.15.0, Xcode 10.2.1, Apple Clang 10.0.1, SDK iPhoneSimulator12.2, platform SIMULATOR64, CMake generator "Xcode", Matrix: [Debug | Release], [shared | static].
 
@@ -107,7 +107,7 @@ Following configurations are in AppVeyor (2019-02-23):
 
 1. Windows 10.0.14393, CMake 3.11.0, MSVC 2017, MSVC 19.16.27026.1, Release, Matrix: [x64 | x32 | WinXP], [shared | static].
 
-2. Windows 10.0.14393, CMake 3.4.0, MinGW-w64 x86_64-7.2.0-posix-seh-rt_v5-rev1, GCC GNU 7.2.0, Release, x64, Matrix: [shared | static].
+2. Windows 10.0.14393, CMake 3.9.0, MinGW-w64 x86_64-7.2.0-posix-seh-rt_v5-rev1, GCC GNU 7.2.0, Release, x64, Matrix: [shared | static].
 
 3. Windows 6.3.9600, CMake 3.11.0, MSVC 2015, MSVC 19.0.24241.7, Release, x64, Matrix: [shared | static].
 
