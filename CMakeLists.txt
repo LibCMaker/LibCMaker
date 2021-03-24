@@ -83,5 +83,8 @@ endif()
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake")
 list(APPEND CMAKE_MODULE_PATH "${lib_BASE_DIR}/cmake")
 
+include(cmr_print_system_info)
+cmr_print_system_info()
+
 include(cmr_build_rules)
 cmr_build_rules()
