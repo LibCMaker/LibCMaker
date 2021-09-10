@@ -23,6 +23,25 @@
 #    along with this program. If not, see <http://www.gnu.org/licenses/>.
 # ****************************************************************************
 
+
+# Dependencies
+
+# LibCMaker   GoogleTest  AGG
+#
+#                         Dirent      FontConfig
+#                         Expat       FontConfig
+#
+#                         HarfBuzz    FreeType    FontConfig
+#
+#                         ICU         Boost
+#                                     SQLite3     SQLiteModernCPP
+#
+#                         Pixman      Cairo
+#                         STLCache
+#                         wxWidgets
+#                         zlib        libpng      Cairo
+
+
 set -e
 
 
