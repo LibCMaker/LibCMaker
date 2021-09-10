@@ -14,9 +14,9 @@ until [[ "${bootanim}" =~ "stopped" ]]; do
   bootanim=$(adb -e shell getprop init.svc.bootanim 2>&1 &)
   echo "Waiting for emulator to start, ${failcounter} seconds, 'bootanim' status: '${bootanim}'"
 
-  if [[ ${cmr_ANDROID_ABI} == "arm64-v8a"
-      && ${failcounter} -gt ${timeout_in_sec_for_arm64} ]] ; then
-    echo "WARNING: 'arm64-v8a' emulator (any API level) does not start on Linux with success, boot animation is not ending."
+  if [[ ( ${cmr_ANDROID_ABI} == "arm64-v8a" )
+      && ( ${failcounter} -gt ${timeout_in_sec_for_arm64} ) ]] ; then
+    echo "WARNING: 'arm64-v8a' emulator (any API level) does not start on Linux and Windows with success, boot animation is not ending."
     exit 0
   fi
 
