@@ -40,18 +40,28 @@ function(cmr_print_system_info)
     set(system_NAME "${system_NAME}_MinGW")
   endif()
 
-  set(compiler_NAME "${CMAKE_CXX_COMPILER_ID} ${CMAKE_CXX_COMPILER_VERSION}")
+  set(CXX_compiler_NAME "${CMAKE_CXX_COMPILER_ID} ${CMAKE_CXX_COMPILER_VERSION}")
+  set(C_compiler_NAME "${CMAKE_C_COMPILER_ID} ${CMAKE_C_COMPILER_VERSION}")
+  set(ASM_compiler_NAME "${CMAKE_ASM_COMPILER_ID} ${CMAKE_ASM_COMPILER_VERSION}")
   if(MSVC)
-    set(compiler_NAME
-      "${compiler_NAME} ${CMAKE_GENERATOR_PLATFORM} ${CMAKE_GENERATOR_TOOLSET}"
+    set(CXX_compiler_NAME
+      "${CXX_compiler_NAME} ${CMAKE_GENERATOR_PLATFORM} ${CMAKE_GENERATOR_TOOLSET}"
+    )
+    set(C_compiler_NAME
+      "${C_compiler_NAME} ${CMAKE_GENERATOR_PLATFORM} ${CMAKE_GENERATOR_TOOLSET}"
+    )
+    set(ASM_compiler_NAME
+      "${ASM_compiler_NAME} ${CMAKE_GENERATOR_PLATFORM} ${CMAKE_GENERATOR_TOOLSET}"
     )
   endif()
 
   cmr_print_status("============================================================")
-  cmr_print_status("Host system:  ${CMAKE_HOST_SYSTEM}")
-  cmr_print_status("System:       ${system_NAME}, ${CMAKE_SYSTEM}")
-  cmr_print_status("Compiler:     ${compiler_NAME}")
-  cmr_print_status("CMake:        ${CMAKE_VERSION}")
-  cmr_print_status("Build type:   ${CMAKE_BUILD_TYPE}")
+  cmr_print_status("Host system:   ${CMAKE_HOST_SYSTEM}")
+  cmr_print_status("System:        ${system_NAME}, ${CMAKE_SYSTEM}")
+  cmr_print_status("C++ compiler:  ${CXX_compiler_NAME}")
+  cmr_print_status("C compiler:    ${C_compiler_NAME}")
+  cmr_print_status("ASM compiler:  ${ASM_compiler_NAME}")
+  cmr_print_status("CMake:         ${CMAKE_VERSION}")
+  cmr_print_status("Build type:    ${CMAKE_BUILD_TYPE}")
   cmr_print_status("============================================================")
 endfunction()
