@@ -327,7 +327,7 @@ macro(cmr_common_sample_test_2nd_part)
   #-----------------------------------------------------------------------
 
   if(ANDROID)
-    find_program(adb_exec adb)
+    find_program(adb_exec adb HINTS ENV PATH)
     if(NOT adb_exec)
       message(FATAL_ERROR "Could not find 'adb'")
     endif()
