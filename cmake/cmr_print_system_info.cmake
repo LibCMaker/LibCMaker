@@ -56,6 +56,7 @@ function(cmr_print_system_info)
   endif()
 
   cmr_print_status("============================================================")
+  cmr_print_status("Library:       ${lib_NAME}")
   cmr_print_status("Host system:   ${CMAKE_HOST_SYSTEM}")
   cmr_print_status("System:        ${system_NAME}, ${CMAKE_SYSTEM}")
   cmr_print_status("C++ compiler:  ${CXX_compiler_NAME}")
