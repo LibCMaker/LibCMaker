@@ -138,5 +138,8 @@ export MINGW_HOME="/path/to/mingw64"
 
 
 # === Run build ===
+if [[ ! -d ${cmr_WORK_DIR}/libs/${cmr_LibCMaker_Lib_DIR_NAME} ]] ; then
+  ln -s ${cmr_REPO_DIR} ${cmr_WORK_DIR}/libs
+fi
 
 source "${cmr_LibCMaker_REPO_DIR}/ci/ci_build.sh"
