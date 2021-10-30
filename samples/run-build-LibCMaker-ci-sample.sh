@@ -119,8 +119,8 @@ export cmr_INSTALL_DIR="${cmr_BUILD_DIR}/install"
 export cmr_DOWNLOAD_DIR="${cmr_PARENT_DIR_3}/.downloads"
 export cmr_UNPACKED_DIR="${cmr_BUILD_DIR}/unpacked"
 
-export cmr_HOST_UNPACKED_DIR="${cmr_WORK_DIR}/unpacked_host_tools"
-export cmr_HOST_BUILD_DIR="${cmr_WORK_DIR}/build_host_tools"
+export cmr_HOST_UNPACKED_DIR="${cmr_BUILD_DIR}/unpacked_host_tools"
+export cmr_HOST_BUILD_DIR="${cmr_BUILD_DIR}/build_host_tools"
 export cmr_HOST_INSTALL_DIR="${cmr_INSTALL_DIR}/host_tools"
 export cmr_HOST_TOOLS_STAMP_FILE_NAME="host_tools_stamp"
 
@@ -139,7 +139,7 @@ export MINGW_HOME="/path/to/mingw64"
 
 # === Run build ===
 if [[ ! -d ${cmr_WORK_DIR}/libs/${cmr_LibCMaker_Lib_DIR_NAME} ]] ; then
-  ln -s ${cmr_REPO_DIR} ${cmr_WORK_DIR}/libs
+  ln -s ${cmr_PARENT_DIR_2} ${cmr_WORK_DIR}/libs
 fi
 
 source "${cmr_LibCMaker_REPO_DIR}/ci/ci_build.sh"
