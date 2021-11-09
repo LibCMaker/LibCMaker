@@ -303,37 +303,9 @@ macro(cmr_common_sample_test_1st_part)
 endmacro()
 
 
-macro(cmr_common_sample_test_2nd_part)
-  if(NOT MINGW AND NOT ANDROID AND NOT IOS
-      AND NOT (APPLE AND CMAKE_GENERATOR MATCHES "Unix Makefiles"))
-    set_target_properties(${test_NAME} PROPERTIES
-      # Link all libraries into the target so as not to use LD_LIBRARY_PATH.
-      LINK_WHAT_YOU_USE ON
-    )
-  endif()
-
-  if(MINGW AND NOT BUILD_SHARED_LIBS
-      AND ${CMAKE_VERSION} VERSION_GREATER "3.12.0")  # CMake 3.13+
-    target_link_options(${test_NAME} PRIVATE "-static")
-  endif()
-
-  # GTest
-  target_link_libraries(${test_NAME} PRIVATE
-    GTest::GTest GTest::Main
-  )
-
-
+macro(cmr_common_sample_test_2nd_part_1)
   #-----------------------------------------------------------------------
-  # Test for Linux, Windows, macOS
-  #-----------------------------------------------------------------------
-
-  if(NOT ANDROID AND NOT IOS)
-    add_test(NAME ${test_NAME} COMMAND ${test_NAME})
-  endif()
-
-
-  #-----------------------------------------------------------------------
-  # Test for Android
+  # Prepare test env for Android
   #-----------------------------------------------------------------------
 
   if(ANDROID)
@@ -410,7 +382,44 @@ macro(cmr_common_sample_test_2nd_part)
           "${TEST_WORK_DIR}/lib/${cpp_shared_LIB_FILE_NAME}"
       )
     endif()
+  endif()
+endmacro()
 
+
+macro(cmr_common_sample_test_2nd_part_2)
+  if(NOT MINGW AND NOT ANDROID AND NOT IOS
+      AND NOT (APPLE AND CMAKE_GENERATOR MATCHES "Unix Makefiles"))
+    set_target_properties(${test_NAME} PROPERTIES
+      # Link all libraries into the target so as not to use LD_LIBRARY_PATH.
+      LINK_WHAT_YOU_USE ON
+    )
+  endif()
+
+  if(MINGW AND NOT BUILD_SHARED_LIBS
+      AND ${CMAKE_VERSION} VERSION_GREATER "3.12.0")  # CMake 3.13+
+    target_link_options(${test_NAME} PRIVATE "-static")
+  endif()
+
+  # GTest
+  target_link_libraries(${test_NAME} PRIVATE
+    GTest::GTest GTest::Main
+  )
+
+
+  #-----------------------------------------------------------------------
+  # Test for Linux, Windows, macOS
+  #-----------------------------------------------------------------------
+
+  if(NOT ANDROID AND NOT IOS)
+    add_test(NAME ${test_NAME} COMMAND ${test_NAME})
+  endif()
+
+
+  #-----------------------------------------------------------------------
+  # Test for Android
+  #-----------------------------------------------------------------------
+
+  if(ANDROID)
     add_test(NAME push_${test_NAME}
       COMMAND ${adb_exec} push ${test_NAME} "${TEST_WORK_DIR}/${test_NAME}"
     )
@@ -537,16 +546,25 @@ macro(cmr_common_sample_test_2nd_part)
     # No such file or directory
     # -----------------------------------------------------------------------
   endif()
+endmacro()
 
 
+macro(cmr_common_sample_test_2nd_part_3)
   #-----------------------------------------------------------------------
   # Common test settings
   #-----------------------------------------------------------------------
 
   set_tests_properties(${test_NAME} PROPERTIES
-    PASS_REGULAR_EXPRESSION "PASSED"
+    PASS_REGULAR_EXPRESSION "\\[  PASSED  \\]"
   )
   set_tests_properties(${test_NAME} PROPERTIES
-    FAIL_REGULAR_EXPRESSION "FAILED"
+    FAIL_REGULAR_EXPRESSION "\\[  FAILED  \\]"
   )
+endmacro()
+
+
+macro(cmr_common_sample_test_2nd_part)
+  cmr_common_sample_test_2nd_part_1()
+  cmr_common_sample_test_2nd_part_2()
+  cmr_common_sample_test_2nd_part_3()
 endmacro()
