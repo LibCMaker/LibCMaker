@@ -225,6 +225,11 @@ macro(cmr_common_sample_2nd_part)
     )
   endif()
 
+  if(MINGW AND NOT BUILD_SHARED_LIBS
+      AND ${CMAKE_VERSION} VERSION_GREATER "3.12.0")  # CMake 3.13+
+    target_link_options(${PROJECT_NAME} PRIVATE "-static")
+  endif()
+
 
   #-----------------------------------------------------------------------
   # iOS Bundle
@@ -305,6 +310,11 @@ macro(cmr_common_sample_test_2nd_part)
       # Link all libraries into the target so as not to use LD_LIBRARY_PATH.
       LINK_WHAT_YOU_USE ON
     )
+  endif()
+
+  if(MINGW AND NOT BUILD_SHARED_LIBS
+      AND ${CMAKE_VERSION} VERSION_GREATER "3.12.0")  # CMake 3.13+
+    target_link_options(${test_NAME} PRIVATE "-static")
   endif()
 
   # GTest
