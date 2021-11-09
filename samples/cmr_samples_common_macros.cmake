@@ -427,7 +427,7 @@ macro(cmr_common_sample_test_2nd_part_2)
       COMMAND ${adb_exec} shell chmod 775 "${TEST_WORK_DIR}/${test_NAME}"
     )
     # TODO: is test "cd_to_work_dir" needed?
-    add_test(NAME cd_to_work_dir COMMAND ${adb_exec} shell
+    add_test(NAME cd_to_work_dir_${test_NAME} COMMAND ${adb_exec} shell
       cd "${TEST_WORK_DIR}"
     )
     add_test(NAME ${test_NAME} COMMAND ${adb_exec} shell
