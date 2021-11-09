@@ -72,12 +72,34 @@ export cmr_CMAKE_DIR="/path/to/cmake"
 #export cmr_HOST_OS="Windows"
 
 
-## === Windows, MinGW-w64 ===
+## === Windows, MSVC, WinXP ===
+#export cmr_TARGET="Windows_MSVC"
+#export cmr_PLATFORM="WinXP"
+#export cmr_COMPILER="MSVC"
+#export cmr_CMAKE_BUILD_TYPE="Debug"
+#export cmr_LIB_LINKING="shared"
+#export cmr_CMAKE_GENERATOR="Visual Studio"
+#export cmr_HOST_OS="Windows"
+
+
+## === Windows, MinGW-w64, GCC ===
 #export cmr_TARGET="Windows_MinGW-w64"
 #export cmr_PLATFORM="x86_64"
 #export cmr_COMPILER="GCC"
 #export cmr_CMAKE_BUILD_TYPE="Release"
 #export cmr_LIB_LINKING="static"
+#export cmr_CMAKE_GENERATOR="MinGW Makefiles"
+#export cmr_HOST_OS="Windows"
+
+
+## === Windows, MinGW-w64, Clang ===
+#export cmr_TARGET="Windows_MinGW-w64"
+#export cmr_PLATFORM="x86_64"
+#export cmr_COMPILER="Clang"
+#export cmr_CMAKE_BUILD_TYPE="Release"
+#export cmr_LIB_LINKING="static"
+##export cmr_CMAKE_BUILD_TYPE="Debug"
+##export cmr_LIB_LINKING="shared"
 #export cmr_CMAKE_GENERATOR="MinGW Makefiles"
 #export cmr_HOST_OS="Windows"
 
@@ -131,7 +153,6 @@ export cmr_ANDROID_NDK_INSTALL_DIR="${cmr_DOWNLOAD_DIR}"
 
 export MINGW_HOME="/path/to/mingw64"
 
-
 # === Steps for Android ===
 # NOTE: Uncomment if needed.
 #source "${cmr_LibCMaker_REPO_DIR}/samples/run-Android-emulator.sh"
@@ -139,7 +160,9 @@ export MINGW_HOME="/path/to/mingw64"
 
 # === Run build ===
 if [[ ! -d ${cmr_WORK_DIR}/libs/${cmr_LibCMaker_Lib_DIR_NAME} ]] ; then
-  ln -s ${cmr_PARENT_DIR_2} ${cmr_WORK_DIR}/libs
+  if [[ -z "${WINDIR}" ]] ; then
+    ln -s ${cmr_PARENT_DIR_2} ${cmr_WORK_DIR}/libs
+  fi
 fi
 
 source "${cmr_LibCMaker_REPO_DIR}/ci/ci_build.sh"
