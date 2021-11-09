@@ -34,53 +34,55 @@ fi
 
 # https://winlibs.com/
 
-#export cmr_GCC_VER="9.3.0"
-#export cmr_Clang_VER="10.0.0"
-#export cmr_MinGW_w64_VER="7.0.0"
-#export cmr_winlibs_VER="r4"
-
-#export cmr_GCC_VER="10.3.0"
-#export cmr_Clang_VER="11.1.0"
-#export cmr_MinGW_w64_VER="8.0.0"
-#export cmr_winlibs_VER="r2"
-
 export cmr_GCC_VER="11.2.0"
-export cmr_Clang_VER="12.0.1"
+#export cmr_Clang_VER="20201020"  # 11.0.0
+#export cmr_Clang_VER="20210423"  # 12.0.0
+export cmr_Clang_VER="20211002"  # 13.0.0
 export cmr_MinGW_w64_VER="9.0.0"
-export cmr_winlibs_VER="r1"
-
-if [[ ${cmr_PLATFORM} == "x86_64" ]] ; then
-  export cmr_EXCEPTION_HANDLING="seh"
-  if [[ -z "${MINGW_HOME}" ]]; then
-    export MINGW_HOME="${cmr_INSTALL_DIR}/mingw64"
-  fi
-elif [[ ${cmr_PLATFORM} == "i686" ]] ; then
-  export cmr_EXCEPTION_HANDLING="dwarf"
-  if [[ -z "${MINGW_HOME}" ]]; then
-    export MINGW_HOME="${cmr_INSTALL_DIR}/mingw32"
-  fi
-else
-  echo "Error: cmr_PLATFORM is not set correctly."
-  exit 1
-fi
-
-export cmr_MINGW_ARCH_NAME="winlibs-${cmr_PLATFORM}-posix-${cmr_EXCEPTION_HANDLING}-gcc-${cmr_GCC_VER}-llvm-${cmr_Clang_VER}-mingw-w64-${cmr_MinGW_w64_VER}-${cmr_winlibs_VER}.7z"
-export cmr_MINGW_URL="https://github.com/brechtsanders/winlibs_mingw/releases/download/${cmr_GCC_VER}-${cmr_Clang_VER}-${cmr_MinGW_w64_VER}-${cmr_winlibs_VER}/${cmr_MINGW_ARCH_NAME}"
-
-export PATH=${cmr_INSTALL_DIR}/bin:${cmr_INSTALL_DIR}/bin64:${cmr_INSTALL_DIR}/lib:${cmr_CMAKE_DIR}/bin:${MINGW_HOME}/bin:${PATH}
+export cmr_GCC_BUILD_REVISION="1"
 
 
 # ==== Set up compiler ====
 if [[ ${cmr_COMPILER} == "GCC" ]] ; then
+  if [[ ${cmr_PLATFORM} == "x86_64" ]] ; then
+    export cmr_EXCEPTION_HANDLING="seh"
+    if [[ -z "${MINGW_HOME}" ]]; then
+      export MINGW_HOME="${cmr_INSTALL_DIR}/mingw64"
+    fi
+  elif [[ ${cmr_PLATFORM} == "i686" ]] ; then
+    export cmr_EXCEPTION_HANDLING="dwarf"
+    if [[ -z "${MINGW_HOME}" ]]; then
+      export MINGW_HOME="${cmr_INSTALL_DIR}/mingw32"
+    fi
+  else
+    echo "Error: cmr_PLATFORM is not set correctly."
+    exit 1
+  fi
+
+  export cmr_MINGW_ARCH_NAME="gcc-${cmr_GCC_VER}-posix-mingw-w64-${cmr_MinGW_w64_VER}-msvcrt-${cmr_PLATFORM}-${cmr_EXCEPTION_HANDLING}-rev${cmr_GCC_BUILD_REVISION}.7z"
+  export cmr_MINGW_URL="https://github.com/LibCMaker/MinGW-w64-GCC/releases/download/gcc-${cmr_GCC_VER}-mingw-w64-${cmr_MinGW_w64_VER}/${cmr_MINGW_ARCH_NAME}"
+
   export CC="gcc"
   export CXX="g++"
+
 elif [[ ${cmr_COMPILER} == "Clang" ]] ; then
+  export cmr_MINGW_NAME="llvm-mingw-${cmr_Clang_VER}-msvcrt-${cmr_PLATFORM}"
+  export cmr_MINGW_ARCH_NAME="${cmr_MINGW_NAME}.zip"
+  export cmr_MINGW_URL="https://github.com/mstorsjo/llvm-mingw/releases/download/${cmr_Clang_VER}/${cmr_MINGW_ARCH_NAME}"
+
+  if [[ -z "${MINGW_HOME}" ]]; then
+    export MINGW_HOME="${cmr_INSTALL_DIR}/${cmr_MINGW_NAME}"
+  fi
+
   export CC="clang"
   export CXX="clang++"
+
 else
   echo "Error: cmr_COMPILER is not set correctly."
   exit 1
 fi
+
+export PATH=${cmr_INSTALL_DIR}/bin:${cmr_INSTALL_DIR}/bin64:${cmr_INSTALL_DIR}/lib:${cmr_CMAKE_DIR}/bin:${MINGW_HOME}/bin:${PATH}
 
 
 # ==== Install MinGW-w64 tools ====
