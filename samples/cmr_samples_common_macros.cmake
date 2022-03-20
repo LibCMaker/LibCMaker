@@ -413,8 +413,10 @@ macro(cmr_common_sample_test_2nd_part_2)
   if(NOT ANDROID AND NOT IOS)
     add_test(NAME ${test_NAME} COMMAND ${test_NAME})
   endif()
+endmacro()
 
 
+macro(cmr_common_sample_test_2nd_part_3)
   #-----------------------------------------------------------------------
   # Test for Android
   #-----------------------------------------------------------------------
@@ -436,8 +438,10 @@ macro(cmr_common_sample_test_2nd_part_2)
       # :${LD_LIBRARY_PATH} || :/vendor/lib64:/system/lib64
     )
   endif()
+endmacro()
 
 
+macro(cmr_common_sample_test_2nd_part_4)
   #-----------------------------------------------------------------------
   # Test for iOS
   #-----------------------------------------------------------------------
@@ -549,7 +553,7 @@ macro(cmr_common_sample_test_2nd_part_2)
 endmacro()
 
 
-macro(cmr_common_sample_test_2nd_part_3)
+macro(cmr_common_sample_test_2nd_part_5)
   #-----------------------------------------------------------------------
   # Common test settings
   #-----------------------------------------------------------------------
@@ -567,4 +571,6 @@ macro(cmr_common_sample_test_2nd_part)
   cmr_common_sample_test_2nd_part_1()
   cmr_common_sample_test_2nd_part_2()
   cmr_common_sample_test_2nd_part_3()
+  cmr_common_sample_test_2nd_part_4()
+  cmr_common_sample_test_2nd_part_5()
 endmacro()
