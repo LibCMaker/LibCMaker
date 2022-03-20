@@ -31,7 +31,8 @@ function(cmr_find_package)
   if(IOS AND CMAKE_GENERATOR MATCHES "Xcode")
     set(cmr_CMAKE_MIN_VER 3.15)
   endif()
-  cmake_minimum_required(VERSION ${cmr_CMAKE_MIN_VER})
+  #cmake_minimum_required(VERSION ${cmr_CMAKE_MIN_VER})
+  cmake_minimum_required(VERSION 3.22)
 
 
   # Parse args.
