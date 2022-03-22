@@ -184,7 +184,9 @@ export cmr_CTEST_CMD="${cmr_CMAKE_DIR}/bin/ctest"
 
 
 # === Get lib params ===
-source ${cmr_REPO_DIR}/ci/ci_lib_params.sh
+if [[ -f ${cmr_REPO_DIR}/ci/ci_lib_params.sh ]] ; then
+  source ${cmr_REPO_DIR}/ci/ci_lib_params.sh
+fi
 
 
 # ==== Init work dirs ====
@@ -239,6 +241,12 @@ if [[ ( ${cmr_CI} == "ON" ) && ( ! -x ${cmr_CMAKE_CMD} ) ]] ; then
 fi
 
 ${cmr_CMAKE_CMD} --version
+
+
+# === Install packages for lib ===
+if [[ -f ${cmr_REPO_DIR}/ci/ci_install_packages.sh ]] ; then
+  source ${cmr_REPO_DIR}/ci/ci_install_packages.sh
+fi
 
 
 # ==== Build project and run test ====
