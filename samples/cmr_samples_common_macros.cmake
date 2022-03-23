@@ -38,7 +38,7 @@
 # https://stackoverflow.com/a/37123943
 # cmake -E env CTEST_OUTPUT_ON_FAILURE=1 cmake --build . --target RUN_TESTS
 
-macro(cmr_common_sample_1st_part)
+macro(cmr_common_sample_1_part)
   option(CMAKE_VERBOSE_MAKEFILE "CMAKE_VERBOSE_MAKEFILE" OFF)
   option(cmr_PRINT_DEBUG "cmr_PRINT_DEBUG" OFF)
 
@@ -205,7 +205,10 @@ macro(cmr_common_sample_1st_part)
     enable_testing()
     include(${LibCMaker_LIB_DIR}/LibCMaker_GoogleTest/cmr_build_googletest.cmake)
   endif()
+endmacro()
 
+
+macro(cmr_common_sample_2_part)
   #-----------------------------------------------------------------------
   # Build the executable of the example
   #-----------------------------------------------------------------------
@@ -216,7 +219,7 @@ macro(cmr_common_sample_1st_part)
 endmacro()
 
 
-macro(cmr_common_sample_2nd_part)
+macro(cmr_common_sample_3_part)
   if(NOT MINGW AND NOT ANDROID AND NOT IOS
       AND NOT (APPLE AND CMAKE_GENERATOR MATCHES "Unix Makefiles"))
     set_target_properties(${PROJECT_NAME} PROPERTIES
@@ -295,7 +298,7 @@ macro(cmr_common_sample_2nd_part)
 endmacro()
 
 
-macro(cmr_common_sample_test_1st_part)
+macro(cmr_common_sample_test_1_part)
   find_package(GTest REQUIRED)
 
   set(test_NAME "Examle_test")
@@ -303,7 +306,7 @@ macro(cmr_common_sample_test_1st_part)
 endmacro()
 
 
-macro(cmr_common_sample_test_2nd_part_1)
+macro(cmr_common_sample_test_2_part_1)
   #-----------------------------------------------------------------------
   # Prepare test env for Android
   #-----------------------------------------------------------------------
@@ -386,7 +389,7 @@ macro(cmr_common_sample_test_2nd_part_1)
 endmacro()
 
 
-macro(cmr_common_sample_test_2nd_part_2)
+macro(cmr_common_sample_test_2_part_2)
   if(NOT MINGW AND NOT ANDROID AND NOT IOS
       AND NOT (APPLE AND CMAKE_GENERATOR MATCHES "Unix Makefiles"))
     set_target_properties(${test_NAME} PROPERTIES
@@ -416,7 +419,7 @@ macro(cmr_common_sample_test_2nd_part_2)
 endmacro()
 
 
-macro(cmr_common_sample_test_2nd_part_3)
+macro(cmr_common_sample_test_2_part_3)
   #-----------------------------------------------------------------------
   # Test for Android
   #-----------------------------------------------------------------------
@@ -441,7 +444,7 @@ macro(cmr_common_sample_test_2nd_part_3)
 endmacro()
 
 
-macro(cmr_common_sample_test_2nd_part_4)
+macro(cmr_common_sample_test_2_part_4)
   #-----------------------------------------------------------------------
   # Test for iOS
   #-----------------------------------------------------------------------
@@ -553,7 +556,7 @@ macro(cmr_common_sample_test_2nd_part_4)
 endmacro()
 
 
-macro(cmr_common_sample_test_2nd_part_5)
+macro(cmr_common_sample_test_2_part_5)
   #-----------------------------------------------------------------------
   # Common test settings
   #-----------------------------------------------------------------------
@@ -567,10 +570,10 @@ macro(cmr_common_sample_test_2nd_part_5)
 endmacro()
 
 
-macro(cmr_common_sample_test_2nd_part)
-  cmr_common_sample_test_2nd_part_1()
-  cmr_common_sample_test_2nd_part_2()
-  cmr_common_sample_test_2nd_part_3()
-  cmr_common_sample_test_2nd_part_4()
-  cmr_common_sample_test_2nd_part_5()
+macro(cmr_common_sample_test_2_part)
+  cmr_common_sample_test_2_part_1()
+  cmr_common_sample_test_2_part_2()
+  cmr_common_sample_test_2_part_3()
+  cmr_common_sample_test_2_part_4()
+  cmr_common_sample_test_2_part_5()
 endmacro()
