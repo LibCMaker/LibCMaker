@@ -24,5 +24,16 @@
 include(cmr_print_debug)
 
 function(cmr_print_value in_var)
+  if(${in_var})
+    list(LENGTH ${in_var} _list_len)
+    if(_list_len GREATER 1)
+      cmr_print_debug("Var: ${in_var} ==")
+      foreach(val IN LISTS ${in_var})
+        cmr_print_debug("    == ${val}")
+      endforeach()
+      return()
+    endif()
+  endif()
+
   cmr_print_debug("Var: ${in_var} == ${${in_var}}")
 endfunction()
