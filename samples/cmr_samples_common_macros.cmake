@@ -42,6 +42,14 @@
 include(${LibCMaker_LIB_DIR}/LibCMaker/cmake/cmr_msvc_utils.cmake)
 
 
+macro(cmr_common_sample_0_part)
+  # Please make sure the variable is set before the `project` command.
+  set(CMAKE_USER_MAKE_RULES_OVERRIDE
+    "${LibCMaker_DIR}/cmake/cmr_platform_overrides.cmake"
+  )
+endmacro()
+
+
 macro(cmr_common_sample_1_part)
   option(CMAKE_VERBOSE_MAKEFILE "CMAKE_VERBOSE_MAKEFILE" OFF)
   option(cmr_PRINT_DEBUG "cmr_PRINT_DEBUG" OFF)
@@ -233,7 +241,33 @@ macro(cmr_common_sample_2_part)
   #-----------------------------------------------------------------------
 
   if(NOT PROJECT_NAME STREQUAL "LibCMaker_GoogleTest_Compile_Test")
+    # NOTE: TARGETING_XP: _ATL_XP_TARGETING and '/SUBSYSTEM:CONSOLE,5.01'.
+
     add_executable(${PROJECT_NAME} ${IOS_MACOSX_BUNDLE} "")
+    #set_property(TARGET ${PROJECT_NAME} PROPERTY MSVC_RUNTIME_LIBRARY
+    #  "MultiThreaded$<$<CONFIG:Debug>:Debug>${_msvc_runtime_DLL}"
+    #)
+
+    if(WIN32 AND MSVC AND (TARGETING_XP_64 OR TARGETING_XP))
+      if(TARGETING_XP_64)
+        set(_EXE_SUBSYSTEM_VER "5.02")
+      elseif(TARGETING_XP)
+        set(_EXE_SUBSYSTEM_VER "5.01")
+      endif()
+
+      # See docs for add_executable() and WIN32_EXECUTABLE.
+      #set_property(TARGET ${PROJECT_NAME} PROPERTY WIN32_EXECUTABLE ON)
+      get_target_property(_WIN32_EXECUTABLE ${PROJECT_NAME} WIN32_EXECUTABLE)
+      if(_WIN32_EXECUTABLE)
+        set(_EXE_SUBSYSTEM "WINDOWS")
+      else()
+        set(_EXE_SUBSYSTEM "CONSOLE")
+      endif()
+
+      target_link_options(${PROJECT_NAME} PRIVATE
+        "/SUBSYSTEM:${_EXE_SUBSYSTEM},${_EXE_SUBSYSTEM_VER}"
+      )
+    endif()
   endif()
 endmacro()
 
@@ -322,6 +356,29 @@ macro(cmr_common_sample_test_1_part)
 
   set(test_NAME "Example_test")
   add_executable(${test_NAME} ${IOS_MACOSX_BUNDLE} "")
+
+  if(WIN32 AND MSVC AND (TARGETING_XP_64 OR TARGETING_XP))
+    # NOTE: TARGETING_XP: _ATL_XP_TARGETING and '/SUBSYSTEM:CONSOLE,5.01'.
+
+    if(TARGETING_XP_64)
+      set(_EXE_SUBSYSTEM_VER "5.02")
+    elseif(TARGETING_XP)
+      set(_EXE_SUBSYSTEM_VER "5.01")
+    endif()
+
+    # See docs for add_executable() and WIN32_EXECUTABLE.
+    #set_property(TARGET ${test_NAME} PROPERTY WIN32_EXECUTABLE ON)
+    get_target_property(_WIN32_EXECUTABLE ${test_NAME} WIN32_EXECUTABLE)
+    if(_WIN32_EXECUTABLE)
+      set(_EXE_SUBSYSTEM "WINDOWS")
+    else()
+      set(_EXE_SUBSYSTEM "CONSOLE")
+    endif()
+
+    target_link_options(${test_NAME} PRIVATE
+      "/SUBSYSTEM:${_EXE_SUBSYSTEM},${_EXE_SUBSYSTEM_VER}"
+    )
+  endif()
 endmacro()
 
 

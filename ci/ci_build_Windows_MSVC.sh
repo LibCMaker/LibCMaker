@@ -61,6 +61,14 @@ export cmr_CMAKE_SYSTEM_VERSION="10.0.22000.0"
 
 export cmr_CMAKE_GENERATOR_TOOLSET="${cmr_VS_TOOLSET},host=${cmr_VS_HOST}"
 export cmr_CMAKE_GENERATOR_PLATFORM=${cmr_PLATFORM}
+export cmr_TARGETING_XP="OFF"
+
+if [[ ${cmr_PLATFORM} == "WinXP" ]] ; then
+  #export cmr_CMAKE_GENERATOR_TOOLSET="v141_xp,host=x64"
+  export cmr_CMAKE_GENERATOR_PLATFORM="Win32"
+  # NOTE: TARGETING_XP: _ATL_XP_TARGETING and '/SUBSYSTEM:CONSOLE,5.01'.
+  export cmr_TARGETING_XP="ON"
+fi
 
 
 # ==== Configure, build project and run test ====
@@ -84,6 +92,7 @@ ${cmr_CMAKE_CMD} ${cmr_SAMPLE_DIR} \
     -DCMAKE_GENERATOR_TOOLSET:STRING="${cmr_CMAKE_GENERATOR_TOOLSET}" \
     -DCMAKE_CONFIGURATION_TYPES:STRING="${cmr_CMAKE_BUILD_TYPE}" \
     -DCMAKE_SYSTEM_VERSION:STRING="${cmr_CMAKE_SYSTEM_VERSION}" \
+    -DTARGETING_XP:BOOL="${cmr_TARGETING_XP}" \
   -Dcmr_VS_GENERATOR_VERBOSITY_LEVEL:STRING="normal" \
   "${cmr_LIB_CMAKE_CONFIG_PARAMS[@]}" \
 
