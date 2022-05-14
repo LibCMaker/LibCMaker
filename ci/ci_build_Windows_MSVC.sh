@@ -34,21 +34,33 @@ fi
 export PATH=${cmr_INSTALL_DIR}/bin:${cmr_INSTALL_DIR}/bin64:${cmr_INSTALL_DIR}/lib:${PATH}
 
 # ==== Set up compiler ====
-export cmr_CMAKE_GENERATOR="Visual Studio 15 2017"
+#export cmr_CMAKE_GENERATOR="Visual Studio 15 2017"
+export cmr_CMAKE_GENERATOR="Visual Studio 16 2019"
 
-if [[ ${cmr_PLATFORM} == "x64" ]] ; then
-  export cmr_CMAKE_GENERATOR_PLATFORM="x64"
-  export cmr_CMAKE_GENERATOR_TOOLSET="v141,host=x64"
-elif [[ ${cmr_PLATFORM} == "Win32" ]] ; then
-  export cmr_CMAKE_GENERATOR_PLATFORM="Win32"
-  export cmr_CMAKE_GENERATOR_TOOLSET="v141,host=x64"
-elif [[ ${cmr_PLATFORM} == "WinXP" ]] ; then
-  export cmr_CMAKE_GENERATOR_PLATFORM="Win32"
-  export cmr_CMAKE_GENERATOR_TOOLSET="v141_xp,host=x64"
-else
-  echo "Error: cmr_PLATFORM is not set correctly."
-  exit 1
+if [[ ${cmr_CMAKE_GENERATOR} == "Visual Studio 15 2017" ]] ; then
+  export cmr_VS_TOOLSET="v141"
+elif [[ ${cmr_CMAKE_GENERATOR} == "Visual Studio 16 2019" ]] ; then
+  #export cmr_VS_TOOLSET="v141"
+  export cmr_VS_TOOLSET="v142"
 fi
+
+export cmr_VS_HOST="x64"
+if [[ ${cmr_VS_TOOLSET} == "v141" ]] ; then
+  # For Skia building with "v141",
+  # otherwise it stop with error "unable to find mspdbcore.dll".
+  export cmr_VS_HOST="x86"
+fi
+
+# WinKit 10.0.17763.0 (Win10) is installed as latest for MSVC 2017.
+# WinKit 10.0.20348.0 (Win10) and 10.0.22000.0 (Win11)
+# are installed as latest for MSVC 2019.
+
+#export cmr_CMAKE_SYSTEM_VERSION="10.0.17763.0"
+#export cmr_CMAKE_SYSTEM_VERSION="10.0.20348.0"
+export cmr_CMAKE_SYSTEM_VERSION="10.0.22000.0"
+
+export cmr_CMAKE_GENERATOR_TOOLSET="${cmr_VS_TOOLSET},host=${cmr_VS_HOST}"
+export cmr_CMAKE_GENERATOR_PLATFORM=${cmr_PLATFORM}
 
 
 # ==== Configure, build project and run test ====
@@ -71,6 +83,7 @@ ${cmr_CMAKE_CMD} ${cmr_SAMPLE_DIR} \
     -DCMAKE_GENERATOR_PLATFORM:STRING="${cmr_CMAKE_GENERATOR_PLATFORM}" \
     -DCMAKE_GENERATOR_TOOLSET:STRING="${cmr_CMAKE_GENERATOR_TOOLSET}" \
     -DCMAKE_CONFIGURATION_TYPES:STRING="${cmr_CMAKE_BUILD_TYPE}" \
+    -DCMAKE_SYSTEM_VERSION:STRING="${cmr_CMAKE_SYSTEM_VERSION}" \
   -Dcmr_VS_GENERATOR_VERBOSITY_LEVEL:STRING="normal" \
   "${cmr_LIB_CMAKE_CONFIG_PARAMS[@]}" \
 

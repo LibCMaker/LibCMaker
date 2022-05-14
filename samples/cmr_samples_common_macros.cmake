@@ -38,6 +38,10 @@
 # https://stackoverflow.com/a/37123943
 # cmake -E env CTEST_OUTPUT_ON_FAILURE=1 cmake --build . --target RUN_TESTS
 
+
+include(${LibCMaker_LIB_DIR}/LibCMaker/cmake/cmr_msvc_utils.cmake)
+
+
 macro(cmr_common_sample_1_part)
   option(CMAKE_VERBOSE_MAKEFILE "CMAKE_VERBOSE_MAKEFILE" OFF)
   option(cmr_PRINT_DEBUG "cmr_PRINT_DEBUG" OFF)
@@ -45,6 +49,13 @@ macro(cmr_common_sample_1_part)
   option(IOS_DISABLE_CODESIGN "IOS_DISABLE_CODESIGN" ON)
   option(BUILD_TESTING "Build the testing tree." OFF)
   option(cmr_USE_STATIC_RUNTIME "cmr_USE_STATIC_RUNTIME" ON)
+
+  if(MSVC)
+    get_vs_toolset_dir_ver()
+  endif()
+  if(WIN32)
+    get_windows_kits_dir_ver()
+  endif()
 
 
   #-----------------------------------------------------------------------
@@ -134,6 +145,14 @@ macro(cmr_common_sample_1_part)
   #-----------------------------------------------------------------------
   # Compiler flags
   #-----------------------------------------------------------------------
+
+  if(BUILD_SHARED_LIBS)
+    set(_msvc_runtime_DLL "DLL")
+  endif()
+
+  set(CMAKE_MSVC_RUNTIME_LIBRARY
+    "MultiThreaded$<$<CONFIG:Debug>:Debug>${_msvc_runtime_DLL}"
+  )
 
   if(cmr_USE_STATIC_RUNTIME AND MSVC AND NOT BUILD_SHARED_LIBS)
     # Set MSVC static runtime flags for all configurations.
@@ -301,7 +320,7 @@ endmacro()
 macro(cmr_common_sample_test_1_part)
   find_package(GTest REQUIRED)
 
-  set(test_NAME "Examle_test")
+  set(test_NAME "Example_test")
   add_executable(${test_NAME} ${IOS_MACOSX_BUNDLE} "")
 endmacro()
 

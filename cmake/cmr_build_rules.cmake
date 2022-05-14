@@ -78,6 +78,10 @@ function(cmr_build_rules)
 
   # Set compile flags.
   if(MSVC)
+    #set(CMAKE_MSVC_RUNTIME_LIBRARY
+    #  "MultiThreaded$<$<CONFIG:Debug>:Debug>${_MSVC_RUNTIME_LIBRARY_DLL}"
+    #)
+
     # Determine MSVC runtime library flag
     set(MSVC_LIB_USE "/MD")
     set(MSVC_LIB_REPLACE "/MT")
