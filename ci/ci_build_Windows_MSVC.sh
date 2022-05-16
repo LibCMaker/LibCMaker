@@ -44,6 +44,12 @@ elif [[ ${cmr_CMAKE_GENERATOR} == "Visual Studio 16 2019" ]] ; then
   export cmr_VS_TOOLSET="v142"
 fi
 
+if [[ ${cmr_PLATFORM} == "WinXP" ]] ; then
+  #export cmr_CMAKE_GENERATOR_TOOLSET="v141_xp,host=x64"
+  # NOTE: TARGETING_XP: _ATL_XP_TARGETING and '/SUBSYSTEM:CONSOLE,5.01'.
+  export cmr_VS_TOOLSET="v141"
+fi
+
 export cmr_VS_HOST="x64"
 if [[ ${cmr_VS_TOOLSET} == "v141" ]] ; then
   # For Skia building with "v141",
