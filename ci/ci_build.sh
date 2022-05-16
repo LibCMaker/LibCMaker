@@ -146,8 +146,8 @@ fi
 # === CMake ===
 
 export cmr_CMAKE_MAJOR_VER="3"
-export cmr_CMAKE_MINOR_VER="22"
-export cmr_CMAKE_PATCH_VER="3"
+export cmr_CMAKE_MINOR_VER="23"
+export cmr_CMAKE_PATCH_VER="1"
 
 if [[ ${cmr_HOST_OS} == "Linux" ]] ; then
 #  export cmr_CMAKE_HOST="Linux-x86_64"
