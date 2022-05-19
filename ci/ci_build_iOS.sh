@@ -78,7 +78,7 @@ ${cmr_CMAKE_CMD} ${cmr_SAMPLE_DIR} \
   -DCMAKE_GENERATOR:STRING="${cmr_CMAKE_GENERATOR}" \
     -DCMAKE_CONFIGURATION_TYPES:STRING="${cmr_CMAKE_BUILD_TYPE}" \
   -DCMAKE_TOOLCHAIN_FILE:PATH=${cmr_SAMPLE_LIB_DIR}/LibCMaker/cmake/ios.toolchain.cmake \
-    -DPLATFORM:STRING="SIMULATOR64" \
+    -DPLATFORM:STRING=${cmr_PLATFORM} \
     -DARCHS:STRING="x86_64" \
     -DENABLE_VISIBILITY:BOOL=${cmr_BUILD_SHARED_LIBS} \
   -Dcmr_HOST_BUILD_DIR:PATH=${cmr_HOST_BUILD_DIR} \
@@ -93,6 +93,14 @@ ${cmr_CMAKE_CMD} --build . --parallel ${cmr_JOBS_CNT} --config ${cmr_CMAKE_BUILD
 if [[ ${cmr_BUILD_TESTING} == "ON" ]] ; then
   echo "${cmr_ECHO_PREFIX} Start iOS simulator"
   xcrun simctl boot "iPhone 8"
+
+  # For open the running simulator run:
+  #open -a Simulator
+
+  # View app bundle dir in simulator:
+  # ~/Library/Developer/CoreSimulator/Devices/<SIMULATOR_ID>/data/Containers/Bundle/Application/<APPLICATION_ID>/Example_test.app
+  # View work dir in simulator:
+  # ~/Library/Developer/CoreSimulator/Devices/<SIMULATOR_ID>/data/Containers/Data/Application/<APPLICATION_ID>/Documents
 
   echo "${cmr_ECHO_PREFIX} Run tests"
   ${cmr_CTEST_CMD} --output-on-failure --build-config ${cmr_CMAKE_BUILD_TYPE}

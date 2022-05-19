@@ -380,7 +380,7 @@ jobs:
 # iOS, Clang, SIMULATOR64
           - target: "iOS"
             platform: "SIMULATOR64"
-            compiler: "Clang"
+            compiler: "AppleClang"
             build_type: "Debug"
             lib_linking: "shared"
             cmake_generator: "Xcode"
@@ -388,7 +388,7 @@ jobs:
 
           - target: "iOS"
             platform: "SIMULATOR64"
-            compiler: "Clang"
+            compiler: "AppleClang"
             build_type: "Release"
             lib_linking: "static"
             cmake_generator: "Xcode"
