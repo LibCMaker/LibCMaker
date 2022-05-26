@@ -449,13 +449,13 @@ macro(cmr_common_test_part__android__push_shared_libs)
       # Instead of the direct using of the adb push use tar.
       add_custom_command(TARGET ${test_NAME} POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E tar cf
-          "${CMAKE_CURRENT_BINARY_DIR}/lib.tar"
+          "${PROJECT_BINARY_DIR}/lib.tar"
           "${cmr_INSTALL_DIR}/lib"
         WORKING_DIRECTORY "${cmr_INSTALL_DIR}"
       )
       add_test(NAME push_libs_tar
         COMMAND ${adb_exec} push
-          "${CMAKE_CURRENT_BINARY_DIR}/lib.tar"
+          "${PROJECT_BINARY_DIR}/lib.tar"
           "${TEST_WORK_DIR}/lib.tar"
       )
       add_test(NAME extract_libs_tar
