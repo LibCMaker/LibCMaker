@@ -42,7 +42,7 @@
 include(${LibCMaker_LIB_DIR}/LibCMaker/cmake/cmr_msvc_utils.cmake)
 
 
-macro(cmr_common_sample_0_part)
+macro(cmr_common_sample_part__before_project)
   # Please make sure the variable is set before the `project` command.
   set(CMAKE_USER_MAKE_RULES_OVERRIDE
     "${LibCMaker_DIR}/cmake/cmr_platform_overrides.cmake"
@@ -50,7 +50,7 @@ macro(cmr_common_sample_0_part)
 endmacro()
 
 
-macro(cmr_common_sample_1_part)
+macro(cmr_common_sample_part__project_settings)
   option(CMAKE_VERBOSE_MAKEFILE "CMAKE_VERBOSE_MAKEFILE" OFF)
   option(cmr_PRINT_DEBUG "cmr_PRINT_DEBUG" OFF)
 
@@ -235,44 +235,18 @@ macro(cmr_common_sample_1_part)
 endmacro()
 
 
-macro(cmr_common_sample_2_part)
+macro(cmr_common_sample_part__add_executable)
+  # NOTE: if(NOT PROJECT_NAME STREQUAL "LibCMaker_GoogleTest_Compile_Test")
+
   #-----------------------------------------------------------------------
   # Build the executable of the example
   #-----------------------------------------------------------------------
 
-  if(NOT PROJECT_NAME STREQUAL "LibCMaker_GoogleTest_Compile_Test")
-    # NOTE: TARGETING_XP: _ATL_XP_TARGETING and '/SUBSYSTEM:CONSOLE,5.01'.
+  add_executable(${PROJECT_NAME} ${IOS_MACOSX_BUNDLE} "")
+  #set_property(TARGET ${PROJECT_NAME} PROPERTY MSVC_RUNTIME_LIBRARY
+  #  "MultiThreaded$<$<CONFIG:Debug>:Debug>${_msvc_runtime_DLL}"
+  #)
 
-    add_executable(${PROJECT_NAME} ${IOS_MACOSX_BUNDLE} "")
-    #set_property(TARGET ${PROJECT_NAME} PROPERTY MSVC_RUNTIME_LIBRARY
-    #  "MultiThreaded$<$<CONFIG:Debug>:Debug>${_msvc_runtime_DLL}"
-    #)
-
-    if(WIN32 AND MSVC AND (TARGETING_XP_64 OR TARGETING_XP))
-      if(TARGETING_XP_64)
-        set(_EXE_SUBSYSTEM_VER "5.02")
-      elseif(TARGETING_XP)
-        set(_EXE_SUBSYSTEM_VER "5.01")
-      endif()
-
-      # See docs for add_executable() and WIN32_EXECUTABLE.
-      #set_property(TARGET ${PROJECT_NAME} PROPERTY WIN32_EXECUTABLE ON)
-      get_target_property(_WIN32_EXECUTABLE ${PROJECT_NAME} WIN32_EXECUTABLE)
-      if(_WIN32_EXECUTABLE)
-        set(_EXE_SUBSYSTEM "WINDOWS")
-      else()
-        set(_EXE_SUBSYSTEM "CONSOLE")
-      endif()
-
-      target_link_options(${PROJECT_NAME} PRIVATE
-        "/SUBSYSTEM:${_EXE_SUBSYSTEM},${_EXE_SUBSYSTEM_VER}"
-      )
-    endif()
-  endif()
-endmacro()
-
-
-macro(cmr_common_sample_3_part)
   if(NOT MINGW AND NOT ANDROID AND NOT IOS
       AND NOT (APPLE AND CMAKE_GENERATOR MATCHES "Unix Makefiles"))
     set_target_properties(${PROJECT_NAME} PROPERTIES
@@ -284,6 +258,29 @@ macro(cmr_common_sample_3_part)
   if(MINGW AND NOT BUILD_SHARED_LIBS
       AND ${CMAKE_VERSION} VERSION_GREATER "3.12.0")  # CMake 3.13+
     target_link_options(${PROJECT_NAME} PRIVATE "-static")
+  endif()
+
+  if(WIN32 AND MSVC AND (TARGETING_XP_64 OR TARGETING_XP))
+    # NOTE: TARGETING_XP: _ATL_XP_TARGETING and '/SUBSYSTEM:CONSOLE,5.01'.
+
+    if(TARGETING_XP_64)
+      set(_EXE_SUBSYSTEM_VER "5.02")
+    elseif(TARGETING_XP)
+      set(_EXE_SUBSYSTEM_VER "5.01")
+    endif()
+
+    # See docs for add_executable() and WIN32_EXECUTABLE.
+    #set_property(TARGET ${PROJECT_NAME} PROPERTY WIN32_EXECUTABLE ON)
+    get_target_property(_WIN32_EXECUTABLE ${PROJECT_NAME} WIN32_EXECUTABLE)
+    if(_WIN32_EXECUTABLE)
+      set(_EXE_SUBSYSTEM "WINDOWS")
+    else()
+      set(_EXE_SUBSYSTEM "CONSOLE")
+    endif()
+
+    target_link_options(${PROJECT_NAME} PRIVATE
+      "/SUBSYSTEM:${_EXE_SUBSYSTEM},${_EXE_SUBSYSTEM_VER}"
+    )
   endif()
 
 
@@ -351,11 +348,28 @@ macro(cmr_common_sample_3_part)
 endmacro()
 
 
-macro(cmr_common_sample_test_1_part)
+macro(cmr_common_test_part__set_test_name)
+  set(test_NAME "test_example")
+endmacro()
+
+
+macro(cmr_common_test_part__add_executable)
   find_package(GTest REQUIRED)
 
-  set(test_NAME "Example_test")
   add_executable(${test_NAME} ${IOS_MACOSX_BUNDLE} "")
+
+  if(NOT MINGW AND NOT ANDROID AND NOT IOS
+      AND NOT (APPLE AND CMAKE_GENERATOR MATCHES "Unix Makefiles"))
+    set_target_properties(${test_NAME} PROPERTIES
+      # Link all libraries into the target so as not to use LD_LIBRARY_PATH.
+      LINK_WHAT_YOU_USE ON
+    )
+  endif()
+
+  if(MINGW AND NOT BUILD_SHARED_LIBS
+      AND ${CMAKE_VERSION} VERSION_GREATER "3.12.0")  # CMake 3.13+
+    target_link_options(${test_NAME} PRIVATE "-static")
+  endif()
 
   if(WIN32 AND MSVC AND (TARGETING_XP_64 OR TARGETING_XP))
     # NOTE: TARGETING_XP: _ATL_XP_TARGETING and '/SUBSYSTEM:CONSOLE,5.01'.
@@ -379,10 +393,24 @@ macro(cmr_common_sample_test_1_part)
       "/SUBSYSTEM:${_EXE_SUBSYSTEM},${_EXE_SUBSYSTEM_VER}"
     )
   endif()
+
+  # GTest
+  target_link_libraries(${test_NAME} PRIVATE
+    GTest::GTest GTest::Main
+  )
+
+
+  #-----------------------------------------------------------------------
+  # Test for Linux, Windows, macOS
+  #-----------------------------------------------------------------------
+
+  if(NOT ANDROID AND NOT IOS)
+    add_test(NAME ${test_NAME} COMMAND ${test_NAME})
+  endif()
 endmacro()
 
 
-macro(cmr_common_sample_test_2_part_1)
+macro(cmr_common_test_part__android__init)
   #-----------------------------------------------------------------------
   # Prepare test env for Android
   #-----------------------------------------------------------------------
@@ -398,16 +426,12 @@ macro(cmr_common_sample_test_2_part_1)
     add_test(NAME rm_work_dir
       COMMAND ${adb_exec} shell "if [ -d \"${TEST_WORK_DIR}\" ] ; then rm -r \"${TEST_WORK_DIR}\" ; fi"
     )
+  endif()
+endmacro()
 
-    if(PROJECT_NAME STREQUAL "LibCMaker_Boost_Compile_Test"
-        OR PROJECT_NAME STREQUAL "LibCMaker_ICU_Compile_Test")
-      add_test(NAME push_icu_data
-        COMMAND ${adb_exec} push
-          "${cmr_INSTALL_DIR}/share/icu"
-          "${TEST_WORK_DIR}/share/icu"
-      )
-    endif()
 
+macro(cmr_common_test_part__android__push_shared_libs)
+  if(ANDROID)
     if(BUILD_SHARED_LIBS)
       add_test(NAME check_tar
         COMMAND ${adb_exec} shell tar --help
@@ -440,21 +464,11 @@ macro(cmr_common_sample_test_2_part_1)
           -C "${TEST_WORK_DIR}"
       )
 
-      if(PROJECT_NAME STREQUAL "LibCMaker_GoogleTest_Compile_Test")
-        add_test(NAME push_test_lib
-          COMMAND ${adb_exec} push
-            "${PROJECT_BINARY_DIR}/libLibCMaker_GoogleTest_Compile_Test.so"
-            "${TEST_WORK_DIR}/lib/libLibCMaker_GoogleTest_Compile_Test.so"
-        )
-      endif()
-
       find_library(cpp_shared_LIB "c++_shared")
       if(NOT cpp_shared_LIB)
         message(FATAL_ERROR "The library 'c++_shared' can not be found.")
       endif()
-
       get_filename_component(cpp_shared_LIB_FILE_NAME ${cpp_shared_LIB} NAME)
-
       add_test(NAME push_cpp_shared
         COMMAND ${adb_exec} push
           "${cpp_shared_LIB}"
@@ -465,37 +479,34 @@ macro(cmr_common_sample_test_2_part_1)
 endmacro()
 
 
-macro(cmr_common_sample_test_2_part_2)
-  if(NOT MINGW AND NOT ANDROID AND NOT IOS
-      AND NOT (APPLE AND CMAKE_GENERATOR MATCHES "Unix Makefiles"))
-    set_target_properties(${test_NAME} PROPERTIES
-      # Link all libraries into the target so as not to use LD_LIBRARY_PATH.
-      LINK_WHAT_YOU_USE ON
+macro(cmr_common_test_part__android__push_icu_data)
+  # NOTE: if(PROJECT_NAME STREQUAL "LibCMaker_Boost_Compile_Test"
+  # NOTE:     OR PROJECT_NAME STREQUAL "LibCMaker_ICU_Compile_Test")
+  if(ANDROID)
+    add_test(NAME push_icu_data
+      COMMAND ${adb_exec} push
+        "${cmr_INSTALL_DIR}/share/icu"
+        "${TEST_WORK_DIR}/share/icu"
     )
-  endif()
-
-  if(MINGW AND NOT BUILD_SHARED_LIBS
-      AND ${CMAKE_VERSION} VERSION_GREATER "3.12.0")  # CMake 3.13+
-    target_link_options(${test_NAME} PRIVATE "-static")
-  endif()
-
-  # GTest
-  target_link_libraries(${test_NAME} PRIVATE
-    GTest::GTest GTest::Main
-  )
-
-
-  #-----------------------------------------------------------------------
-  # Test for Linux, Windows, macOS
-  #-----------------------------------------------------------------------
-
-  if(NOT ANDROID AND NOT IOS)
-    add_test(NAME ${test_NAME} COMMAND ${test_NAME})
   endif()
 endmacro()
 
 
-macro(cmr_common_sample_test_2_part_3)
+macro(cmr_common_test_part__android__push_test_lib)
+  # NOTE: if(PROJECT_NAME STREQUAL "LibCMaker_GoogleTest_Compile_Test")
+  if(ANDROID)
+    if(BUILD_SHARED_LIBS)
+      add_test(NAME push_test_lib
+        COMMAND ${adb_exec} push
+          "${PROJECT_BINARY_DIR}/libLibCMaker_GoogleTest_Compile_Test.so"
+          "${TEST_WORK_DIR}/lib/libLibCMaker_GoogleTest_Compile_Test.so"
+      )
+    endif()
+  endif()
+endmacro()
+
+
+macro(cmr_common_test_part__android__push_test_exe)
   #-----------------------------------------------------------------------
   # Test for Android
   #-----------------------------------------------------------------------
@@ -504,12 +515,14 @@ macro(cmr_common_sample_test_2_part_3)
     add_test(NAME push_${test_NAME}
       COMMAND ${adb_exec} push ${test_NAME} "${TEST_WORK_DIR}/${test_NAME}"
     )
+  endif()
+endmacro()
+
+
+macro(cmr_common_test_part__android__run_test)
+  if(ANDROID)
     add_test(NAME chmod_${test_NAME}
       COMMAND ${adb_exec} shell chmod 775 "${TEST_WORK_DIR}/${test_NAME}"
-    )
-    # TODO: is test "cd_to_work_dir" needed?
-    add_test(NAME cd_to_work_dir_${test_NAME} COMMAND ${adb_exec} shell
-      cd "${TEST_WORK_DIR}"
     )
     add_test(NAME ${test_NAME} COMMAND ${adb_exec} shell
       "cd ${TEST_WORK_DIR} && "
@@ -520,7 +533,7 @@ macro(cmr_common_sample_test_2_part_3)
 endmacro()
 
 
-macro(cmr_common_sample_test_2_part_4)
+macro(cmr_common_test_part__ios)
   #-----------------------------------------------------------------------
   # Test for iOS
   #-----------------------------------------------------------------------
@@ -632,7 +645,9 @@ macro(cmr_common_sample_test_2_part_4)
 endmacro()
 
 
-macro(cmr_common_sample_test_2_part_5)
+macro(cmr_common_test_part__set_common_tests_properties)
+  # NOTE: The part MUST be AFTER all add_test, also for ANDROID and IOS.
+
   #-----------------------------------------------------------------------
   # Common test settings
   #-----------------------------------------------------------------------
@@ -646,10 +661,13 @@ macro(cmr_common_sample_test_2_part_5)
 endmacro()
 
 
-macro(cmr_common_sample_test_2_part)
-  cmr_common_sample_test_2_part_1()
-  cmr_common_sample_test_2_part_2()
-  cmr_common_sample_test_2_part_3()
-  cmr_common_sample_test_2_part_4()
-  cmr_common_sample_test_2_part_5()
+macro(cmr_common_test_part)
+  cmr_common_test_part__set_test_name()
+  cmr_common_test_part__add_executable()
+  cmr_common_test_part__android__init()
+  cmr_common_test_part__android__push_shared_libs()
+  cmr_common_test_part__android__push_test_exe()
+  cmr_common_test_part__android__run_test()
+  cmr_common_test_part__ios()
+  cmr_common_test_part__set_common_tests_properties()
 endmacro()
