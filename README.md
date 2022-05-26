@@ -129,6 +129,8 @@ Following configurations are:
 
  [LibCMaker_SQLiteModernCPP](https://github.com/LibCMaker/LibCMaker_SQLiteModernCPP) <br> [SQLiteModernCPP site](https://github.com/SqliteModernCpp/sqlite_modern_cpp) | [![LibCMaker CI](https://github.com/LibCMaker/LibCMaker_SQLiteModernCPP/actions/workflows/LibCMaker_CI.yml/badge.svg)](https://github.com/LibCMaker/LibCMaker_SQLiteModernCPP/actions/workflows/LibCMaker_CI.yml) | GTest, ICU, SQLite3
 
+ [LibCMaker_Skia](https://github.com/LibCMaker/LibCMaker_Skia) <br> [Skia site](https://skia.org/) | [![LibCMaker CI](https://github.com/LibCMaker/LibCMaker_Skia/actions/workflows/LibCMaker_CI.yml/badge.svg)](https://github.com/LibCMaker/LibCMaker_Skia/actions/workflows/LibCMaker_CI.yml) | GTest
+
  [LibCMaker_fmt](https://github.com/LibCMaker/LibCMaker_fmt) <br> [{fmt} site](https://github.com/fmtlib/fmt) | [![LibCMaker CI](https://github.com/LibCMaker/LibCMaker_fmt/actions/workflows/LibCMaker_CI.yml/badge.svg)](https://github.com/LibCMaker/LibCMaker_fmt/actions/workflows/LibCMaker_CI.yml) | GTest
 
  [LibCMaker_litehtml](https://github.com/LibCMaker/LibCMaker_litehtml) <br> [litehtml site](http://www.litehtml.com/) | [![LibCMaker CI](https://github.com/LibCMaker/LibCMaker_litehtml/actions/workflows/LibCMaker_CI.yml/badge.svg)](https://github.com/LibCMaker/LibCMaker_litehtml/actions/workflows/LibCMaker_CI.yml) | GTest, gumbo (embedded)
