@@ -118,24 +118,47 @@ Following configurations are:
 
  *Library*   | *GitHub Actions* <br> Linux <br> macOS <br> Windows_MSVC <br> Windows_MinGW_w64 <br> Android_on_Linux <br> Android_on_Windows <br> iOS | *Built with dependencies*
  ----------- | ---------------------------------------------------------------------------------------------------------------------------------------- | -------------------------
- [LibCMaker_AGG](https://github.com/LibCMaker/LibCMaker_AGG) <br> [AGG site](http://www.antigrain.com/) | Disabled | GTest
-[LibCMaker_Boost](https://github.com/LibCMaker/LibCMaker_Boost) <br> [Boost site](https://www.boost.org/) | [![LibCMaker CI](https://github.com/LibCMaker/LibCMaker_Boost/actions/workflows/LibCMaker_CI.yml/badge.svg)](https://github.com/LibCMaker/LibCMaker_Boost/actions/workflows/LibCMaker_CI.yml) | GTest, ICU
- [LibCMaker_Cairo](https://github.com/LibCMaker/LibCMaker_Cairo) <br> [Cairo site](https://www.cairographics.org/) | [![LibCMaker CI](https://github.com/LibCMaker/LibCMaker_Cairo/actions/workflows/LibCMaker_CI.yml/badge.svg)](https://github.com/LibCMaker/LibCMaker_Cairo/actions/workflows/LibCMaker_CI.yml) | GTest, zlib, libpng, Dirent (only for Windows), Expat, FreeType, FontConfig, Pixman
- [LibCMaker_Dirent](https://github.com/LibCMaker/LibCMaker_Dirent) <br> [Dirent site](https://github.com/tronkko/dirent) | [![LibCMaker CI](https://github.com/LibCMaker/LibCMaker_Dirent/actions/workflows/LibCMaker_CI.yml/badge.svg)](https://github.com/LibCMaker/LibCMaker_Dirent/actions/workflows/LibCMaker_CI.yml) | Only for Windows, GTest
- [LibCMaker_Expat](https://github.com/LibCMaker/LibCMaker_Expat) <br> [Expat site](https://libexpat.github.io/) | [![LibCMaker CI](https://github.com/LibCMaker/LibCMaker_Expat/actions/workflows/LibCMaker_CI.yml/badge.svg)](https://github.com/LibCMaker/LibCMaker_Expat/actions/workflows/LibCMaker_CI.yml) | GTest
- [LibCMaker_fmt](https://github.com/LibCMaker/LibCMaker_fmt) <br> [{fmt} site](https://github.com/fmtlib/fmt) | [![LibCMaker CI](https://github.com/LibCMaker/LibCMaker_fmt/actions/workflows/LibCMaker_CI.yml/badge.svg)](https://github.com/LibCMaker/LibCMaker_fmt/actions/workflows/LibCMaker_CI.yml) | GTest
- [LibCMaker_FontConfig](https://github.com/LibCMaker/LibCMaker_FontConfig) <br> [FontConfig site](https://www.fontconfig.org/) | [![LibCMaker CI](https://github.com/LibCMaker/LibCMaker_FontConfig/actions/workflows/LibCMaker_CI.yml/badge.svg)](https://github.com/LibCMaker/LibCMaker_FontConfig/actions/workflows/LibCMaker_CI.yml) | GTest, Dirent (only for Windows), Expat, FreeType
- [LibCMaker_FreeType](https://github.com/LibCMaker/LibCMaker_FreeType) <br> [FreeType site](https://www.freetype.org/) | [![LibCMaker CI](https://github.com/LibCMaker/LibCMaker_FreeType/actions/workflows/LibCMaker_CI.yml/badge.svg)](https://github.com/LibCMaker/LibCMaker_FreeType/actions/workflows/LibCMaker_CI.yml) | GTest, HarfBuzz
+
  [LibCMaker_GoogleTest](https://github.com/LibCMaker/LibCMaker_GoogleTest) <br> [GoogleTest site](https://github.com/google/googletest) | [![LibCMaker CI](https://github.com/LibCMaker/LibCMaker_GoogleTest/actions/workflows/LibCMaker_CI.yml/badge.svg)](https://github.com/LibCMaker/LibCMaker_GoogleTest/actions/workflows/LibCMaker_CI.yml) |
- [LibCMaker_HarfBuzz](https://github.com/LibCMaker/LibCMaker_HarfBuzz) <br> [HarfBuzz site](http://www.harfbuzz.org/) | [![LibCMaker CI](https://github.com/LibCMaker/LibCMaker_HarfBuzz/actions/workflows/LibCMaker_CI.yml/badge.svg)](https://github.com/LibCMaker/LibCMaker_HarfBuzz/actions/workflows/LibCMaker_CI.yml) | GTest
+
  [LibCMaker_ICU](https://github.com/LibCMaker/LibCMaker_ICU) <br> [ICU site](http://site.icu-project.org/) | [![LibCMaker CI](https://github.com/LibCMaker/LibCMaker_ICU/actions/workflows/LibCMaker_CI.yml/badge.svg)](https://github.com/LibCMaker/LibCMaker_ICU/actions/workflows/LibCMaker_CI.yml) | GTest
+
  [LibCMaker_POCO](https://github.com/LibCMaker/LibCMaker_POCO) <br> [POCO site](https://pocoproject.org/) | [![LibCMaker CI](https://github.com/LibCMaker/LibCMaker_POCO/actions/workflows/LibCMaker_CI.yml/badge.svg)](https://github.com/LibCMaker/LibCMaker_POCO/actions/workflows/LibCMaker_CI.yml) | GTest
- [LibCMaker_Pixman](https://github.com/LibCMaker/LibCMaker_Pixman) <br> [Pixman site](http://www.pixman.org/) | [![LibCMaker CI](https://github.com/LibCMaker/LibCMaker_Pixman/actions/workflows/LibCMaker_CI.yml/badge.svg)](https://github.com/LibCMaker/LibCMaker_Pixman/actions/workflows/LibCMaker_CI.yml) | GTest
- [LibCMaker_spdlog](https://github.com/LibCMaker/LibCMaker_spdlog) <br> [spdlog site](https://github.com/gabime/spdlog) | [![LibCMaker CI](https://github.com/LibCMaker/LibCMaker_spdlog/actions/workflows/LibCMaker_CI.yml/badge.svg)](https://github.com/LibCMaker/LibCMaker_spdlog/actions/workflows/LibCMaker_CI.yml) | GTest, {fmt}
+
  [LibCMaker_SQLite3](https://github.com/LibCMaker/LibCMaker_SQLite3) <br> [SQLite3 site](https://www.sqlite.org/) | [![LibCMaker CI](https://github.com/LibCMaker/LibCMaker_SQLite3/actions/workflows/LibCMaker_CI.yml/badge.svg)](https://github.com/LibCMaker/LibCMaker_SQLite3/actions/workflows/LibCMaker_CI.yml) | GTest, ICU
+
  [LibCMaker_SQLiteModernCPP](https://github.com/LibCMaker/LibCMaker_SQLiteModernCPP) <br> [SQLiteModernCPP site](https://github.com/SqliteModernCpp/sqlite_modern_cpp) | [![LibCMaker CI](https://github.com/LibCMaker/LibCMaker_SQLiteModernCPP/actions/workflows/LibCMaker_CI.yml/badge.svg)](https://github.com/LibCMaker/LibCMaker_SQLiteModernCPP/actions/workflows/LibCMaker_CI.yml) | GTest, ICU, SQLite3
- [LibCMaker_STLCache](https://github.com/LibCMaker/LibCMaker_STLCache) <br> [STL::Cache site](https://github.com/akashihi/stlcache) | [![LibCMaker CI](https://github.com/LibCMaker/LibCMaker_STLCache/actions/workflows/LibCMaker_CI.yml/badge.svg)](https://github.com/LibCMaker/LibCMaker_STLCache/actions/workflows/LibCMaker_CI.yml) | GTest
- [LibCMaker_libpng](https://github.com/LibCMaker/LibCMaker_libpng) <br> [libpng site](http://www.libpng.org/pub/png/libpng.html) | [![LibCMaker CI](https://github.com/LibCMaker/LibCMaker_libpng/actions/workflows/LibCMaker_CI.yml/badge.svg)](https://github.com/LibCMaker/LibCMaker_libpng/actions/workflows/LibCMaker_CI.yml) | GTest, zlib
+
+ [LibCMaker_fmt](https://github.com/LibCMaker/LibCMaker_fmt) <br> [{fmt} site](https://github.com/fmtlib/fmt) | [![LibCMaker CI](https://github.com/LibCMaker/LibCMaker_fmt/actions/workflows/LibCMaker_CI.yml/badge.svg)](https://github.com/LibCMaker/LibCMaker_fmt/actions/workflows/LibCMaker_CI.yml) | GTest
+
  [LibCMaker_litehtml](https://github.com/LibCMaker/LibCMaker_litehtml) <br> [litehtml site](http://www.litehtml.com/) | [![LibCMaker CI](https://github.com/LibCMaker/LibCMaker_litehtml/actions/workflows/LibCMaker_CI.yml/badge.svg)](https://github.com/LibCMaker/LibCMaker_litehtml/actions/workflows/LibCMaker_CI.yml) | GTest, gumbo (embedded)
- [LibCMaker_wxWidgets](https://github.com/LibCMaker/LibCMaker_wxWidgets) <br> [wxWidgets site](https://www.wxwidgets.org/) | [![LibCMaker CI](https://github.com/LibCMaker/LibCMaker_wxWidgets/actions/workflows/LibCMaker_CI.yml/badge.svg)](https://github.com/LibCMaker/LibCMaker_wxWidgets/actions/workflows/LibCMaker_CI.yml) | GTest
- [LibCMaker_zlib](https://github.com/LibCMaker/LibCMaker_zlib) <br> [zlib site](https://zlib.net/) | [![LibCMaker CI](https://github.com/LibCMaker/LibCMaker_zlib/actions/workflows/LibCMaker_CI.yml/badge.svg)](https://github.com/LibCMaker/LibCMaker_zlib/actions/workflows/LibCMaker_CI.yml) | GTest
+
+ [LibCMaker_spdlog](https://github.com/LibCMaker/LibCMaker_spdlog) <br> [spdlog site](https://github.com/gabime/spdlog) | [![LibCMaker CI](https://github.com/LibCMaker/LibCMaker_spdlog/actions/workflows/LibCMaker_CI.yml/badge.svg)](https://github.com/LibCMaker/LibCMaker_spdlog/actions/workflows/LibCMaker_CI.yml) | GTest, {fmt}
+
+
+
+ [LibCMaker_AGG](https://github.com/LibCMaker/LibCMaker_AGG) <br> [AGG site](http://www.antigrain.com/) | Disabled | GTest
+
+ [LibCMaker_Boost](https://github.com/LibCMaker/LibCMaker_Boost) <br> [Boost site](https://www.boost.org/) | Disabled [![LibCMaker CI](https://github.com/LibCMaker/LibCMaker_Boost/actions/workflows/LibCMaker_CI.yml/badge.svg)](https://github.com/LibCMaker/LibCMaker_Boost/actions/workflows/LibCMaker_CI.yml) | GTest, ICU
+
+ [LibCMaker_Cairo](https://github.com/LibCMaker/LibCMaker_Cairo) <br> [Cairo site](https://www.cairographics.org/) | Disabled [![LibCMaker CI](https://github.com/LibCMaker/LibCMaker_Cairo/actions/workflows/LibCMaker_CI.yml/badge.svg)](https://github.com/LibCMaker/LibCMaker_Cairo/actions/workflows/LibCMaker_CI.yml) | GTest, zlib, libpng, Dirent (only for Windows), Expat, FreeType, FontConfig, Pixman
+
+ [LibCMaker_Dirent](https://github.com/LibCMaker/LibCMaker_Dirent) <br> [Dirent site](https://github.com/tronkko/dirent) | Disabled [![LibCMaker CI](https://github.com/LibCMaker/LibCMaker_Dirent/actions/workflows/LibCMaker_CI.yml/badge.svg)](https://github.com/LibCMaker/LibCMaker_Dirent/actions/workflows/LibCMaker_CI.yml) | Only for Windows, GTest
+
+ [LibCMaker_Expat](https://github.com/LibCMaker/LibCMaker_Expat) <br> [Expat site](https://libexpat.github.io/) | Disabled [![LibCMaker CI](https://github.com/LibCMaker/LibCMaker_Expat/actions/workflows/LibCMaker_CI.yml/badge.svg)](https://github.com/LibCMaker/LibCMaker_Expat/actions/workflows/LibCMaker_CI.yml) | GTest
+
+ [LibCMaker_FontConfig](https://github.com/LibCMaker/LibCMaker_FontConfig) <br> [FontConfig site](https://www.fontconfig.org/) | Disabled [![LibCMaker CI](https://github.com/LibCMaker/LibCMaker_FontConfig/actions/workflows/LibCMaker_CI.yml/badge.svg)](https://github.com/LibCMaker/LibCMaker_FontConfig/actions/workflows/LibCMaker_CI.yml) | GTest, Dirent (only for Windows), Expat, FreeType
+
+ [LibCMaker_FreeType](https://github.com/LibCMaker/LibCMaker_FreeType) <br> [FreeType site](https://www.freetype.org/) | Disabled [![LibCMaker CI](https://github.com/LibCMaker/LibCMaker_FreeType/actions/workflows/LibCMaker_CI.yml/badge.svg)](https://github.com/LibCMaker/LibCMaker_FreeType/actions/workflows/LibCMaker_CI.yml) | GTest, HarfBuzz
+
+ [LibCMaker_HarfBuzz](https://github.com/LibCMaker/LibCMaker_HarfBuzz) <br> [HarfBuzz site](http://www.harfbuzz.org/) | Disabled [![LibCMaker CI](https://github.com/LibCMaker/LibCMaker_HarfBuzz/actions/workflows/LibCMaker_CI.yml/badge.svg)](https://github.com/LibCMaker/LibCMaker_HarfBuzz/actions/workflows/LibCMaker_CI.yml) | GTest
+
+ [LibCMaker_Pixman](https://github.com/LibCMaker/LibCMaker_Pixman) <br> [Pixman site](http://www.pixman.org/) | Disabled [![LibCMaker CI](https://github.com/LibCMaker/LibCMaker_Pixman/actions/workflows/LibCMaker_CI.yml/badge.svg)](https://github.com/LibCMaker/LibCMaker_Pixman/actions/workflows/LibCMaker_CI.yml) | GTest
+
+ [LibCMaker_STLCache](https://github.com/LibCMaker/LibCMaker_STLCache) <br> [STL::Cache site](https://github.com/akashihi/stlcache) | Disabled [![LibCMaker CI](https://github.com/LibCMaker/LibCMaker_STLCache/actions/workflows/LibCMaker_CI.yml/badge.svg)](https://github.com/LibCMaker/LibCMaker_STLCache/actions/workflows/LibCMaker_CI.yml) | GTest
+
+ [LibCMaker_libpng](https://github.com/LibCMaker/LibCMaker_libpng) <br> [libpng site](http://www.libpng.org/pub/png/libpng.html) | Disabled [![LibCMaker CI](https://github.com/LibCMaker/LibCMaker_libpng/actions/workflows/LibCMaker_CI.yml/badge.svg)](https://github.com/LibCMaker/LibCMaker_libpng/actions/workflows/LibCMaker_CI.yml) | GTest, zlib
+
+ [LibCMaker_wxWidgets](https://github.com/LibCMaker/LibCMaker_wxWidgets) <br> [wxWidgets site](https://www.wxwidgets.org/) | Disabled [![LibCMaker CI](https://github.com/LibCMaker/LibCMaker_wxWidgets/actions/workflows/LibCMaker_CI.yml/badge.svg)](https://github.com/LibCMaker/LibCMaker_wxWidgets/actions/workflows/LibCMaker_CI.yml) | GTest
+
+ [LibCMaker_zlib](https://github.com/LibCMaker/LibCMaker_zlib) <br> [zlib site](https://zlib.net/) | Disabled [![LibCMaker CI](https://github.com/LibCMaker/LibCMaker_zlib/actions/workflows/LibCMaker_CI.yml/badge.svg)](https://github.com/LibCMaker/LibCMaker_zlib/actions/workflows/LibCMaker_CI.yml) | GTest
