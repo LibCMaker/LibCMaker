@@ -128,6 +128,8 @@ Following configurations are:
  [LibCMaker_litehtml](https://github.com/LibCMaker/LibCMaker_litehtml) <br> [litehtml site](http://www.litehtml.com/) | [![LibCMaker CI](https://github.com/LibCMaker/LibCMaker_litehtml/actions/workflows/LibCMaker_CI.yml/badge.svg)](https://github.com/LibCMaker/LibCMaker_litehtml/actions/workflows/LibCMaker_CI.yml) | GTest, gumbo (embedded)
  [LibCMaker_spdlog](https://github.com/LibCMaker/LibCMaker_spdlog) <br> [spdlog site](https://github.com/gabime/spdlog) | [![LibCMaker CI](https://github.com/LibCMaker/LibCMaker_spdlog/actions/workflows/LibCMaker_CI.yml/badge.svg)](https://github.com/LibCMaker/LibCMaker_spdlog/actions/workflows/LibCMaker_CI.yml) | GTest, {fmt}
   |  | 
+ ------- | ------- | -------
+  |  | 
  [LibCMaker_AGG](https://github.com/LibCMaker/LibCMaker_AGG) <br> [AGG site](http://www.antigrain.com/) | Disabled | GTest
  [LibCMaker_Boost](https://github.com/LibCMaker/LibCMaker_Boost) <br> [Boost site](https://www.boost.org/) | Disabled [![LibCMaker CI](https://github.com/LibCMaker/LibCMaker_Boost/actions/workflows/LibCMaker_CI.yml/badge.svg)](https://github.com/LibCMaker/LibCMaker_Boost/actions/workflows/LibCMaker_CI.yml) | GTest, ICU
  [LibCMaker_Cairo](https://github.com/LibCMaker/LibCMaker_Cairo) <br> [Cairo site](https://www.cairographics.org/) | Disabled [![LibCMaker CI](https://github.com/LibCMaker/LibCMaker_Cairo/actions/workflows/LibCMaker_CI.yml/badge.svg)](https://github.com/LibCMaker/LibCMaker_Cairo/actions/workflows/LibCMaker_CI.yml) | GTest, zlib, libpng, Dirent (only for Windows), Expat, FreeType, FontConfig, Pixman
