@@ -123,7 +123,8 @@ macro(cmr_common_sample_part__project_settings)
     # C++11 concept not supported all iOS platforms,
     # thread_local is allowed beginning with iOS 9 for Xcode 10.
     # Xcode 9 + iOS 8 compiles OK.
-    set(IOS_DEPLOYMENT_TARGET "9.0")  # Deployment target version of iOS.
+    # Commented, set by DEPLOYMENT_TARGET from ios.toolchain.cmake
+    #set(IOS_DEPLOYMENT_TARGET "9.0")  # Deployment target version of iOS.
 
     # Set to "1" to target iPhone, "2" to target iPad, "1,2" to target both.
     set(IOS_DEVICE_FAMILY "1")
@@ -138,8 +139,9 @@ macro(cmr_common_sample_part__project_settings)
     set(MACOSX_BUNDLE_LONG_VERSION_STRING "1.0")
     set(MACOSX_BUNDLE_SHORT_VERSION_STRING "1.0")
     set(MACOSX_BUNDLE_BUNDLE_VERSION "1.0")
-    set(MACOSX_BUNDLE_COPYRIGHT "Copyright (c) 2017-2020 NikitaFeodonit")
-    set(MACOSX_DEPLOYMENT_TARGET ${IOS_DEPLOYMENT_TARGET})
+    set(MACOSX_BUNDLE_COPYRIGHT "Copyright (c) 2017-2022 NikitaFeodonit")
+    #set(MACOSX_DEPLOYMENT_TARGET ${IOS_DEPLOYMENT_TARGET})
+    set(MACOSX_DEPLOYMENT_TARGET ${DEPLOYMENT_TARGET})
 
     #set(CMAKE_MACOSX_BUNDLE ON)
     #set(CMAKE_FRAMEWORK ON)
@@ -301,7 +303,8 @@ macro(cmr_common_sample_part__add_executable)
 
       XCODE_ATTRIBUTE_CODE_SIGN_IDENTITY "${IOS_CODE_SIGN_IDENTITY}"
       XCODE_ATTRIBUTE_DEVELOPMENT_TEAM ${DEVELOPMENT_TEAM_ID}
-      XCODE_ATTRIBUTE_IPHONEOS_DEPLOYMENT_TARGET ${IOS_DEPLOYMENT_TARGET}
+      #XCODE_ATTRIBUTE_IPHONEOS_DEPLOYMENT_TARGET ${IOS_DEPLOYMENT_TARGET}
+      XCODE_ATTRIBUTE_IPHONEOS_DEPLOYMENT_TARGET ${DEPLOYMENT_TARGET}
       XCODE_ATTRIBUTE_TARGETED_DEVICE_FAMILY ${IOS_DEVICE_FAMILY}
       #
       # From https://github.com/sheldonth/ios-cmake
@@ -554,7 +557,8 @@ macro(cmr_common_test_part__ios)
 
       XCODE_ATTRIBUTE_CODE_SIGN_IDENTITY "${IOS_CODE_SIGN_IDENTITY}"
       XCODE_ATTRIBUTE_DEVELOPMENT_TEAM ${DEVELOPMENT_TEAM_ID}
-      XCODE_ATTRIBUTE_IPHONEOS_DEPLOYMENT_TARGET ${IOS_DEPLOYMENT_TARGET}
+      #XCODE_ATTRIBUTE_IPHONEOS_DEPLOYMENT_TARGET ${IOS_DEPLOYMENT_TARGET}
+      XCODE_ATTRIBUTE_IPHONEOS_DEPLOYMENT_TARGET ${DEPLOYMENT_TARGET}
       XCODE_ATTRIBUTE_TARGETED_DEVICE_FAMILY ${IOS_DEVICE_FAMILY}
     )
 
