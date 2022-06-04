@@ -1,3 +1,7 @@
+# The code is from
+# https://github.com/leetal/ios-cmake/raw/master/ios.toolchain.cmake
+
+
 # This file is part of the ios-cmake project. It was retrieved from
 # https://github.com/leetal/ios-cmake.git, which is a fork of
 # https://github.com/gerstrong/ios-cmake.git, which is a fork of
@@ -144,10 +148,10 @@
 cmake_minimum_required(VERSION 3.8.0)
 
 # CMake invokes the toolchain file twice during the first build, but only once during subsequent rebuilds.
-if(DEFINED ENV{_IOS_TOOLCHAIN_HAS_RUN})
-  return()
-endif()
-set(ENV{_IOS_TOOLCHAIN_HAS_RUN} true)
+#if(DEFINED ENV{_IOS_TOOLCHAIN_HAS_RUN})
+#  return()
+#endif()
+#set(ENV{_IOS_TOOLCHAIN_HAS_RUN} true)
 
 # List of supported platform values
 list(APPEND _supported_platforms
@@ -296,7 +300,7 @@ if(PLATFORM_INT STREQUAL "OS")
     set(ARCHS armv7 armv7s arm64)
     set(APPLE_TARGET_TRIPLE_INT arm-apple-ios${DEPLOYMENT_TARGET})
   else()
-    set(APPLE_TARGET_TRIPLE_INT ${ARCHS_SPLIT}-apple-ios${DEPLOYMENT_TARGET})  
+    set(APPLE_TARGET_TRIPLE_INT ${ARCHS_SPLIT}-apple-ios${DEPLOYMENT_TARGET})
   endif()
 elseif(PLATFORM_INT STREQUAL "OS64")
   set(SDK_NAME iphoneos)
@@ -905,10 +909,10 @@ set(CMAKE_TRY_COMPILE_PLATFORM_VARIABLES
         BUILD_LIBTOOL
         CMAKE_INSTALL_NAME_TOOL
         CMAKE_C_FLAGS
-        CMAKE_C_DEBUG
-        CMAKE_C_MINSIZEREL
-        CMAKE_C_RELWITHDEBINFO
-        CMAKE_C_RELEASE
+        CMAKE_C_FLAGS_DEBUG
+        CMAKE_C_FLAGS_MINSIZEREL
+        CMAKE_C_FLAGS_RELWITHDEBINFO
+        CMAKE_C_FLAGS_RELEASE
         CMAKE_CXX_FLAGS
         CMAKE_CXX_FLAGS_DEBUG
         CMAKE_CXX_FLAGS_MINSIZEREL
@@ -920,7 +924,7 @@ set(CMAKE_TRY_COMPILE_PLATFORM_VARIABLES
 )
 
 if(NAMED_LANGUAGE_SUPPORT_INT)
-  list(APPEND CMAKE_TRY_COMPILE_PLATFORM_VARIABLES 
+  list(APPEND CMAKE_TRY_COMPILE_PLATFORM_VARIABLES
         CMAKE_OBJC_FLAGS
         CMAKE_OBJC_DEBUG
         CMAKE_OBJC_MINSIZEREL
@@ -956,7 +960,7 @@ endif()
 set(CMAKE_FIND_FRAMEWORK FIRST)
 
 # Set up the default search directories for frameworks.
-if(PLATFORM_INT MATCHES "^MAC_CATALYST") 
+if(PLATFORM_INT MATCHES "^MAC_CATALYST")
   set(CMAKE_FRAMEWORK_PATH
           ${CMAKE_DEVELOPER_ROOT}/Library/PrivateFrameworks
           ${CMAKE_OSX_SYSROOT_INT}/System/Library/Frameworks
@@ -969,18 +973,19 @@ else()
           ${CMAKE_FRAMEWORK_PATH} CACHE INTERNAL "")
 endif()
 
-# By default, search both the specified iOS SDK and the remainder of the host filesystem.
+# By default, search only the remainder of the host filesystem.
 if(NOT CMAKE_FIND_ROOT_PATH_MODE_PROGRAM)
-  set(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM BOTH CACHE INTERNAL "")
+  set(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER CACHE INTERNAL "")
 endif()
+# By default, search only the specified iOS SDK, not the remainder of the host filesystem.
 if(NOT CMAKE_FIND_ROOT_PATH_MODE_LIBRARY)
-  set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY BOTH CACHE INTERNAL "")
+  set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY CACHE INTERNAL "")
 endif()
 if(NOT CMAKE_FIND_ROOT_PATH_MODE_INCLUDE)
-  set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE BOTH CACHE INTERNAL "")
+  set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY CACHE INTERNAL "")
 endif()
 if(NOT CMAKE_FIND_ROOT_PATH_MODE_PACKAGE)
-  set(CMAKE_FIND_ROOT_PATH_MODE_PACKAGE BOTH CACHE INTERNAL "")
+  set(CMAKE_FIND_ROOT_PATH_MODE_PACKAGE ONLY CACHE INTERNAL "")
 endif()
 
 #
@@ -1007,8 +1012,8 @@ macro(find_host_package)
   set(IOS OFF)
   find_package(${ARGN})
   set(IOS ${_TOOLCHAIN_IOS})
-  set(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM BOTH)
-  set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY BOTH)
-  set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE BOTH)
-  set(CMAKE_FIND_ROOT_PATH_MODE_PACKAGE BOTH)
+  set(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)
+  set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
+  set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
+  set(CMAKE_FIND_ROOT_PATH_MODE_PACKAGE ONLY)
 endmacro(find_host_package)
