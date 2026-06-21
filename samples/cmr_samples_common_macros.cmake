@@ -223,7 +223,7 @@ macro(cmr_common_sample_part__project_settings)
 
   #set(LibCMaker_DIR "${LibCMaker_LIB_DIR}/LibCMaker")
   list(APPEND CMAKE_MODULE_PATH "${LibCMaker_DIR}/cmake")
-  include(cmr_find_package)
+#  include(cmr_find_package)
 
 
   #-----------------------------------------------------------------------
@@ -232,7 +232,8 @@ macro(cmr_common_sample_part__project_settings)
 
   if(BUILD_TESTING)
     enable_testing()
-    include(${LibCMaker_LIB_DIR}/LibCMaker_GoogleTest/cmr_build_googletest.cmake)
+    list(APPEND CMAKE_PREFIX_PATH ${LibCMaker_LIB_DIR}/LibCMaker_GoogleTest/cmake)
+    find_package(GTest REQUIRED)
   endif()
 endmacro()
 
@@ -399,7 +400,7 @@ macro(cmr_common_test_part__add_executable)
 
   # GTest
   target_link_libraries(${test_NAME} PRIVATE
-    GTest::GTest GTest::Main
+    GTest::gtest_main
   )
 
 
@@ -665,6 +666,28 @@ macro(cmr_common_test_part__set_common_tests_properties)
 endmacro()
 
 
+macro(cmr_common_sample_part__set_cxx_c_standards)
+  set_target_properties(${PROJECT_NAME} PROPERTIES
+    CXX_STANDARD 23
+    C_STANDARD 11
+  )
+endmacro()
+
+
+macro(cmr_common_test_part__set_cxx_c_standards)
+  set_target_properties(${test_NAME} PROPERTIES
+    CXX_STANDARD 23
+    C_STANDARD 11
+  )
+endmacro()
+
+
+macro(cmr_common_test_part__add_subdirectory_test)
+  set(test_src_DIR "${CMAKE_CURRENT_LIST_DIR}/src")
+  add_subdirectory(test)
+endmacro()
+
+
 macro(cmr_common_test_part)
   cmr_common_test_part__set_test_name()
   cmr_common_test_part__add_executable()
@@ -674,4 +697,5 @@ macro(cmr_common_test_part)
   cmr_common_test_part__android__run_test()
   cmr_common_test_part__ios()
   cmr_common_test_part__set_common_tests_properties()
+  cmr_common_test_part__set_cxx_c_standards()
 endmacro()

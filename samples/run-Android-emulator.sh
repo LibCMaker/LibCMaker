@@ -47,6 +47,9 @@ export cmr_LibCMaker_DIR_NAME="LibCMaker"
 # === Android on Linux ===
 export cmr_TARGET="Android_Linux"
 export cmr_PLATFORM="armeabi-v7a"
+#export cmr_PLATFORM="arm64-v8a"
+#export cmr_PLATFORM="x86"
+#export cmr_PLATFORM="x86_64"
 export cmr_HOST_OS="Linux"
 
 ## === Android, on Windows ===
@@ -71,17 +74,23 @@ export cmr_ANDROID_EMULATOR_API_LEVEL="24"
 
 #export cmr_LibCMaker_REPO_DIR=="${cmr_PARENT_DIR_1}"
 export cmr_LibCMaker_REPO_DIR="${cmr_PARENT_DIR_2}/${cmr_LibCMaker_DIR_NAME}"
+echo "cmr_LibCMaker_REPO_DIR=${cmr_LibCMaker_REPO_DIR}"
 
 export cmr_DOWNLOAD_DIR="${cmr_PARENT_DIR_3}/.downloads"
+echo "cmr_DOWNLOAD_DIR=${cmr_DOWNLOAD_DIR}"
 
 export cmr_ANDROID_CMD_TOOLS_VERSION="7583922"
-export cmr_ANDROID_SDK="${cmr_DOWNLOAD_DIR}/android-sdk-${cmr_ANDROID_CMD_TOOLS_VERSION}"
+#export cmr_ANDROID_SDK="${cmr_DOWNLOAD_DIR}/android-sdk-${cmr_ANDROID_CMD_TOOLS_VERSION}"
+export cmr_ANDROID_SDK="/home/work/apps/android/android-sdk-linux"
+echo "cmr_ANDROID_SDK=${cmr_ANDROID_SDK}"
 
 export ANDROID_HOME=${cmr_ANDROID_SDK}
 export ANDROID_SDK_ROOT=${cmr_ANDROID_SDK}
 export ANDROID_AVD_HOME="${cmr_DOWNLOAD_DIR}/android-avd"
+echo "ANDROID_AVD_HOME=${ANDROID_AVD_HOME}"
 
-export PATH=${cmr_ANDROID_SDK}/cmdline-tools/cmdline-tools/bin:${cmr_ANDROID_SDK}/platform-tools:${cmr_ANDROID_SDK}/emulator:${PATH}
+export PATH=${cmr_ANDROID_SDK}/cmdline-tools/latest/bin:${cmr_ANDROID_SDK}/cmdline-tools/cmdline-tools/bin:${cmr_ANDROID_SDK}/platform-tools:${cmr_ANDROID_SDK}/emulator:${PATH}
+echo "PATH=${PATH}"
 
 if [[ ${cmr_HOST_OS} == "Windows" ]] ; then
   export cmr_WIN_CMD="cmd //c"

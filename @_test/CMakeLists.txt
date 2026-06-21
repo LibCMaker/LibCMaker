@@ -3,7 +3,7 @@
 #  Purpose:  A CMake build scripts for build libraries with CMake
 #  Author:   NikitaFeodonit, nfeodonit@yandex.com
 # ****************************************************************************
-#    Copyright (c) 2017-2020 NikitaFeodonit
+#    Copyright (c) 2017-2018 NikitaFeodonit
 #
 #    This file is part of the LibCMaker project.
 #
@@ -21,19 +21,11 @@
 #    along with this program. If not, see <http://www.gnu.org/licenses/>.
 # ****************************************************************************
 
-macro(cmr_get_cmake_min_ver)
-  #if(IOS)
-  #  set(cmr_CMAKE_MIN_VER 3.15)
-  #elseif(APPLE)  # macOS
-  #  set(cmr_CMAKE_MIN_VER 3.9)
-  #else()
-  #  set(cmr_CMAKE_MIN_VER 3.9)
-  #endif()
-  set(cmr_CMAKE_MIN_VER 4.3)
+cmake_minimum_required(VERSION 3.4)
 
-  if(${ARGC} GREATER 0)
-    if(${ARGV0} GREATER cmr_CMAKE_MIN_VER)
-      set(cmr_CMAKE_MIN_VER ${${ARGV0}})
-    endif()
-  endif()
-endmacro()
+project(LibCMaker_Tests)
+
+message(STATUS "CMAKE_GENERATOR == ${CMAKE_GENERATOR}")
+message(STATUS "cmr_CMAKE_GENERATOR_2 == ${cmr_CMAKE_GENERATOR_2}")
+message(STATUS "cmr_CMAKE_GENERATOR_3 == ${cmr_CMAKE_GENERATOR_3}")
+message(STATUS "cmr_CMAKE_GENERATOR_4 == ${cmr_CMAKE_GENERATOR_4}")

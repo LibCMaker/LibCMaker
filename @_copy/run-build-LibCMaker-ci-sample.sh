@@ -41,16 +41,12 @@ export cmr_ECHO_PREFIX="==== [LibCMaker CI] ==== "
 
 export cmr_LibCMaker_DIR_NAME="LibCMaker"
 #export cmr_LibCMaker_Lib_DIR_NAME="LibCMaker_GoogleTest"
-#export cmr_LibCMaker_Lib_DIR_NAME="LibCMaker_POCO"
-#export cmr_LibCMaker_Lib_DIR_NAME="LibCMaker_Skia"
-#export cmr_LibCMaker_Lib_DIR_NAME="LibCMaker_SQLite3"
-#export cmr_LibCMaker_Lib_DIR_NAME="LibCMaker_RmlUi"
-export cmr_LibCMaker_Lib_DIR_NAME="LibCMaker_SDL2"
+export cmr_LibCMaker_Lib_DIR_NAME="LibCMaker_ICU"
 
 
 # === CMake ===
 #export cmr_CMAKE_DIR="/path/to/cmake"
-export cmr_CMAKE_DIR="/home/work/apps/cmake/cmake-3.23.2-linux-x86_64"
+export cmr_CMAKE_DIR="/home/work/apps/cmake/cmake-3.22.1-linux-x86_64"
 
 
 # === Targets ===
@@ -61,14 +57,15 @@ export cmr_TARGET="Linux"
 export cmr_PLATFORM="x64"
 #export cmr_COMPILER="GCC"
 export cmr_COMPILER="Clang"
-export cmr_CMAKE_BUILD_TYPE="Debug"
+#export cmr_CMAKE_BUILD_TYPE="Debug"
 export cmr_LIB_LINKING="shared"
-#export cmr_CMAKE_BUILD_TYPE="Release"
+export cmr_CMAKE_BUILD_TYPE="Release"
 #export cmr_LIB_LINKING="static"
 export cmr_CMAKE_GENERATOR="Unix Makefiles"
 export cmr_HOST_OS="Linux"
-#export cmr_GCC_VER="10"
-#export cmr_GLANG_VER="11"
+export cmr_GCC_VER="10"
+#export cmr_GLANG_VER="12"
+export cmr_GLANG_VER="11"
 
 
 ## === Windows, MSVC ===
@@ -116,14 +113,9 @@ export cmr_HOST_OS="Linux"
 ## === Android on Linux ===
 #export cmr_TARGET="Android_Linux"
 #export cmr_PLATFORM="armeabi-v7a"
-##export cmr_PLATFORM="arm64-v8a"
-##export cmr_PLATFORM="x86"
-##export cmr_PLATFORM="x86_64"
 #export cmr_COMPILER="Clang"
 #export cmr_CMAKE_BUILD_TYPE="Debug"
-##export cmr_CMAKE_BUILD_TYPE="Release"
 #export cmr_LIB_LINKING="shared"
-##export cmr_LIB_LINKING="static"
 #export cmr_CMAKE_GENERATOR="Ninja"
 #export cmr_HOST_OS="Linux"
 
@@ -162,8 +154,7 @@ export cmr_HOST_TOOLS_STAMP_FILE_NAME="host_tools_stamp"
 
 export cmr_ANDROID_CMD_TOOLS_VERSION="7583922"
 export cmr_ANDROID_SDK="${cmr_DOWNLOAD_DIR}/android-sdk-${cmr_ANDROID_CMD_TOOLS_VERSION}"
-#export cmr_ANDROID_NDK="${cmr_DOWNLOAD_DIR}/android-ndk-r23"
-export cmr_ANDROID_NDK="/home/work/apps/android/android-ndk-linux/android-ndk-r23"
+export cmr_ANDROID_NDK="${cmr_DOWNLOAD_DIR}/android-ndk-r23"
 export cmr_ANDROID_NDK_INSTALL_DIR="${cmr_DOWNLOAD_DIR}"
 
 export MINGW_HOME="/path/to/mingw64"
