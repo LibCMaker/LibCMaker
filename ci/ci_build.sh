@@ -146,8 +146,8 @@ fi
 # === CMake ===
 
 export cmr_CMAKE_MAJOR_VER="4"
-export cmr_CMAKE_MINOR_VER="3"
-export cmr_CMAKE_PATCH_VER="4"
+export cmr_CMAKE_MINOR_VER="4"
+export cmr_CMAKE_PATCH_VER="0"
 
 if [[ ${cmr_HOST_OS} == "Linux" ]] ; then
 #  export cmr_CMAKE_HOST="Linux-x86_64"
@@ -166,10 +166,16 @@ else
   exit 1
 fi
 
-export cmr_CMAKE_RELEASE="cmake-${cmr_CMAKE_MAJOR_VER}.${cmr_CMAKE_MINOR_VER}.${cmr_CMAKE_PATCH_VER}-${cmr_CMAKE_HOST}"
-export cmr_CMAKE_AR_FILE_NAME="${cmr_CMAKE_RELEASE}.${cmr_CMAKE_AR_EXT}"
+# https://github.com/Kitware/CMake/releases/download/v4.4.0-rc2/cmake-4.4.0-rc2-linux-x86_64.tar.gz
+export cmr_CMAKE_RELEASE="cmake-${cmr_CMAKE_MAJOR_VER}.${cmr_CMAKE_MINOR_VER}.${cmr_CMAKE_PATCH_VER}-rc2-${cmr_CMAKE_HOST}"
+export cmr_CMAKE_BASE_URL="https://github.com/Kitware/CMake/releases/download/v${cmr_CMAKE_MAJOR_VER}.${cmr_CMAKE_MINOR_VER}.${cmr_CMAKE_PATCH_VER}-rc2"
+
+# https://github.com/Kitware/CMake/releases/download/v4.3.4/cmake-4.3.4-linux-x86_64.tar.gz
+#export cmr_CMAKE_RELEASE="cmake-${cmr_CMAKE_MAJOR_VER}.${cmr_CMAKE_MINOR_VER}.${cmr_CMAKE_PATCH_VER}-${cmr_CMAKE_HOST}"
 #export cmr_CMAKE_BASE_URL="https://cmake.org/files/v${cmr_CMAKE_MAJOR_VER}.${cmr_CMAKE_MINOR_VER}"
-export cmr_CMAKE_BASE_URL="https://github.com/Kitware/CMake/releases/download/v${cmr_CMAKE_MAJOR_VER}.${cmr_CMAKE_MINOR_VER}.${cmr_CMAKE_PATCH_VER}"
+#export cmr_CMAKE_BASE_URL="https://github.com/Kitware/CMake/releases/download/v${cmr_CMAKE_MAJOR_VER}.${cmr_CMAKE_MINOR_VER}.${cmr_CMAKE_PATCH_VER}"
+
+export cmr_CMAKE_AR_FILE_NAME="${cmr_CMAKE_RELEASE}.${cmr_CMAKE_AR_EXT}"
 
 if [[ -z "${cmr_CMAKE_DIR}" ]]; then
   if [[ ( ${cmr_HOST_OS} == "Linux" ) || ( ${cmr_HOST_OS} == "Windows" ) ]] ; then
