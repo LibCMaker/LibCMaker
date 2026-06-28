@@ -3,7 +3,7 @@
 #  Purpose:  A CMake build scripts for build libraries with CMake
 #  Author:   NikitaFeodonit, nfeodonit@yandex.com
 # ****************************************************************************
-#    Copyright (c) 2017-2020 NikitaFeodonit
+#    Copyright (c) 2017-2026 NikitaFeodonit
 #
 #    This file is part of the LibCMaker project.
 #
@@ -139,7 +139,7 @@ macro(cmr_common_sample_part__project_settings)
     set(MACOSX_BUNDLE_LONG_VERSION_STRING "1.0")
     set(MACOSX_BUNDLE_SHORT_VERSION_STRING "1.0")
     set(MACOSX_BUNDLE_BUNDLE_VERSION "1.0")
-    set(MACOSX_BUNDLE_COPYRIGHT "Copyright (c) 2017-2022 NikitaFeodonit")
+    set(MACOSX_BUNDLE_COPYRIGHT "Copyright (c) 2017-2026 NikitaFeodonit")
     #set(MACOSX_DEPLOYMENT_TARGET ${IOS_DEPLOYMENT_TARGET})
     set(MACOSX_DEPLOYMENT_TARGET ${DEPLOYMENT_TARGET})
 
