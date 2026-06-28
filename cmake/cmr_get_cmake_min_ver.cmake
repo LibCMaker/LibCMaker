@@ -29,6 +29,7 @@ macro(cmr_get_cmake_min_ver)
   #else()
   #  set(cmr_CMAKE_MIN_VER 3.9)
   #endif()
+
   set(cmr_CMAKE_MIN_VER 4.4)
 
   if(${ARGC} GREATER 0)

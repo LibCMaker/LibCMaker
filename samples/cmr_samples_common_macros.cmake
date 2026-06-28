@@ -39,7 +39,7 @@
 # cmake -E env CTEST_OUTPUT_ON_FAILURE=1 cmake --build . --target RUN_TESTS
 
 
-include(${LibCMaker_LIB_DIR}/LibCMaker/cmake/cmr_msvc_utils.cmake)
+include(${LibCMaker_LIB_DIR}/LibCMaker/cmake/cmr_functions.cmake)
 
 
 macro(cmr_common_sample_part__before_project)
