@@ -33,6 +33,7 @@ function(cmr_print_debug message)
   endif()
 endfunction()
 
+
 function(cmr_print_error)
   message("")
   foreach(arg ${ARGV})
@@ -44,11 +45,13 @@ function(cmr_print_error)
   message(FATAL_ERROR "")
 endfunction()
 
+
 function(cmr_print_status message)
 #  string(TIMESTAMP timestamp)
 #  message(STATUS "[ LibCMaker ${timestamp} ] ${message}")
   message(STATUS "[ LibCMaker ] ${message}")
 endfunction()
+
 
 function(cmr_print_system_info)
   if(UNIX AND NOT APPLE AND NOT ANDROID)
@@ -125,6 +128,7 @@ function(get_vs_toolset_dir_ver)
   set(cmr_VS_TOOLSET_VERSION "${_toolset_ver}" CACHE STRING "cmr_VS_TOOLSET_VERSION")
 endfunction()
 
+
 function(get_windows_kits_dir_ver)
   if(MSVC_CXX_ARCHITECTURE_ID)
     string(TOLOWER "${MSVC_CXX_ARCHITECTURE_ID}" _msvc_arch)
@@ -160,6 +164,7 @@ function(get_windows_kits_dir_ver)
   )
 endfunction()
 
+
 function(get_windows_kits_include_dirs _win_kit_dir _win_kit_ver _out_var)
   # Based on the 'FindWindowsSDK.cmake' module.
 
@@ -189,6 +194,7 @@ function(get_windows_kits_include_dirs _win_kit_dir _win_kit_ver _out_var)
 
   set(${_out_var} ${_dirs} PARENT_SCOPE)
 endfunction()
+
 
 function(get_windows_kits_library_dirs _win_kit_dir _win_kit_ver _win_kit_arch _out_var)
   # Based on the 'FindWindowsSDK.cmake' module.
@@ -224,9 +230,3 @@ function(get_windows_kits_library_dirs _win_kit_dir _win_kit_ver _win_kit_arch _
 
   set(${_out_var} ${_dirs} PARENT_SCOPE)
 endfunction()
-
-
-#-----------------------------------------------------------------------
-#
-#
-
