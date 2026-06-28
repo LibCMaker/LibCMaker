@@ -29,7 +29,7 @@
 function(cmr_print_debug message)
   if(cmr_PRINT_DEBUG)
     string(TIMESTAMP timestamp)
-    message(STATUS "[ LibCMaker ** DEBUG ** ${timestamp} ] ${message}")
+    message(DEBUG "[ LibCMaker ** DEBUG ** ${timestamp} ] ${message}")
   endif()
 endfunction()
 
@@ -37,11 +37,11 @@ endfunction()
 function(cmr_print_error)
   message("")
   foreach(arg ${ARGV})
-    message(STATUS "[ LibCMaker ** FATAL ERROR ** ] ${arg}")
+    message(SEND_ERROR "[ LibCMaker ** FATAL ERROR ** ] ${arg}")
   endforeach()
-  message(STATUS
+  message(SEND_ERROR
     "[ LibCMaker ** FATAL ERROR ** ] [ Directory: ${CMAKE_CURRENT_LIST_DIR} ]")
-  message(STATUS "")
+  message(SEND_ERROR "")
   message(FATAL_ERROR "")
 endfunction()
 
@@ -50,6 +50,22 @@ function(cmr_print_status message)
 #  string(TIMESTAMP timestamp)
 #  message(STATUS "[ LibCMaker ${timestamp} ] ${message}")
   message(STATUS "[ LibCMaker ] ${message}")
+endfunction()
+
+
+function(cmr_print_value in_var)
+  if(${in_var})
+    list(LENGTH ${in_var} _list_len)
+    if(_list_len GREATER 1)
+      cmr_print_debug("Var: ${in_var} ==")
+      foreach(val IN LISTS ${in_var})
+        cmr_print_debug("    == ${val}")
+      endforeach()
+      return()
+    endif()
+  endif()
+
+  cmr_print_debug("Var: ${in_var} == ${${in_var}}")
 endfunction()
 
 
