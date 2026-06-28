@@ -223,7 +223,6 @@ macro(cmr_common_sample_part__project_settings)
 
   #set(LibCMaker_DIR "${LibCMaker_LIB_DIR}/LibCMaker")
   list(APPEND CMAKE_MODULE_PATH "${LibCMaker_DIR}/cmake")
-#  include(cmr_find_package)
 
 
   #-----------------------------------------------------------------------
