@@ -38,7 +38,7 @@ jobs:
         #                         zlib        libpng      Cairo
 
         # NOTE: LibCMaker lib triggers.
-        - ./trigger.sh LibCMaker LibCMaker_GoogleTest master $TRAVIS_ACCESS_TOKEN
+        - ./trigger.sh LibCMaker GoogleTest_LibCMaker master $TRAVIS_ACCESS_TOKEN
 
 
 notifications:

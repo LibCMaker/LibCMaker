@@ -27,7 +27,7 @@ if(NOT lib_NAME)
 endif()
 if(NOT lib_BASE_DIR)
   message(FATAL_ERROR
-    "Please set lib_BASE_DIR with path to LibCMaker_${lib_NAME} project root.")
+    "Please set lib_BASE_DIR with path to ${lib_NAME}_LibCMaker project root.")
 endif()
 if(NOT cmr_CMAKE_MIN_VER)
   message(FATAL_ERROR
@@ -73,7 +73,7 @@ set(cmr_main_CMAKE_FIND_ROOT_PATH ${CMAKE_FIND_ROOT_PATH})
 
 cmake_minimum_required(VERSION ${cmr_CMAKE_MIN_VER})
 # If not defined lib_LANGUAGES then default languages (C and CXX).
-project(LibCMaker_${lib_NAME} ${lib_LANGUAGES})
+project(${lib_NAME}_LibCMaker ${lib_LANGUAGES})
 
 if(ANDROID OR IOS)
   # android.toolchain.cmake resets CMAKE_FIND_ROOT_PATH.

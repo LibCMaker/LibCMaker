@@ -99,7 +99,7 @@ function(cmr_find_package)
   # Set vars and dirs.
   string(TOUPPER ${find_NAME} lib_NAME_UPPER)
   string(TOLOWER ${find_NAME} lib_NAME_LOWER)
-  set(cmr_lib_NAME "LibCMaker_${find_NAME}")
+  set(cmr_lib_NAME "${find_NAME}_LibCMaker")
 
   set(module_NAME ${find_NAME})
   if(find_FIND_MODULE_NAME)

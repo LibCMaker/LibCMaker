@@ -238,7 +238,7 @@ endmacro()
 
 
 macro(cmr_common_sample_part__add_executable)
-  # NOTE: if(NOT PROJECT_NAME STREQUAL "LibCMaker_GoogleTest_Compile_Test")
+  # NOTE: if(NOT PROJECT_NAME STREQUAL "GoogleTest_LibCMaker_Compile_Test")
 
   #-----------------------------------------------------------------------
   # Build the executable of the example
@@ -483,8 +483,8 @@ endmacro()
 
 
 macro(cmr_common_test_part__android__push_icu_data)
-  # NOTE: if(PROJECT_NAME STREQUAL "LibCMaker_Boost_Compile_Test"
-  # NOTE:     OR PROJECT_NAME STREQUAL "LibCMaker_ICU_Compile_Test")
+  # NOTE: if(PROJECT_NAME STREQUAL "Boost_LibCMaker_Compile_Test"
+  # NOTE:     OR PROJECT_NAME STREQUAL "ICU_LibCMaker_Compile_Test")
   if(ANDROID)
     add_test(NAME push_icu_data
       COMMAND ${adb_exec} push
@@ -496,13 +496,13 @@ endmacro()
 
 
 macro(cmr_common_test_part__android__push_test_lib)
-  # NOTE: if(PROJECT_NAME STREQUAL "LibCMaker_GoogleTest_Compile_Test")
+  # NOTE: if(PROJECT_NAME STREQUAL "GoogleTest_LibCMaker_Compile_Test")
   if(ANDROID)
     if(BUILD_SHARED_LIBS)
       add_test(NAME push_test_lib
         COMMAND ${adb_exec} push
-          "${PROJECT_BINARY_DIR}/libLibCMaker_GoogleTest_Compile_Test.so"
-          "${TEST_WORK_DIR}/lib/libLibCMaker_GoogleTest_Compile_Test.so"
+          "${PROJECT_BINARY_DIR}/libGoogleTest_LibCMaker_Compile_Test.so"
+          "${TEST_WORK_DIR}/lib/libGoogleTest_LibCMaker_Compile_Test.so"
       )
     endif()
   endif()
@@ -562,8 +562,8 @@ macro(cmr_common_test_part__ios)
       XCODE_ATTRIBUTE_TARGETED_DEVICE_FAMILY ${IOS_DEVICE_FAMILY}
     )
 
-    if(PROJECT_NAME STREQUAL "LibCMaker_Boost_Compile_Test"
-        OR PROJECT_NAME STREQUAL "LibCMaker_ICU_Compile_Test")
+    if(PROJECT_NAME STREQUAL "Boost_LibCMaker_Compile_Test"
+        OR PROJECT_NAME STREQUAL "ICU_LibCMaker_Compile_Test")
       add_custom_command(TARGET ${test_NAME} POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E make_directory
           "${IOS_TEST_APP_BIN_DIR}/share/icu"
@@ -582,11 +582,11 @@ macro(cmr_common_test_part__ios)
           "${IOS_TEST_APP_BIN_DIR}/lib/"
       )
 
-      if(PROJECT_NAME STREQUAL "LibCMaker_GoogleTest_Compile_Test")
+      if(PROJECT_NAME STREQUAL "GoogleTest_LibCMaker_Compile_Test")
         add_custom_command(TARGET ${test_NAME} POST_BUILD
           COMMAND ${CMAKE_COMMAND} -E copy
-            "${PROJECT_BINARY_DIR}/$<CONFIG>-iphonesimulator/libLibCMaker_GoogleTest_Compile_Test.dylib"
-            "${IOS_TEST_APP_BIN_DIR}/lib/libLibCMaker_GoogleTest_Compile_Test.dylib"
+            "${PROJECT_BINARY_DIR}/$<CONFIG>-iphonesimulator/libGoogleTest_LibCMaker_Compile_Test.dylib"
+            "${IOS_TEST_APP_BIN_DIR}/lib/libGoogleTest_LibCMaker_Compile_Test.dylib"
         )
       endif()
     endif()
@@ -606,8 +606,8 @@ macro(cmr_common_test_part__ios)
       )
     endif()
 
-    if(PROJECT_NAME STREQUAL "LibCMaker_Boost_Compile_Test"
-        OR PROJECT_NAME STREQUAL "LibCMaker_ICU_Compile_Test")
+    if(PROJECT_NAME STREQUAL "Boost_LibCMaker_Compile_Test"
+        OR PROJECT_NAME STREQUAL "ICU_LibCMaker_Compile_Test")
       add_test(NAME copy_icu_dat_file_of_${test_NAME}
         COMMAND bash -c
           "TEST_APP_HOME_DIR=$(xcrun simctl getenv booted HOME) && cp -R ${cmr_INSTALL_DIR}/share $TEST_APP_HOME_DIR"
@@ -622,8 +622,8 @@ macro(cmr_common_test_part__ios)
         COMMAND xcrun simctl install booted ${IOS_TEST_APP_FULL_BIN_DIR}/
       )
 
-#      if(PROJECT_NAME STREQUAL "LibCMaker_Boost_Compile_Test"
-#          OR PROJECT_NAME STREQUAL "LibCMaker_ICU_Compile_Test")
+#      if(PROJECT_NAME STREQUAL "Boost_LibCMaker_Compile_Test"
+#          OR PROJECT_NAME STREQUAL "ICU_LibCMaker_Compile_Test")
 #        # Must be after the app installing
 #        add_test(NAME copy_icu_dat_file_of_${test_NAME}
 #          COMMAND bash -c
