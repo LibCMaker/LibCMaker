@@ -59,7 +59,7 @@ export cmr_CMAKE_DIR="/path/to/cmake"
 #export cmr_CMAKE_GENERATOR="Unix Makefiles"
 #export cmr_HOST_OS="Linux"
 #export cmr_GCC_VER="10"
-#export cmr_GLANG_VER="12"
+#export cmr_GLANG_VER="11"
 
 
 ## === Windows, MSVC ===

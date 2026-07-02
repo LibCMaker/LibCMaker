@@ -46,7 +46,7 @@ if [[ ${cmr_COMPILER} == "GCC" ]] ; then
   fi
 
 elif [[ ${cmr_COMPILER} == "Clang" ]] ; then
-  export cmr_GLANG_VER="12"
+  export cmr_GLANG_VER="11"
   export CC="clang-${cmr_GLANG_VER}"
   export CXX="clang++-${cmr_GLANG_VER}"
 
