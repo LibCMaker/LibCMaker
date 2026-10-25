@@ -232,7 +232,7 @@ macro(cmr_common_sample_part__project_settings)
   if(BUILD_TESTING)
     enable_testing()
     list(APPEND CMAKE_PREFIX_PATH ${LibCMaker_LIB_DIR}/GoogleTest_LibCMaker/cmake)
-    find_package(GTest REQUIRED NO_PACKAGE_ROOT_PATH)
+    find_package(GTest REQUIRED CONFIG)
   endif()
 endmacro()
 
